@@ -7,6 +7,9 @@
     "start": "electron .",
     "build": "electron-builder"
   },
+  "keywords": [],
+  "author": "Geidai Nexus (Shunsuke Mitani)",
+  "license": "ISC",
   "dependencies": {
     "express": "^4.19.2",
     "qrcode": "^1.5.3",
@@ -17,8 +20,7 @@
     "electron-builder": "^24.13.3"
   },
   "build": {
-    "publish": null,
-    "appId": "com.shunm.timeq",
+    "appId": "com.geidainexus.timeq",
     "productName": "Time Q",
     "files": [
       "main.js",
