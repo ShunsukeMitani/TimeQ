@@ -7,12 +7,9 @@
     "start": "electron .",
     "build": "electron-builder"
   },
-  "keywords": [],
-  "author": "shunm",
-  "license": "ISC",
   "dependencies": {
     "express": "^4.19.2",
-    "qrcode": "^1.5.4",
+    "qrcode": "^1.5.3",
     "ws": "^8.17.0"
   },
   "devDependencies": {
@@ -20,6 +17,7 @@
     "electron-builder": "^24.13.3"
   },
   "build": {
+    "publish": null,
     "appId": "com.shunm.timeq",
     "productName": "Time Q",
     "files": [
