@@ -20,6 +20,7 @@
     "electron-builder": "^24.13.3"
   },
   "build": {
+    "publish": null,
     "appId": "com.geidainexus.timeq",
     "productName": "Time Q",
     "files": [
