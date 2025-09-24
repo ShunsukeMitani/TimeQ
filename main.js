@@ -6,9 +6,20 @@ const express = require('express');
 const qrcode = require('qrcode');
 
 let programState = null;
+let directorWs = null; // ディレクターの接続を保持する変数
 
 function getLocalIpAddress() {
   const interfaces = os.networkInterfaces();
+  for (const name of Object.keys(interfaces)) {
+    if (!name.match(/([Ww][Ii]-?[Ff][Ii])|([Ee]thernet)/)) {
+      continue;
+    }
+    for (const iface of interfaces[name]) {
+      if (iface.family === 'IPv4' && !iface.internal) {
+        return iface.address;
+      }
+    }
+  }
   for (const name of Object.keys(interfaces)) {
     for (const iface of interfaces[name]) {
       if (iface.family === 'IPv4' && !iface.internal) {
@@ -35,7 +46,6 @@ const createWindow = () => {
 
   win.webContents.on('did-finish-load', () => {
     const ip = getLocalIpAddress();
-    // ⭐ 修正箇所: URLの末尾に ?directorIP=... を追加
     const url = `http://${ip}:3000?directorIP=${ip}`;
     console.log(`Webサーバーが http://${ip}:3000 で起動しました。`);
 
@@ -63,7 +73,6 @@ app.on('window-all-closed', () => {
 const wss = new WebSocketServer({ port: 8080 });
 console.log('WebSocketサーバーがポート8080で起動しました。');
 
-// ... (以降のWebSocketサーバーのコードは変更ありません)
 function broadcastState() {
   if (!programState) return;
   const message = JSON.stringify({ type: 'stateUpdate', payload: programState });
@@ -73,6 +82,7 @@ function broadcastState() {
     }
   });
 }
+
 function broadcastToOthers(senderWs, message) {
   const data = JSON.stringify(message);
   wss.clients.forEach((client) => {
@@ -81,14 +91,23 @@ function broadcastToOthers(senderWs, message) {
     }
   });
 }
+
 wss.on('connection', (ws) => {
   console.log('クライアントが接続しました。');
   if (programState) {
     ws.send(JSON.stringify({ type: 'stateUpdate', payload: programState }));
   }
+
   ws.on('message', (message) => {
     const data = JSON.parse(message.toString());
+
+    // ディレクターの接続を特定して保存
+    if (data.type === 'identify' && data.payload.role === 'director') {
+      directorWs = ws;
+    }
+
     if (!programState && data.type !== 'startProgram') return;
+
     switch (data.type) {
       case 'startProgram':
         programState = {
@@ -103,6 +122,7 @@ wss.on('connection', (ws) => {
         };
         broadcastState();
         break;
+
       case 'togglePlayPause':
         if (programState.programStatus === 'running') {
           programState.programStatus = 'paused';
@@ -117,6 +137,7 @@ wss.on('connection', (ws) => {
         }
         broadcastState();
         break;
+
       case 'nextItem':
         if (programState.currentItemIndex < programState.cueSheet.length - 1) {
           const prevItem = programState.cueSheet[programState.currentItemIndex];
@@ -130,6 +151,7 @@ wss.on('connection', (ws) => {
         }
         broadcastState();
         break;
+
       case 'prevItem':
         if (programState.currentItemIndex > 0) {
           programState.currentItemIndex--;
@@ -137,14 +159,26 @@ wss.on('connection', (ws) => {
         }
         broadcastState();
         break;
+
       case 'handwritingUpdate':
         broadcastToOthers(ws, { type: 'handwritingUpdate', payload: data.payload });
         return;
+
       case 'presetMessage':
         broadcastToOthers(ws, { type: 'presetMessage', payload: data.payload });
         return;
+
+      // ⭐ ここから下をすべて追加
+      case 'acknowledgement':
+        if (directorWs && directorWs.readyState === directorWs.OPEN) {
+          directorWs.send(JSON.stringify({ type: 'acknowledged' }));
+        }
+        return;
+      // ⭐ ここまで追加
+
       case 'endProgram':
         programState = null;
+        directorWs = null;
         wss.clients.forEach(client => {
           if (client.readyState === client.OPEN) {
             client.send(JSON.stringify({ type: 'programEnded' }));
@@ -153,13 +187,16 @@ wss.on('connection', (ws) => {
         return;
     }
   });
+
   ws.on('close', () => console.log('クライアントとの接続が切れました。'));
   ws.on('error', (error) => console.error('エラー:', error));
 });
 
 const httpApp = express();
 const PORT = 3000;
+
 httpApp.use(express.static(path.join(__dirname)));
+
 httpApp.listen(PORT, () => {
   console.log(`Webサーバーが http://[あなたのIPアドレス]:${PORT} で起動しました。`);
 });

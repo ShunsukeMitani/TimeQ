@@ -62,13 +62,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const 接続URLテキスト = document.getElementById('connection-url-text');
     const QRコード画像 = document.getElementById('qr-code-image');
 
+    // ⭐ 修正: オフライン版として更新履歴をリニューアル
     const 更新履歴 = [
+        { version: "Ver.1.0", note: "オフライン版として初回リリース。ウェブ版の全機能に加え、IPアドレス・QRコードによる簡単接続、双方向通信などを実装。" },
         { version: "Ver.0.06", note: "メニューバーを非表示にし、最終的な調整を実施。" },
         { version: "Ver.0.05", note: "IPアドレスの自動表示機能、テンプレート保存機能、ログダウンロード機能などを追加。" },
         { version: "Ver.0.04", note: "手書き指示とプリセットメッセージのリアルタイム同期機能を追加。" },
         { version: "Ver.0.03", note: "タイマーの再生/停止、進行表の次へ/前へ機能の同期を実装。" },
         { version: "Ver.0.02", note: "WebSocketによるローカルサーバー機能を実装。" },
-        { version: "Ver.0.01", note: "オフライン版開発プロジェクトを開始。Electronの基本構造を構築。" }
+        { version: "Ver.0.01", note: "オフライン版開発プロジェクトを開始。Electronの基本構造を構築。" },
     ];
 
     // --- アプリの状態管理 ---
@@ -82,17 +84,18 @@ document.addEventListener('DOMContentLoaded', () => {
     let programLog = [];
     let currentProgramState = null;
 
-    // preload.js経由でmain.jsからの情報を受け取る
-    window.electronAPI.onConnectionInfo((info) => {
-        myIpAddress = info.ip;
-        接続URLテキスト.textContent = info.url;
-        QRコード画像.src = info.qr;
-
-        if (自分の役割 === 'director') {
-            ルーム情報表示.classList.remove('hidden');
-            ルームIDテキスト.textContent = `IP: ${myIpAddress}`;
-        }
-    });
+    // Electron環境でのみ実行
+    if (window.electronAPI) {
+        window.electronAPI.onConnectionInfo((info) => {
+            myIpAddress = info.ip;
+            接続URLテキスト.textContent = info.url;
+            QRコード画像.src = info.qr;
+            if (自分の役割 === 'director') {
+                ルーム情報表示.classList.remove('hidden');
+                ルームIDテキスト.textContent = `IP: ${myIpAddress}`;
+            }
+        });
+    }
 
     // --- ヘルパー関数 ---
     function showCustomPrompt(title) {
@@ -159,6 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
         socket.onopen = () => {
             console.log('サーバーに接続しました。');
             if (自分の役割 === 'director') {
+                sendData('identify', { role: 'director' });
                 番組設定モーダルをリセットする();
                 番組設定モーダル.classList.remove('hidden');
             } else {
@@ -187,6 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentProgramState = data.payload;
             const state = currentProgramState;
             if (!state) return;
+
             if (自分の役割 === 'director') {
                 画面を表示する(ディレクター画面);
                 if (state.programStatus === 'running') {
@@ -199,6 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 画面を表示する(パーソナリティ画面);
             }
+
             if (prevState && state.currentItemIndex !== prevState.currentItemIndex) {
                 const newCue = state.cueSheet[state.currentItemIndex];
                 let totalElapsedMs = state.totalElapsedTime;
@@ -207,8 +213,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 programLog.push(`${formatLogTime(totalElapsedMs)} - コーナー開始: ${newCue.title}`);
             }
+
             進行表を描画する(state.cueSheet, state.currentItemIndex);
             押し巻き時間を描画する(state.timeDifference);
+
             if (animationFrameId) cancelAnimationFrame(animationFrameId);
             if (state.programStatus === 'running') {
                 const loop = () => {
@@ -236,6 +244,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 プリセットメッセージ表示.textContent = text;
                 プリセットメッセージ表示.classList.remove('hidden');
                 setTimeout(() => プリセットメッセージ表示.classList.add('hidden'), 5000);
+            }
+        }
+        if (data.type === 'acknowledged') {
+            if (自分の役割 === 'director') {
+                了解インジケーター.classList.add('show');
+                setTimeout(() => {
+                    了解インジケーター.classList.remove('show');
+                }, 2000);
             }
         }
         if (data.type === 'programEnded') {
@@ -276,12 +292,15 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
         if (進行表データ.length === 0) return alert('進行表に項目を追加してください。');
+
         const 番組データ = {
             title: 番組タイトル入力欄.value,
             totalDuration: parseInt(番組時間入力欄.value, 10) * 60,
             cueSheet: 進行表データ,
         };
+
         programLog = [`[00:00:00] - 番組開始: ${番組データ.title}`];
+
         sendData('startProgram', 番組データ);
         番組設定モーダル.classList.add('hidden');
         画面を表示する(ディレクター画面);
@@ -453,6 +472,9 @@ document.addEventListener('DOMContentLoaded', () => {
             sendData('presetMessage', { text: message });
         }
     });
+    了解ボタン.onclick = () => {
+        sendData('acknowledgement');
+    };
     テンプレート保存ボタン.onclick = async () => {
         const name = await showCustomPrompt('テンプレート名を入力してください');
         if (!name) return;
@@ -533,17 +555,14 @@ document.addEventListener('DOMContentLoaded', () => {
         テンプレートリストを更新();
         画面を表示する(ホーム画面);
 
-        // ⭐ ここから下をすべて追加
-        // URLにIPアドレスが含まれているかチェック
         const urlParams = new URLSearchParams(window.location.search);
         const directorIP = urlParams.get('directorIP');
 
         if (directorIP) {
             console.log(`URLからIPアドレスを検出: ${directorIP}`);
-            ルームID入力欄.value = directorIP; // 入力欄に自動で入れる
-            部屋に参加する(); // 自動で接続を開始する
+            ルームID入力欄.value = directorIP;
+            部屋に参加する();
         }
-        // ⭐ ここまで追加
     }
     初期化();
 });
