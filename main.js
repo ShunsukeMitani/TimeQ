@@ -6,7 +6,7 @@ const express = require('express');
 const qrcode = require('qrcode');
 
 let programState = null;
-let directorWs = null; // ディレクターの接続を保持する変数
+let directorWs = null;
 
 function getLocalIpAddress() {
   const interfaces = os.networkInterfaces();
@@ -101,7 +101,6 @@ wss.on('connection', (ws) => {
   ws.on('message', (message) => {
     const data = JSON.parse(message.toString());
 
-    // ディレクターの接続を特定して保存
     if (data.type === 'identify' && data.payload.role === 'director') {
       directorWs = ws;
     }
@@ -120,7 +119,6 @@ wss.on('connection', (ws) => {
           lastPauseTime: 0,
           timeDifference: 0,
         };
-        broadcastState();
         break;
 
       case 'togglePlayPause':
@@ -135,7 +133,6 @@ wss.on('connection', (ws) => {
             programState.currentItemStartTime = Date.now();
           }
         }
-        broadcastState();
         break;
 
       case 'nextItem':
@@ -149,7 +146,6 @@ wss.on('connection', (ws) => {
           programState.currentItemIndex++;
           programState.currentItemStartTime = Date.now();
         }
-        broadcastState();
         break;
 
       case 'prevItem':
@@ -157,7 +153,6 @@ wss.on('connection', (ws) => {
           programState.currentItemIndex--;
           programState.currentItemStartTime = Date.now();
         }
-        broadcastState();
         break;
 
       case 'handwritingUpdate':
@@ -168,13 +163,11 @@ wss.on('connection', (ws) => {
         broadcastToOthers(ws, { type: 'presetMessage', payload: data.payload });
         return;
 
-      // ⭐ ここから下をすべて追加
       case 'acknowledgement':
         if (directorWs && directorWs.readyState === directorWs.OPEN) {
           directorWs.send(JSON.stringify({ type: 'acknowledged' }));
         }
         return;
-      // ⭐ ここまで追加
 
       case 'endProgram':
         programState = null;
@@ -186,6 +179,8 @@ wss.on('connection', (ws) => {
         });
         return;
     }
+
+    broadcastState();
   });
 
   ws.on('close', () => console.log('クライアントとの接続が切れました。'));

@@ -10,11 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const ホームタイトル = document.getElementById('home-title');
     const electronホーム = document.getElementById('electron-home');
     const browserホーム = document.getElementById('browser-home');
-    const ルーム作成ボタン = document.getElementById('create-room-btn');
+    const サーバー起動ボタン = document.getElementById('start-server-btn');
+    const クライアントとして参加ボタン = document.getElementById('join-as-client-btn');
     const director参加ボタン = document.getElementById('join-director-btn');
     const personality参加ボタン = document.getElementById('join-personality-btn');
     const IP入力欄 = document.getElementById('ip-input');
-    const 手動接続ボタン = document.getElementById('manual-join-btn');
+    const サーバー情報 = document.getElementById('server-info');
+    const サーバーQRコード画像 = document.getElementById('server-qr-code-image');
+    const サーバーURLテキスト = document.getElementById('server-url-text');
     const ルーム情報表示 = document.getElementById('room-info-display');
     const ルームIDテキスト = document.getElementById('room-id-text');
     const 閉じるボタン群 = document.querySelectorAll('.close-btn');
@@ -64,18 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const プロンプト入力欄 = document.getElementById('prompt-input');
     const プロンプトOKボタン = document.getElementById('prompt-ok-btn');
     const プロンプトキャンセルボタン = document.getElementById('prompt-cancel-btn');
-    const 接続URLテキスト = document.getElementById('connection-url-text');
-    const QRコード画像 = document.getElementById('qr-code-image');
 
     const 更新履歴 = [
-        { version: "Ver.1.1", note: "iPadでもディレクター側できるように修正。" },
+        { version: "Ver.1.1", note: "PC/Macアプリをサーバー専用機とクライアントの両方で使えるように修正。押し巻き時間の計算バグを修正。" },
         { version: "Ver.1.0", note: "オフライン版として初回リリース。ウェブ版の全機能に加え、IPアドレス・QRコードによる簡単接続、双方向通信などを実装。" },
-        { version: "Ver.0.06", note: "メニューバーを非表示にし、最終的な調整を実施。" },
-        { version: "Ver.0.05", note: "IPアドレスの自動表示機能、テンプレート保存機能、ログダウンロード機能などを追加。" },
-        { version: "Ver.0.04", note: "手書き指示とプリセットメッセージのリアルタイム同期機能を追加。" },
-        { version: "Ver.0.03", note: "タイマーの再生/停止、進行表の次へ/前へ機能の同期を実装。" },
-        { version: "Ver.0.02", note: "WebSocketによるローカルサーバー機能を実装。" },
-        { version: "Ver.0.01", note: "オフライン版開発プロジェクトを開始。Electronの基本構造を構築。" },
     ];
 
     // --- アプリの状態管理 ---
@@ -94,12 +89,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isElectron) {
         window.electronAPI.onConnectionInfo((info) => {
             myIpAddress = info.ip;
-            接続URLテキスト.textContent = info.url;
-            QRコード画像.src = info.qr;
-            if (自分の役割 === 'director') {
-                ルーム情報表示.classList.remove('hidden');
-                ルームIDテキスト.textContent = `IP: ${myIpAddress}`;
-            }
+            サーバーURLテキスト.textContent = `http://${myIpAddress}:3000`;
+            サーバーQRコード画像.src = info.qr;
+            ルーム情報表示.classList.remove('hidden');
+            ルームIDテキスト.textContent = `IP: ${myIpAddress}`;
         });
     }
 
@@ -168,17 +161,11 @@ document.addEventListener('DOMContentLoaded', () => {
         socket.onopen = () => {
             console.log('サーバーに接続しました。');
             if (自分の役割 === 'director') {
-                if (isElectron) {
-                    sendData('identify', { role: 'director' });
-                    番組設定モーダルをリセットする();
-                    番組設定モーダル.classList.remove('hidden');
-                } else {
-                    画面を表示する(ディレクター画面);
-                    setTimeout(初期化手書きパッド, 100);
-                }
+                sendData('identify', { role: 'director' });
+                番組設定モーダルをリセットする();
+                番組設定モーダル.classList.remove('hidden');
             } else {
                 画面を表示する(パーソナリティ画面);
-                パーソナリティ進行表.innerHTML = `<h2>ディレクターの操作を待っています...</h2>`;
             }
         };
         socket.onmessage = (event) => {
@@ -202,6 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentProgramState = data.payload;
             const state = currentProgramState;
             if (!state) return;
+
             if (自分の役割 === 'director') {
                 画面を表示する(ディレクター画面);
                 if (state.programStatus === 'running') {
@@ -214,6 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 画面を表示する(パーソナリティ画面);
             }
+
             if (prevState && state.currentItemIndex !== prevState.currentItemIndex) {
                 const newCue = state.cueSheet[state.currentItemIndex];
                 let totalElapsedMs = state.totalElapsedTime;
@@ -222,8 +211,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 programLog.push(`${formatLogTime(totalElapsedMs)} - コーナー開始: ${newCue.title}`);
             }
+
             進行表を描画する(state.cueSheet, state.currentItemIndex);
             押し巻き時間を描画する(state.timeDifference);
+
             if (animationFrameId) cancelAnimationFrame(animationFrameId);
             if (state.programStatus === 'running') {
                 const loop = () => {
@@ -275,21 +266,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- メイン機能 ---
     function サーバーを起動する() {
-        自分の役割 = 'director';
-        ルーム情報表示.classList.remove('hidden');
-        ルームIDテキスト.textContent = `IP: ${myIpAddress}`;
-        プリセットボタンを描画する();
-        テンプレートリストを更新();
-        connectToServer('localhost');
+        サーバー情報.classList.remove('hidden');
+        electronホーム.classList.add('hidden');
+        ホームタイトル.textContent = "クライアントの接続を待っています";
+        // Electron自体がサーバーなので、クライアントからの接続を待つだけ
     }
-    function 参加する(role, ipAddress) {
+
+    function クライアントとして参加する準備() {
+        electronホーム.classList.add('hidden');
+        browserホーム.classList.remove('hidden');
+        ホームタイトル.textContent = '参加する部屋の情報を入力してください';
+    }
+
+    function 参加する(role) {
         自分の役割 = role;
+        const ipAddress = IP入力欄.value.trim();
         if (!ipAddress) {
             alert('サーバーPCのIPアドレスを入力してください。');
             return;
         }
         connectToServer(ipAddress);
     }
+
     function 番組を開始する() {
         const 進行表データ = [];
         document.querySelectorAll('#cue-sheet-rows-container .cue-sheet-row').forEach((row, index) => {
@@ -301,14 +299,18 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
         if (進行表データ.length === 0) return alert('進行表に項目を追加してください。');
+
         const 番組データ = {
             title: 番組タイトル入力欄.value,
             totalDuration: parseInt(番組時間入力欄.value, 10) * 60,
             cueSheet: 進行表データ,
         };
+
         programLog = [`[00:00:00] - 番組開始: ${番組データ.title}`];
         sendData('startProgram', 番組データ);
         番組設定モーダル.classList.add('hidden');
+
+        // ブラウザからディレクターとして参加した場合、手動で画面遷移
         if (!isElectron) {
             画面を表示する(ディレクター画面);
             setTimeout(初期化手書きパッド, 100);
@@ -447,16 +449,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- イベントリスナー設定 ---
-    ルーム作成ボタン.onclick = サーバーを起動する;
-    director参加ボタン.onclick = () => 参加する('director', IP入力欄.value.trim());
-    personality参加ボタン.onclick = () => 参加する('personality', IP入力欄.value.trim());
-    手動接続ボタン.onclick = () => {
-        if (!自分の役割) {
-            alert('まず役割を選択してください。');
-            return;
-        }
-        参加する(自分の役割, IP入力欄.value.trim());
-    };
+    サーバー起動ボタン.onclick = サーバーを起動する;
+    クライアントとして参加ボタン.onclick = クライアントとして参加する準備;
+    director参加ボタン.onclick = () => 参加する('director');
+    personality参加ボタン.onclick = () => 参加する('personality');
+
     番組開始ボタン.onclick = 番組を開始する;
     更新履歴ボタン.onclick = () => {
         更新履歴リスト.innerHTML = '';
