@@ -26,13 +26,21 @@
 
         <main>
             <div id="home-screen">
-                <h2>役割を選択してください</h2>
-                <div class="button-group">
-                    <button id="create-room-btn"><i class="fas fa-user-tie"></i> 部屋を作る (ディレクター)</button>
+                <h2 id="home-title">役割を選択してください</h2>
+
+                <div id="electron-home" class="button-group">
+                    <button id="create-room-btn"><i class="fas fa-user-tie"></i> サーバーを起動 (ディレクター)</button>
                 </div>
-                <div class="join-room-container">
-                    <input type="text" id="room-id-input" placeholder="ディレクターのIPアドレスを入力">
-                    <button id="join-room-btn"><i class="fas fa-microphone-alt"></i> 部屋に入る (パーソナリティ)</button>
+
+                <div id="browser-home" class="hidden">
+                    <div class="button-group">
+                        <button id="join-director-btn"><i class="fas fa-user-tie"></i> ディレクターとして参加</button>
+                        <button id="join-personality-btn"><i class="fas fa-microphone-alt"></i> パーソナリティとして参加</button>
+                    </div>
+                    <div class="join-room-container">
+                        <input type="text" id="ip-input" placeholder="サーバーPCのIPアドレスを入力">
+                        <button id="manual-join-btn">手動で接続</button>
+                    </div>
                 </div>
             </div>
 
