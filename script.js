@@ -76,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { version: "Ver.1.0", note: "オフライン版として初回リリース。ウェブ版の全機能に加え、IPアドレス・QRコードによる簡単接続、双方向通信などを実装。" },
     ];
 
-    // --- アプリの状態管理 ---
     let socket;
     let 自分の役割 = null;
     let animationFrameId = null;
@@ -86,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let プリセットメッセージリスト = [];
     let programLog = [];
     let currentProgramState = null;
-
     const isElectron = !!window.electronAPI;
 
     if (isElectron) {
@@ -99,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- ヘルパー関数 ---
     function showCustomPrompt(title) {
         return new Promise((resolve) => {
             プロンプトタイトル.textContent = title;
@@ -158,7 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return `[${[hours, minutes, seconds].map(v => v.toString().padStart(2, '0')).join(':')}]`;
     }
 
-    // --- WebSocket通信機能 ---
     function connectToServer(ipAddress) {
         socket = new WebSocket('ws://' + ipAddress + ':8080');
         socket.onopen = () => {
@@ -192,7 +188,6 @@ document.addEventListener('DOMContentLoaded', () => {
             currentProgramState = data.payload;
             const state = currentProgramState;
             if (!state) return;
-
             if (自分の役割 === 'director') {
                 画面を表示する(ディレクター画面);
                 if (state.programStatus === 'running') {
@@ -205,7 +200,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 画面を表示する(パーソナリティ画面);
             }
-
             if (prevState && state.currentItemIndex !== prevState.currentItemIndex) {
                 const newCue = state.cueSheet[state.currentItemIndex];
                 let totalElapsedMs = state.totalElapsedTime;
@@ -214,10 +208,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 programLog.push(`${formatLogTime(totalElapsedMs)} - コーナー開始: ${newCue.title}`);
             }
-
             進行表を描画する(state.cueSheet, state.currentItemIndex);
             押し巻き時間を描画する(state.timeDifference);
-
             if (animationFrameId) cancelAnimationFrame(animationFrameId);
             if (state.programStatus === 'running') {
                 const loop = () => {
@@ -267,7 +259,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- メイン機能 ---
     function サーバーを起動する() {
         サーバー情報.classList.remove('hidden');
         electronホーム.classList.add('hidden');
@@ -312,13 +303,12 @@ document.addEventListener('DOMContentLoaded', () => {
         sendData('startProgram', 番組データ);
         番組設定モーダル.classList.add('hidden');
 
-        if (!isElectron) {
+        if (!isElectron || 自分の役割 === 'director') {
             画面を表示する(ディレクター画面);
             setTimeout(初期化手書きパッド, 100);
         }
     }
 
-    // --- UIヘルパー関数 ---
     function getTemplates() { return JSON.parse(localStorage.getItem('timeqCueTemplates') || '{}'); }
     function saveTemplates(templates) { localStorage.setItem('timeqCueTemplates', JSON.stringify(templates)); }
     function テンプレートリストを更新() {
@@ -364,6 +354,10 @@ document.addEventListener('DOMContentLoaded', () => {
         手書きキャンバス.getContext("2d").scale(ratio, ratio);
         手書きパッド = new SignaturePad(手書きキャンバス);
         手書きパッド.addEventListener("afterUpdateStroke", 手書き更新処理);
+        // ⭐ iPadのスワイプ問題対策
+        手書きキャンバス.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        }, { passive: false });
     }
     function 画面を表示する(表示する画面) {
         全ての画面.forEach(画面 => 画面.classList.add('hidden'));
@@ -454,7 +448,6 @@ document.addEventListener('DOMContentLoaded', () => {
     クライアントとして参加ボタン.onclick = クライアントとして参加する準備;
     director参加ボタン.onclick = () => 参加する('director');
     personality参加ボタン.onclick = () => 参加する('personality');
-
     番組開始ボタン.onclick = 番組を開始する;
     更新履歴ボタン.onclick = () => {
         更新履歴リスト.innerHTML = '';

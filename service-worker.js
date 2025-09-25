@@ -1,4 +1,4 @@
-const CACHE_NAME = 'time-q-cache-v2'; // バージョンを上げておく
+const CACHE_NAME = 'time-q-cache-v1';
 const urlsToCache = [
     '/',
     '/index.html',
@@ -32,7 +32,6 @@ self.addEventListener('fetch', (event) => {
     );
 });
 
-// 古いキャッシュを削除する処理を追加
 self.addEventListener('activate', (event) => {
     const cacheWhitelist = [CACHE_NAME];
     event.waitUntil(
