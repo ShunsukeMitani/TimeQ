@@ -1,6 +1,7 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
-// main.jsからの'connection-info'というメッセージを受け取るための橋渡しを設定
 contextBridge.exposeInMainWorld('electronAPI', {
-    onConnectionInfo: (callback) => ipcRenderer.on('connection-info', (_event, value) => callback(value))
+    onConnectionInfo: (callback) => ipcRenderer.on('connection-info', (_event, value) => callback(value)),
+    // 変更点: main.jsに準備完了を通知する関数を追加
+    rendererReady: () => ipcRenderer.send('renderer-ready')
 });

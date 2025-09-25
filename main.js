@@ -1,4 +1,5 @@
-const { app, BrowserWindow } = require('electron');
+// 変更点: ipcMain を追加
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const os = require('os');
 const { WebSocketServer } = require('ws');
@@ -42,7 +43,9 @@ const createWindow = () => {
   win.loadFile('index.html');
   win.removeMenu();
 
-  win.webContents.on('did-finish-load', () => {
+  // 変更点: 'did-finish-load'からQRコード生成処理を移動し、
+  // 'renderer-ready'イベントを待つように変更
+  ipcMain.on('renderer-ready', () => {
     const ip = getLocalIpAddress();
     const url = `http://${ip}:3000?directorIP=${ip}`;
     qrcode.toDataURL(url, (err, qrDataURL) => {
@@ -82,10 +85,8 @@ function broadcastToOthers(senderWs, message) {
 function recalculateTimeDifference() {
   if (!programState) return 0;
   let totalDifference = 0;
-  // 現在のアイテムの直前まで（＝完了したアイテム）をループ
   for (let i = 0; i < programState.currentItemIndex; i++) {
     const item = programState.cueSheet[i];
-    // actualDurationが記録されていれば、予定との差を計算して加算
     if (item.actualDuration !== null && typeof item.actualDuration !== 'undefined') {
       totalDifference += (item.actualDuration - item.duration);
     }
@@ -108,7 +109,6 @@ wss.on('connection', (ws) => {
 
     switch (data.type) {
       case 'startProgram':
-        // 各進行表アイテムに実際の経過時間を保存するプロパティを追加
         const cueSheetWithState = data.payload.cueSheet.map(item => ({ ...item, actualDuration: null }));
         programState = { ...data.payload, cueSheet: cueSheetWithState, currentItemIndex: 0, programStatus: 'ready', totalElapsedTime: 0, lastStartTime: 0, currentItemStartTime: 0, lastPauseTime: 0, timeDifference: 0 };
         break;
@@ -120,7 +120,6 @@ wss.on('connection', (ws) => {
           programState.totalElapsedTime += programState.lastPauseTime - programState.lastStartTime;
         } else {
           const now = Date.now();
-          // 一時停止からの再開の場合、停止していた時間をコーナー開始時間に加算する
           if (programState.lastPauseTime > 0) {
             const pauseDuration = now - programState.lastPauseTime;
             if (programState.currentItemStartTime > 0) {
@@ -129,7 +128,6 @@ wss.on('connection', (ws) => {
           }
           programState.programStatus = 'running';
           programState.lastStartTime = now;
-          // 最初のコーナーの開始時間を記録
           if (programState.currentItemIndex === 0 && programState.currentItemStartTime === 0) {
             programState.currentItemStartTime = now;
           }
@@ -139,33 +137,22 @@ wss.on('connection', (ws) => {
       case 'nextItem':
         if (programState.currentItemIndex < programState.cueSheet.length - 1) {
           const finishedItem = programState.cueSheet[programState.currentItemIndex];
-
-          // 完了したコーナーの実際の経過時間を計算・保存
           if (programState.programStatus === 'running' && programState.currentItemStartTime > 0) {
             const actualDuration = (Date.now() - programState.currentItemStartTime) / 1000;
             finishedItem.actualDuration = actualDuration;
           }
-
           programState.currentItemIndex++;
           programState.currentItemStartTime = Date.now();
-
-          // 時間差を再計算
           programState.timeDifference = recalculateTimeDifference();
         }
         break;
 
       case 'prevItem':
         if (programState.currentItemIndex > 0) {
-          // 戻る先のアイテムの実際の経過時間をリセット
           const currentItem = programState.cueSheet[programState.currentItemIndex];
           currentItem.actualDuration = null;
-
           programState.currentItemIndex--;
-
-          // 戻ったので、新しい現在のアイテムの開始時間をリセット
           programState.currentItemStartTime = Date.now();
-
-          // 時間差を再計算
           programState.timeDifference = recalculateTimeDifference();
         }
         break;

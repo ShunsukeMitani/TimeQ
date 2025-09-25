@@ -1,14 +1,21 @@
 /* 基本スタイル */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    /* ページ全体のスクロールを無効化 */
+}
+
 body {
     font-family: 'Helvetica Neue', 'Arial', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif;
     background-color: #f0f4f8;
     color: #333;
-    margin: 0;
     padding: 20px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 .container {
@@ -19,6 +26,11 @@ body {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     padding: 30px;
     text-align: center;
+    /* ★★★★★ 修正点：ここから ★★★★★ */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    /* ★★★★★ 修正ここまで ★★★★★ */
 }
 
 header {
@@ -28,7 +40,19 @@ header {
     margin-bottom: 20px;
     border-bottom: 2px solid #e0e0e0;
     padding-bottom: 15px;
+    flex-shrink: 0;
+    /* ヘッダーが縮まないようにする */
 }
+
+/* ★★★★★ 修正点：メインコンテンツエリアが残りの高さを埋めるように設定 ★★★★★ */
+#home-screen,
+#director-screen,
+#personality-screen {
+    flex-grow: 1;
+    min-height: 0;
+    /* flexアイテムの縮小を許可 */
+}
+
 
 h1 {
     color: #2c3e50;
@@ -133,15 +157,25 @@ button:disabled {
     display: flex;
     gap: 30px;
     text-align: left;
+    height: 100%;
+    /* 親要素の高さを引き継ぐ */
 }
 
 .left-panel {
     flex: 1;
+    /* ★★★★★ 修正点 ★★★★★ */
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
 }
 
 .right-panel {
     flex: 1;
     position: relative;
+    /* ★★★★★ 修正点 ★★★★★ */
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
 }
 
 /* タイマー */
@@ -221,7 +255,9 @@ button:disabled {
 .cue-sheet-area {
     border: 1px solid #ddd;
     border-radius: 8px;
-    height: 500px;
+    /* ★★★★★ 修正点：高さを固定値から可変に変更 ★★★★★ */
+    flex-grow: 1;
+    min-height: 0;
     overflow-y: auto;
 }
 
@@ -280,11 +316,16 @@ button:disabled {
     border-radius: 8px;
     touch-action: none;
     user-select: none;
+    /* ★★★★★ 修正点：高さを可変に変更 ★★★★★ */
+    flex-grow: 1;
+    min-height: 0;
+    display: flex;
 }
 
 #handwriting-canvas {
     width: 100%;
-    height: 280px;
+    height: 100%;
+    /* 親要素の高さに追従 */
     cursor: crosshair;
     display: block;
 }
@@ -659,8 +700,8 @@ button:disabled {
 /* ===== レスポンシブ対応 (ここから) ===== */
 /* =================================== */
 
-/* タブレットサイズ (iPad縦向きなど) */
-@media (max-width: 768px) {
+/* タブレットサイズ (iPad縦向き・横向きなど) */
+@media (max-width: 1024px) {
     .main-layout {
         flex-direction: column;
     }
@@ -676,6 +717,25 @@ button:disabled {
 
     h1 {
         font-size: 24px;
+    }
+
+    .timer-display-area {
+        padding: 10px 15px;
+    }
+
+    .timer-clock {
+        font-size: 32px;
+    }
+
+    .segment-timer-clock,
+    .time-diff-clock {
+        font-size: 26px;
+    }
+
+    .segment-timer-area,
+    .time-diff-area {
+        margin-top: 5px;
+        padding-top: 5px;
     }
 }
 
@@ -699,7 +759,9 @@ button:disabled {
 
     .cue-sheet-area {
         height: 35vh;
-        /* 画面の高さの35%に調整 */
+        /* スマートフォンでは高さをvh指定に戻す */
+        flex-grow: 0;
+        /* growを無効化 */
     }
 
     #handwriting-canvas {
@@ -727,7 +789,6 @@ button:disabled {
     }
 }
 
-/* ⭐ ここから下をすべて追加 */
 #header-controls {
     display: flex;
     align-items: center;

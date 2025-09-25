@@ -18,8 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const サーバー情報 = document.getElementById('server-info');
     const サーバーQRコード画像 = document.getElementById('server-qr-code-image');
     const サーバーURLテキスト = document.getElementById('server-url-text');
-    const ルーム情報表示 = document.getElementById('room-info-display');
-    const ルームIDテキスト = document.getElementById('room-id-text');
     const 閉じるボタン群 = document.querySelectorAll('.close-btn');
     const 更新履歴ボタン = document.getElementById('history-log-btn');
     const 更新履歴リスト = document.getElementById('history-log-list');
@@ -33,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const セグメントタイマーラベル = document.getElementById('segment-timer-label');
     const 時間差表示 = document.getElementById('time-diff');
     const playPauseBtn = document.getElementById('play-pause-btn');
-    const 手書きラッパー = document.getElementById('handwriting-wrapper');
     const 手書きキャンバス = document.getElementById('handwriting-canvas');
     const キャンバス消去ボタン = document.getElementById('clear-canvas-btn');
     const 番組終了ボタン = document.getElementById('end-program-btn');
@@ -71,12 +68,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const テーマアイコン = document.querySelector('#theme-toggle-btn i');
 
     const 更新履歴 = [
+        { version: "Ver.1.3", note: "PWAのインストール機能に代わり、「ホーム画面に追加」による全画面表示機能を強化。サーバー起動時のQRコード表示に関する不具合を修正。" },
         { version: "Ver.1.2.3", note: "ディレクター画面の初回表示時にプリセットメッセージが読み込まれない問題を修正。" },
         { version: "Ver.1.2.2", note: "手書きキャンバスで、書き終えた後にスワイプすると描画が消える問題を修正。" },
         { version: "Ver.1.2.1", note: "進行表の次へ/前へボタン操作時に押し巻き時間がずれるバグを修正。一時停止時の時間計算精度を向上。" },
         { version: "Ver.1.2", note: "PC/Macアプリでサーバー/クライアントの役割を選択可能に。ダークモードを追加。押し巻き時間の計算バグを修正。" },
         { version: "Ver.1.1", note: "iPadをディレクター端末として使用する機能を追加。" },
         { version: "Ver.1.0", note: "オフライン版として初回リリース。ウェブ版の全機能に加え、IPアドレス・QRコードによる簡単接続、双方向通信などを実装。" },
+        { version: "Ver.0.9", note: "進行表の時間入力を「分:秒」形式に対応。" },
+        { version: "Ver.0.8", note: "番組全体の時間の「押し/巻き」を自動計算して表示する機能を追加。" },
+        { version: "Ver.0.7", note: "進行表にタイプ（talk, music, cmなど）を指定し、色分け表示する機能を追加。" },
+        { version: "Ver.0.6", note: "進行表をテンプレートとして保存・読込・削除できる機能を追加。" },
+        { version: "Ver.0.5", note: "パーソナリティからの『了解』ボタンを追加し、双方向のコミュニケーションを可能に。" },
+        { version: "Ver.0.4", note: "コーナーごとの残り時間タイマー機能を追加。" },
+        { version: "Ver.0.3", note: "プリセットメッセージをユーザーが自由に変更し、ブラウザに保存できる機能を追加。" },
+        { version: "Ver.0.2", note: "タイムキーパー機能を追加。" },
+        { version: "Ver.0.1", note: "基本機能をリリース。" }
     ];
 
     let socket;
@@ -93,10 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isElectron) {
         window.electronAPI.onConnectionInfo((info) => {
             myIpAddress = info.ip;
-            サーバーURLテキスト.textContent = `http://${myIpAddress}:3000`;
+            サーバーURLテキスト.textContent = info.url;
             サーバーQRコード画像.src = info.qr;
-            ルーム情報表示.classList.remove('hidden');
-            ルームIDテキスト.textContent = `IP: ${myIpAddress}`;
         });
     }
 
@@ -308,7 +313,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!isElectron || 自分の役割 === 'director') {
             画面を表示する(ディレクター画面);
-            // ⭐ [修正] ここでプリセットボタンの描画処理を呼び出す
             プリセットボタンを描画する();
             setTimeout(初期化手書きパッド, 100);
         }
@@ -583,6 +587,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const 全画面表示ボタン = document.getElementById('fullscreen-btn');
+    if (全画面表示ボタン) {
+        全画面表示ボタン.onclick = () => {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else {
+                document.documentElement.requestFullscreen().catch(err => {
+                    alert(`全画面表示にできませんでした: ${err.message}`);
+                });
+            }
+        };
+    }
+
     // --- 初期化 ---
     function 初期化() {
         プリセットメッセージを読み込む();
@@ -597,6 +614,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (isElectron) {
             electronホーム.classList.remove('hidden');
+            window.electronAPI.rendererReady();
         } else {
             browserホーム.classList.remove('hidden');
             const urlParams = new URLSearchParams(window.location.search);
