@@ -2,7 +2,7 @@
     "name": "Time Q (Offline App)",
     "short_name": "Time Q",
     "start_url": "/index.html?source=pwa",
-    "id": "/index.html?source=pwa",
+    "scope": "/",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#2c3e50",
