@@ -1,25 +1,27 @@
 {
-    "name": "Time Q",
+    "name": "Time Q (Offline App)",
     "short_name": "Time Q",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#2c3e50",
-    "description": "Offline Time Keeper App",
+    "description": "Offline Time Keeper App for broadcasting.",
     "icons": [
         {
             "src": "icon-192x192.png",
             "sizes": "192x192",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any"
         },
         {
             "src": "icon-512x512.png",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any"
         },
         {
-            "src": "icon-maskable.png",
-            "sizes": "192x192",
+            "src": "icon-maskable-512x512.png",
+            "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
         }
