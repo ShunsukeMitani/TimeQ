@@ -366,9 +366,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         手書きパッド.addEventListener("afterUpdateStroke", 手書き更新処理);
 
-        手書きキャンバス.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-        }, { passive: false });
+        // ★★★★★ 修正点：以下の3行を削除 ★★★★★
+        // 手書きキャンバス.addEventListener('touchmove', (e) => {
+        //     e.preventDefault();
+        // }, { passive: false });
     }
     function 画面を表示する(表示する画面) {
         全ての画面.forEach(画面 => 画面.classList.add('hidden'));
@@ -599,45 +600,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
     }
-
-    // ★★★★★ 全画面表示のスワイプ解除機能 (ここから) ★★★★★
-    let touchStartY = 0;
-    let touchStartX = 0;
-
-    const handleTouchStart = (e) => {
-        // スワイプの開始位置を記録
-        touchStartY = e.touches[0].clientY;
-        touchStartX = e.touches[0].clientX;
-    };
-
-    const handleTouchEnd = (e) => {
-        // 全画面表示でない場合は何もしない
-        if (!document.fullscreenElement) return;
-
-        const touchEndY = e.changedTouches[0].clientY;
-        const touchEndX = e.changedTouches[0].clientX;
-
-        const deltaY = touchEndY - touchStartY;
-        const deltaX = touchEndX - touchStartX;
-
-        // 条件: 下に100px以上スワイプし、かつ横の動きが少ない場合
-        if (deltaY > 100 && Math.abs(deltaX) < 75) {
-            document.exitFullscreen();
-        }
-    };
-
-    document.addEventListener('fullscreenchange', () => {
-        if (document.fullscreenElement) {
-            // 全画面になったらスワイプの監視を開始
-            document.addEventListener('touchstart', handleTouchStart, { passive: true });
-            document.addEventListener('touchend', handleTouchEnd, { passive: true });
-        } else {
-            // 全画面が解除されたら監視を終了
-            document.removeEventListener('touchstart', handleTouchStart);
-            document.removeEventListener('touchend', handleTouchEnd);
-        }
-    });
-    // ★★★★★ 全画面表示のスワイプ解除機能 (ここまで) ★★★★★
 
     // --- 初期化 ---
     function 初期化() {
