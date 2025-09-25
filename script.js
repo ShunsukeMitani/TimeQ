@@ -67,9 +67,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const プロンプト入力欄 = document.getElementById('prompt-input');
     const プロンプトOKボタン = document.getElementById('prompt-ok-btn');
     const プロンプトキャンセルボタン = document.getElementById('prompt-cancel-btn');
+    const テーマ切替ボタン = document.getElementById('theme-toggle-btn');
+    const テーマアイコン = document.querySelector('#theme-toggle-btn i');
 
     const 更新履歴 = [
-        { version: "Ver.1.1", note: "PC/Macアプリをサーバー専用機とクライアントの両方で使えるように修正。押し巻き時間の計算バグを修正。" },
+        { version: "Ver.1.2", note: "PC/Macアプリでサーバー/クライアントの役割を選択可能に。ダークモードを追加。押し巻き時間の計算バグを修正。" },
+        { version: "Ver.1.1", note: "iPadをディレクター端末として使用する機能を追加。" },
         { version: "Ver.1.0", note: "オフライン版として初回リリース。ウェブ版の全機能に加え、IPアドレス・QRコードによる簡単接続、双方向通信などを実装。" },
     ];
 
@@ -269,7 +272,6 @@ document.addEventListener('DOMContentLoaded', () => {
         サーバー情報.classList.remove('hidden');
         electronホーム.classList.add('hidden');
         ホームタイトル.textContent = "クライアントの接続を待っています";
-        // Electron自体がサーバーなので、クライアントからの接続を待つだけ
     }
 
     function クライアントとして参加する準備() {
@@ -310,7 +312,6 @@ document.addEventListener('DOMContentLoaded', () => {
         sendData('startProgram', 番組データ);
         番組設定モーダル.classList.add('hidden');
 
-        // ブラウザからディレクターとして参加した場合、手動で画面遷移
         if (!isElectron) {
             画面を表示する(ディレクター画面);
             setTimeout(初期化手書きパッド, 100);
@@ -559,14 +560,35 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     };
+
+    テーマ切替ボタン.onclick = () => {
+        document.body.classList.toggle('dark-theme');
+        if (document.body.classList.contains('dark-theme')) {
+            localStorage.setItem('theme', 'dark');
+            テーマアイコン.classList.remove('fa-moon');
+            テーマアイコン.classList.add('fa-sun');
+        } else {
+            localStorage.setItem('theme', 'light');
+            テーマアイコン.classList.remove('fa-sun');
+            テーマアイコン.classList.add('fa-moon');
+        }
+    };
+
     閉じるボタン群.forEach(btn => btn.onclick = () => btn.closest('.modal').classList.add('hidden'));
     window.onclick = (e) => { if (e.target.classList.contains('modal')) e.target.classList.add('hidden'); };
+    window.onresize = () => { if (自分の役割 === 'director' && 手書きパッド) 初期化手書きパッド(); };
 
     // --- 初期化 ---
     function 初期化() {
         プリセットメッセージを読み込む();
         テンプレートリストを更新();
         画面を表示する(ホーム画面);
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+            テーマアイコン.classList.remove('fa-moon');
+            テーマアイコン.classList.add('fa-sun');
+        }
 
         if (isElectron) {
             electronホーム.classList.remove('hidden');

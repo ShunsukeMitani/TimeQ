@@ -726,3 +726,90 @@ button:disabled {
         box-sizing: border-box;
     }
 }
+
+/* ⭐ ここから下をすべて追加 */
+#header-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* =================================== */
+/* ===== ダークモード対応 (ここから) ===== */
+/* =================================== */
+body.dark-theme {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+}
+
+body.dark-theme .container {
+    background-color: #2a2a2a;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-theme header {
+    border-bottom-color: #444;
+}
+
+body.dark-theme h1,
+body.dark-theme h2 {
+    color: #f0f0f0;
+}
+
+body.dark-theme input,
+body.dark-theme textarea,
+body.dark-theme select {
+    background-color: #333;
+    border-color: #555;
+    color: #e0e0e0;
+}
+
+body.dark-theme .timer-display-area {
+    background-color: #111;
+}
+
+body.dark-theme .cue-sheet-area,
+body.dark-theme #instruction-display-area {
+    border-color: #444;
+    background-color: #222;
+}
+
+body.dark-theme .cue-item {
+    border-bottom-color: #444;
+}
+
+body.dark-theme .cue-item.type-talk {
+    background-color: #2c3e50;
+}
+
+body.dark-theme .cue-item.type-music {
+    background-color: #2e7d32;
+}
+
+body.dark-theme .cue-item.type-cm {
+    background-color: #4e342e;
+}
+
+body.dark-theme .cue-item.current {
+    background-color: #f9a825 !important;
+    color: #111;
+}
+
+body.dark-theme .modal-content,
+body.dark-theme .prompt-content {
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+body.dark-theme #connection-area {
+    background-color: #222;
+    border-color: #444;
+}
+
+body.dark-theme #connection-area p {
+    color: #ccc;
+}
+
+body.dark-theme #connection-url-text {
+    background-color: #444;
+}

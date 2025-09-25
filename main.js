@@ -42,36 +42,23 @@ const createWindow = () => {
   win.loadFile('index.html');
   win.removeMenu();
 
-  // win.webContents.openDevTools();
-
   win.webContents.on('did-finish-load', () => {
     const ip = getLocalIpAddress();
     const url = `http://${ip}:3000?directorIP=${ip}`;
-    console.log(`Webサーバーが http://${ip}:3000 で起動しました。`);
-
     qrcode.toDataURL(url, (err, qrDataURL) => {
-      if (err) {
-        console.error('QRコードの生成に失敗しました', err);
-        return;
-      }
+      if (err) return;
       win.webContents.send('connection-info', { ip: ip, qr: qrDataURL, url: url });
     });
   });
 };
 
-app.whenReady().then(() => {
-  createWindow();
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  });
-});
+app.whenReady().then(createWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
 
 const wss = new WebSocketServer({ port: 8080 });
-console.log('WebSocketサーバーがポート8080で起動しました。');
 
 function broadcastState() {
   if (!programState) return;
@@ -93,32 +80,20 @@ function broadcastToOthers(senderWs, message) {
 }
 
 wss.on('connection', (ws) => {
-  console.log('クライアントが接続しました。');
   if (programState) {
     ws.send(JSON.stringify({ type: 'stateUpdate', payload: programState }));
   }
 
   ws.on('message', (message) => {
     const data = JSON.parse(message.toString());
-
     if (data.type === 'identify' && data.payload.role === 'director') {
       directorWs = ws;
     }
-
     if (!programState && data.type !== 'startProgram') return;
 
     switch (data.type) {
       case 'startProgram':
-        programState = {
-          ...data.payload,
-          currentItemIndex: 0,
-          programStatus: 'ready',
-          totalElapsedTime: 0,
-          lastStartTime: 0,
-          currentItemStartTime: 0,
-          lastPauseTime: 0,
-          timeDifference: 0,
-        };
+        programState = { ...data.payload, currentItemIndex: 0, programStatus: 'ready', totalElapsedTime: 0, lastStartTime: 0, currentItemStartTime: 0, lastPauseTime: 0, timeDifference: 0 };
         break;
 
       case 'togglePlayPause':
@@ -138,7 +113,8 @@ wss.on('connection', (ws) => {
       case 'nextItem':
         if (programState.currentItemIndex < programState.cueSheet.length - 1) {
           const prevItem = programState.cueSheet[programState.currentItemIndex];
-          if (programState.programStatus === 'running') {
+          // ⭐ 修正: タイマー実行中のみ差分を計算する
+          if (programState.programStatus === 'running' && programState.currentItemStartTime > 0) {
             const actualDuration = (Date.now() - programState.currentItemStartTime) / 1000;
             const segmentDifference = actualDuration - prevItem.duration;
             programState.timeDifference += segmentDifference;
@@ -158,17 +134,14 @@ wss.on('connection', (ws) => {
       case 'handwritingUpdate':
         broadcastToOthers(ws, { type: 'handwritingUpdate', payload: data.payload });
         return;
-
       case 'presetMessage':
         broadcastToOthers(ws, { type: 'presetMessage', payload: data.payload });
         return;
-
       case 'acknowledgement':
         if (directorWs && directorWs.readyState === directorWs.OPEN) {
           directorWs.send(JSON.stringify({ type: 'acknowledged' }));
         }
         return;
-
       case 'endProgram':
         programState = null;
         directorWs = null;
@@ -179,19 +152,13 @@ wss.on('connection', (ws) => {
         });
         return;
     }
-
     broadcastState();
   });
-
-  ws.on('close', () => console.log('クライアントとの接続が切れました。'));
-  ws.on('error', (error) => console.error('エラー:', error));
 });
 
 const httpApp = express();
 const PORT = 3000;
-
 httpApp.use(express.static(path.join(__dirname)));
-
 httpApp.listen(PORT, () => {
   console.log(`Webサーバーが http://[あなたのIPアドレス]:${PORT} で起動しました。`);
 });
