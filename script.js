@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const テーマアイコン = document.querySelector('#theme-toggle-btn i');
 
     const 更新履歴 = [
+        { version: "Ver.1.2.3", note: "ディレクター画面の初回表示時にプリセットメッセージが読み込まれない問題を修正。" },
         { version: "Ver.1.2.2", note: "手書きキャンバスで、書き終えた後にスワイプすると描画が消える問題を修正。" },
         { version: "Ver.1.2.1", note: "進行表の次へ/前へボタン操作時に押し巻き時間がずれるバグを修正。一時停止時の時間計算精度を向上。" },
         { version: "Ver.1.2", note: "PC/Macアプリでサーバー/クライアントの役割を選択可能に。ダークモードを追加。押し巻き時間の計算バグを修正。" },
@@ -307,6 +308,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!isElectron || 自分の役割 === 'director') {
             画面を表示する(ディレクター画面);
+            // ⭐ [修正] ここでプリセットボタンの描画処理を呼び出す
+            プリセットボタンを描画する();
             setTimeout(初期化手書きパッド, 100);
         }
     }
@@ -355,13 +358,10 @@ document.addEventListener('DOMContentLoaded', () => {
         手書きキャンバス.height = 手書きキャンバス.offsetHeight * ratio;
         手書きキャンバス.getContext("2d").scale(ratio, ratio);
 
-        // signature_padライブラリのインスタンスを生成する前に、
-        // 古いインスタンスがあればイベントリスナーを解除するなどのクリーンアップが望ましいが、
-        // 今回のケースでは毎回新しいインスタンスを生成するだけでも機能する
         手書きパッド = new SignaturePad(手書きキャンバス);
 
         手書きパッド.addEventListener("afterUpdateStroke", 手書き更新処理);
-        // iPadのスワイプ問題対策: touchmoveイベントのデフォルト動作（スクロールなど）を無効化
+
         手書きキャンバス.addEventListener('touchmove', (e) => {
             e.preventDefault();
         }, { passive: false });
@@ -392,7 +392,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentCueItem = state.cueSheet[state.currentItemIndex];
         let segmentElapsedSeconds = 0;
         if (state.currentItemStartTime > 0) {
-            // 経過時間は、純粋な再生時間（現在時刻 - ポーズ時間を考慮した開始時刻）で計算
             const runningTime = Date.now() - state.currentItemStartTime;
             segmentElapsedSeconds = (state.programStatus === 'running') ? runningTime / 1000 : (state.lastPauseTime - state.currentItemStartTime) / 1000;
         }
@@ -576,22 +575,13 @@ document.addEventListener('DOMContentLoaded', () => {
     閉じるボタン群.forEach(btn => btn.onclick = () => btn.closest('.modal').classList.add('hidden'));
     window.onclick = (e) => { if (e.target.classList.contains('modal')) e.target.classList.add('hidden'); };
 
-    // ⭐ ここからが修正箇所
-    // 画面サイズが変更されたときの処理
     window.onresize = () => {
-        // ディレクター画面で、手書きパッドが使われている場合のみ処理を実行
         if (自分の役割 === 'director' && 手書きパッド) {
-            // 現在の描画内容を一時的に保存
             const data = 手書きパッド.toData();
-
-            // キャンバスを再初期化（サイズ調整）
             初期化手書きパッド();
-
-            // 保存しておいた描画内容を復元
             手書きパッド.fromData(data);
         }
     };
-    // ⭐ ここまでが修正箇所
 
     // --- 初期化 ---
     function 初期化() {
