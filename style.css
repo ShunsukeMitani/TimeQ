@@ -11,7 +11,7 @@ body {
     font-family: 'Helvetica Neue', 'Arial', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif;
     background-color: #f0f4f8;
     color: #333;
-    padding: 20px;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -20,17 +20,16 @@ body {
 
 .container {
     width: 100%;
-    max-width: 1200px;
+    max-width: none;
+    padding: 20px;
     background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    padding: 30px;
+    border-radius: 0;
+    box-shadow: none;
     text-align: center;
-    /* ★★★★★ 修正点：ここから ★★★★★ */
     height: 100%;
     display: flex;
     flex-direction: column;
-    /* ★★★★★ 修正ここまで ★★★★★ */
+    box-sizing: border-box;
 }
 
 header {
@@ -41,16 +40,13 @@ header {
     border-bottom: 2px solid #e0e0e0;
     padding-bottom: 15px;
     flex-shrink: 0;
-    /* ヘッダーが縮まないようにする */
 }
 
-/* ★★★★★ 修正点：メインコンテンツエリアが残りの高さを埋めるように設定 ★★★★★ */
 #home-screen,
 #director-screen,
 #personality-screen {
     flex-grow: 1;
     min-height: 0;
-    /* flexアイテムの縮小を許可 */
 }
 
 
@@ -158,21 +154,18 @@ button:disabled {
     gap: 30px;
     text-align: left;
     height: 100%;
-    /* 親要素の高さを引き継ぐ */
 }
 
 .left-panel {
     flex: 1;
-    /* ★★★★★ 修正点 ★★★★★ */
     display: flex;
     flex-direction: column;
     min-width: 0;
 }
 
 .right-panel {
-    flex: 1;
+    flex: 1.5;
     position: relative;
-    /* ★★★★★ 修正点 ★★★★★ */
     display: flex;
     flex-direction: column;
     min-width: 0;
@@ -255,7 +248,6 @@ button:disabled {
 .cue-sheet-area {
     border: 1px solid #ddd;
     border-radius: 8px;
-    /* ★★★★★ 修正点：高さを固定値から可変に変更 ★★★★★ */
     flex-grow: 1;
     min-height: 0;
     overflow-y: auto;
@@ -316,7 +308,6 @@ button:disabled {
     border-radius: 8px;
     touch-action: none;
     user-select: none;
-    /* ★★★★★ 修正点：高さを可変に変更 ★★★★★ */
     flex-grow: 1;
     min-height: 0;
     display: flex;
@@ -325,7 +316,6 @@ button:disabled {
 #handwriting-canvas {
     width: 100%;
     height: 100%;
-    /* 親要素の高さに追従 */
     cursor: crosshair;
     display: block;
 }
@@ -507,6 +497,9 @@ button:disabled {
     flex-wrap: wrap;
     gap: 10px;
     margin-top: 10px;
+    max-height: 160px;
+    overflow-y: auto;
+    padding-right: 5px;
 }
 
 .preset-btn {
@@ -591,7 +584,7 @@ button:disabled {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 .template-controls {
@@ -695,6 +688,49 @@ button:disabled {
     user-select: all;
 }
 
+.right-panel-footer {
+    margin-top: auto;
+    padding-top: 15px;
+}
+
+.right-panel-footer #end-program-btn {
+    width: 100%;
+}
+
+/* ショートカット設定モーダル */
+.shortcut-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.shortcut-label {
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 15px;
+}
+
+.shortcut-key-input {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px 12px;
+    min-width: 120px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    font-weight: bold;
+    color: #333;
+}
+
+.shortcut-key-input.recording {
+    background-color: #eaf5ff;
+    color: #2980b9;
+    border-color: #3498db;
+}
 
 /* =================================== */
 /* ===== レスポンシブ対応 (ここから) ===== */
@@ -759,9 +795,7 @@ button:disabled {
 
     .cue-sheet-area {
         height: 35vh;
-        /* スマートフォンでは高さをvh指定に戻す */
         flex-grow: 0;
-        /* growを無効化 */
     }
 
     #handwriting-canvas {
@@ -873,4 +907,16 @@ body.dark-theme #connection-area p {
 
 body.dark-theme #connection-url-text {
     background-color: #444;
+}
+
+body.dark-theme .shortcut-key-input {
+    background-color: #444;
+    border-color: #666;
+    color: #f0f0f0;
+}
+
+body.dark-theme .shortcut-key-input.recording {
+    background-color: #2c3e50;
+    color: #eaf5ff;
+    border-color: #3498db;
 }

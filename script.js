@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const 番組設定モーダル = document.getElementById('program-settings-modal');
     const 更新履歴モーダル = document.getElementById('history-log-modal');
     const プリセット設定モーダル = document.getElementById('preset-settings-modal');
+    const ショートカット設定モーダル = document.getElementById('shortcut-settings-modal');
     const ホームタイトル = document.getElementById('home-title');
     const electronホーム = document.getElementById('electron-home');
     const browserホーム = document.getElementById('browser-home');
@@ -21,6 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const 閉じるボタン群 = document.querySelectorAll('.close-btn');
     const 更新履歴ボタン = document.getElementById('history-log-btn');
     const 更新履歴リスト = document.getElementById('history-log-list');
+    const ショートカット設定ボタン = document.getElementById('shortcut-settings-btn');
+    const ショートカットリストコンテナ = document.getElementById('shortcut-list-container');
+    const ショートカット保存ボタン = document.getElementById('save-shortcuts-btn');
     const ディレクター進行表 = document.getElementById('director-cue-sheet');
     const 前へボタン = document.getElementById('prev-item-btn');
     const 次へボタン = document.getElementById('next-item-btn');
@@ -68,6 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const テーマアイコン = document.querySelector('#theme-toggle-btn i');
 
     const 更新履歴 = [
+        { version: "Ver.1.5", note: "タイマーの開始/停止、各プリセットメッセージにショートカットキーを割り当てられる機能を追加。" },
+        { version: "Ver.1.4", note: "PC版のレイアウトを大幅に刷新。iPadでの表示崩れを全面的に解消し、スクロールせずに全要素が表示されるように改善。手書きキャンバスで線が二重になる不具合を修正。PWA機能を廃止。" },
         { version: "Ver.1.3", note: "PWAのインストール機能に代わり、「ホーム画面に追加」による全画面表示機能を強化。サーバー起動時のQRコード表示に関する不具合を修正。" },
         { version: "Ver.1.2.3", note: "ディレクター画面の初回表示時にプリセットメッセージが読み込まれない問題を修正。" },
         { version: "Ver.1.2.2", note: "手書きキャンバスで、書き終えた後にスワイプすると描画が消える問題を修正。" },
@@ -95,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let プリセットメッセージリスト = [];
     let programLog = [];
     let currentProgramState = null;
+    let shortcuts = {};
     const isElectron = !!window.electronAPI;
 
     if (isElectron) {
@@ -111,14 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
             プロンプト入力欄.value = '';
             カスタムプロンプトモーダル.classList.remove('hidden');
             プロンプト入力欄.focus();
-            const onOk = () => {
-                cleanup();
-                resolve(プロンプト入力欄.value);
-            };
-            const onCancel = () => {
-                cleanup();
-                resolve(null);
-            };
+            const onOk = () => { cleanup(); resolve(プロンプト入力欄.value); };
+            const onCancel = () => { cleanup(); resolve(null); };
             const onKeyDown = (e) => {
                 if (e.key === 'Enter') onOk();
                 if (e.key === 'Escape') onCancel();
@@ -355,22 +356,17 @@ document.addEventListener('DOMContentLoaded', () => {
         プリセットボタンを描画する();
         プリセット設定モーダル.classList.add('hidden');
     }
+
     function 初期化手書きパッド() {
         if (!手書きキャンバス) return;
         const ratio = Math.max(window.devicePixelRatio || 1, 1);
         手書きキャンバス.width = 手書きキャンバス.offsetWidth * ratio;
         手書きキャンバス.height = 手書きキャンバス.offsetHeight * ratio;
         手書きキャンバス.getContext("2d").scale(ratio, ratio);
-
         手書きパッド = new SignaturePad(手書きキャンバス);
-
         手書きパッド.addEventListener("afterUpdateStroke", 手書き更新処理);
-
-        // ★★★★★ 修正点：以下の3行を削除 ★★★★★
-        // 手書きキャンバス.addEventListener('touchmove', (e) => {
-        //     e.preventDefault();
-        // }, { passive: false });
     }
+
     function 画面を表示する(表示する画面) {
         全ての画面.forEach(画面 => 画面.classList.add('hidden'));
         if (表示する画面) 表示する画面.classList.remove('hidden');
@@ -453,6 +449,102 @@ document.addEventListener('DOMContentLoaded', () => {
         addCueRow('エンディング', '1', '0', 'talk');
     }
 
+    // --- ショートカットキー機能 ---
+    function loadShortcuts() {
+        shortcuts = JSON.parse(localStorage.getItem('timeqShortcuts') || '{}');
+    }
+    function saveShortcuts() {
+        const newShortcuts = {};
+        document.querySelectorAll('.shortcut-row').forEach(row => {
+            const action = row.dataset.action;
+            const keyInput = row.querySelector('.shortcut-key-input');
+            const key = keyInput.dataset.key;
+            if (action && key) {
+                newShortcuts[action] = key;
+            }
+        });
+        shortcuts = newShortcuts;
+        localStorage.setItem('timeqShortcuts', JSON.stringify(shortcuts));
+        alert('ショートカット設定を保存しました。');
+        ショートカット設定モーダル.classList.add('hidden');
+    }
+
+    function openShortcutSettingsModal() {
+        ショートカットリストコンテナ.innerHTML = '';
+
+        createShortcutRow('togglePlayPause', 'タイマー開始 / 停止');
+
+        プリセットメッセージリスト.forEach((msg, index) => {
+            createShortcutRow(`preset_${index}`, `プリセット: ${msg}`);
+        });
+
+        ショートカット設定モーダル.classList.remove('hidden');
+    }
+
+    function createShortcutRow(action, label) {
+        const row = document.createElement('div');
+        row.className = 'shortcut-row';
+        row.dataset.action = action;
+
+        const labelEl = document.createElement('div');
+        labelEl.className = 'shortcut-label';
+        labelEl.textContent = label;
+
+        const keyInputEl = document.createElement('div');
+        keyInputEl.className = 'shortcut-key-input';
+        keyInputEl.textContent = shortcuts[action] || '未設定';
+        keyInputEl.dataset.key = shortcuts[action] || '';
+
+        keyInputEl.addEventListener('click', () => listenForKey(keyInputEl));
+
+        row.appendChild(labelEl);
+        row.appendChild(keyInputEl);
+        ショートカットリストコンテナ.appendChild(row);
+    }
+
+    function listenForKey(targetElement) {
+        document.querySelectorAll('.shortcut-key-input.recording').forEach(el => {
+            el.classList.remove('recording');
+            el.textContent = el.dataset.key || '未設定';
+        });
+
+        targetElement.classList.add('recording');
+        targetElement.textContent = 'キーを押してください...';
+
+        const keydownHandler = (e) => {
+            e.preventDefault();
+            const keyName = e.code;
+            targetElement.textContent = keyName;
+            targetElement.dataset.key = keyName;
+            targetElement.classList.remove('recording');
+            window.removeEventListener('keydown', keydownHandler, { capture: true });
+        };
+
+        window.addEventListener('keydown', keydownHandler, { capture: true });
+    }
+
+    function handleGlobalKeyDown(e) {
+        const isTyping = ['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName);
+        const isModalOpen = !!document.querySelector('.modal:not(.hidden)');
+        if (isTyping || isModalOpen) return;
+
+        const action = Object.keys(shortcuts).find(act => shortcuts[act] === e.code);
+
+        if (action) {
+            e.preventDefault();
+            if (action === 'togglePlayPause') {
+                playPauseBtn.click();
+            } else if (action.startsWith('preset_')) {
+                const index = parseInt(action.split('_')[1], 10);
+                const presetButtons = プリセットボタンエリア.querySelectorAll('.preset-btn');
+                if (presetButtons[index]) {
+                    presetButtons[index].click();
+                }
+            }
+        }
+    }
+
+
     // --- イベントリスナー設定 ---
     サーバー起動ボタン.onclick = サーバーを起動する;
     クライアントとして参加ボタン.onclick = クライアントとして参加する準備;
@@ -468,6 +560,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         更新履歴モーダル.classList.remove('hidden');
     };
+    ショートカット設定ボタン.onclick = openShortcutSettingsModal;
+    ショートカット保存ボタン.onclick = saveShortcuts;
     行追加ボタン.onclick = () => addCueRow();
     playPauseBtn.onclick = () => sendData('togglePlayPause');
     次へボタン.onclick = () => sendData('nextItem');
@@ -489,9 +583,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sendData('presetMessage', { text: message });
         }
     });
-    了解ボタン.onclick = () => {
-        sendData('acknowledgement');
-    };
+    了解ボタン.onclick = () => { sendData('acknowledgement'); };
     テンプレート保存ボタン.onclick = async () => {
         const name = await showCustomPrompt('テンプレート名を入力してください');
         if (!name) return;
@@ -579,7 +671,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     閉じるボタン群.forEach(btn => btn.onclick = () => btn.closest('.modal').classList.add('hidden'));
     window.onclick = (e) => { if (e.target.classList.contains('modal')) e.target.classList.add('hidden'); };
-
     window.onresize = () => {
         if (自分の役割 === 'director' && 手書きパッド) {
             const data = 手書きパッド.toData();
@@ -587,7 +678,6 @@ document.addEventListener('DOMContentLoaded', () => {
             手書きパッド.fromData(data);
         }
     };
-
     const 全画面表示ボタン = document.getElementById('fullscreen-btn');
     if (全画面表示ボタン) {
         全画面表示ボタン.onclick = () => {
@@ -605,6 +695,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function 初期化() {
         プリセットメッセージを読み込む();
         テンプレートリストを更新();
+        loadShortcuts();
+        window.addEventListener('keydown', handleGlobalKeyDown);
         画面を表示する(ホーム画面);
 
         if (localStorage.getItem('theme') === 'dark') {
@@ -620,7 +712,6 @@ document.addEventListener('DOMContentLoaded', () => {
             browserホーム.classList.remove('hidden');
             const urlParams = new URLSearchParams(window.location.search);
             const directorIP = urlParams.get('directorIP');
-
             if (directorIP) {
                 ホームタイトル.textContent = '役割を選択してください';
                 IP入力欄.value = directorIP;

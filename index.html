@@ -16,6 +16,7 @@
         <header>
             <h1><i class="fas fa-stopwatch"></i>Time Q</h1>
             <div id="header-controls">
+                <button id="shortcut-settings-btn" class="icon-btn"><i class="fas fa-keyboard"></i>ショートカット</button>
                 <button id="history-log-btn" class="icon-btn"><i class="fas fa-history"></i>更新履歴</button>
                 <button id="theme-toggle-btn" class="icon-btn"><i class="fas fa-moon"></i></button>
             </div>
@@ -49,6 +50,17 @@
 
         <div id="director-screen" class="main-layout hidden">
             <div class="left-panel">
+                <h2><i class="fas fa-list-ol"></i>進行表</h2>
+                <div id="director-cue-sheet" class="cue-sheet-area"></div>
+                <div class="cue-sheet-controls">
+                    <button id="prev-item-btn"><i class="fas fa-backward"></i> 前へ</button>
+                    <button id="next-item-btn">次へ <i class="fas fa-forward"></i></button>
+                </div>
+                <div class="director-footer-controls">
+                    <button id="download-log-btn" class="icon-btn"><i class="fas fa-download"></i> ログ保存</button>
+                </div>
+            </div>
+            <div class="right-panel">
                 <div id="timer-display" class="timer-display-area">
                     <div>
                         <div id="program-timer-label" class="timer-label">番組残り時間</div>
@@ -68,18 +80,7 @@
                     <button id="fullscreen-btn" class="icon-btn" style="width: 100%; margin-top: 5px;"><i
                             class="fas fa-expand"></i> 全画面表示</button>
                 </div>
-                <h2><i class="fas fa-list-ol"></i>進行表</h2>
-                <div id="director-cue-sheet" class="cue-sheet-area"></div>
-                <div class="cue-sheet-controls">
-                    <button id="prev-item-btn"><i class="fas fa-backward"></i> 前へ</button>
-                    <button id="next-item-btn">次へ <i class="fas fa-forward"></i></button>
-                </div>
-                <div class="director-footer-controls">
-                    <button id="end-program-btn" class="danger-btn"><i class="fas fa-stop-circle"></i> 番組終了</button>
-                    <button id="download-log-btn" class="icon-btn"><i class="fas fa-download"></i> ログ保存</button>
-                </div>
-            </div>
-            <div class="right-panel">
+
                 <div class="sub-heading-with-button">
                     <h2><i class="fas fa-pencil-alt"></i>手書き指示</h2>
                     <div id="ack-indicator">了解！</div>
@@ -90,11 +91,16 @@
                 <div id="canvas-controls">
                     <button id="clear-canvas-btn" class="icon-btn danger-btn"><i class="fas fa-trash"></i> 消去</button>
                 </div>
+
                 <div class="sub-heading-with-button">
                     <h2><i class="fas fa-bolt"></i>プリセットメッセージ</h2>
                     <button id="open-preset-settings-btn" class="icon-btn"><i class="fas fa-cog"></i> 設定</button>
                 </div>
                 <div id="preset-buttons-area"></div>
+
+                <div class="right-panel-footer">
+                    <button id="end-program-btn" class="danger-btn"><i class="fas fa-stop-circle"></i> 番組終了</button>
+                </div>
             </div>
         </div>
 
@@ -188,6 +194,17 @@
                 <button id="prompt-cancel-btn">キャンセル</button>
                 <button id="prompt-ok-btn">OK</button>
             </div>
+        </div>
+    </div>
+
+    <div id="shortcut-settings-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2><i class="fas fa-keyboard"></i>ショートカットキー設定</h2>
+            <p>設定したい項目のボックスをクリックしてから、割り当てたいキーを押してください。</p>
+            <div id="shortcut-list-container"></div>
+            <button id="save-shortcuts-btn" style="width: 100%; margin-top: 20px;"><i class="fas fa-save"></i>
+                この設定を保存</button>
         </div>
     </div>
 
