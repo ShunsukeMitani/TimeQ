@@ -58,7 +58,12 @@
                     <p data-i18n-key="waitingForClientsDesc">他のPCやタブレットから、以下のQRコードまたはURLで接続してください。</p>
                     <div class="qr-code-container">
                         <img id="server-qr-code-image" src="" alt="QR Code">
+                    </div>
+                    <div class="url-container">
                         <p id="server-url-text"></p>
+                        <button id="copy-url-btn" class="icon-btn" data-i18n-title-key="copyURL">
+                            <i class="fas fa-copy"></i>
+                        </button>
                     </div>
                     <div class="local-open-buttons">
                         <button id="open-director-window-btn">

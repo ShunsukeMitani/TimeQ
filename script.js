@@ -76,6 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
             role_select: "Select Your Role",
             role_enterIP: "Enter Server PC's IP Address",
             serverStarting: "Starting server...",
+            copyURL: "Copy URL",
+            copied: "Copied!",
             // Cue Sheet Types
             type_talk: "Talk",
             type_music: "Music",
@@ -83,144 +85,36 @@ document.addEventListener('DOMContentLoaded', () => {
             // Shortcut Items
             shortcut_timer: "Timer Start / Stop",
             shortcut_preset: (name) => `Preset: ${name}`,
+            // Default Data
+            defaultProgramTitle: "My Radio Program",
+            defaultCueOpening: "Opening",
+            defaultCueMusic1: "Music 1",
+            defaultCueCM: "CM",
+            defaultCueEnding: "Ending",
+            defaultPresets: ['👍', 'OK!', 'Roll!', 'To CM', '30s left'],
             // Update History
             updateHistoryContent: [
+                { version: "Ver.2.1.2", note: "Added a button to copy the server URL. Fixed a bug where text would duplicate when switching languages." },
+                { version: "Ver.2.1.1", note: "Fixed a bug that caused text to duplicate when switching languages." },
                 { version: "Ver.2.1.0", note: "Added a language switching feature (Japanese/English)." },
                 { version: "Ver.2.0.1", note: "Improved the design of the shortcut key settings screen." },
                 { version: "Ver.2.0.0", note: "Added a feature to open a Personality window from the server screen, in addition to the Director window." },
-                { version: "Ver.1.9.3", note: "Fixed a bug where the display scaling feature was not working." },
-                { version: "Ver.1.9.2", note: "Fixed multiple bugs including display scaling, UI for multi-window startup, and handwriting coordinate drift in fullscreen." },
-                { version: "Ver.1.9.1", note: "Fixed a bug where the home screen would not appear on launch." },
-                { version: "Ver.1.9", note: "Changed to a two-window system to run server and client from one app, resolving port conflicts." },
-                { version: "Ver.1.8", note: "Fixed multiple bugs including dark mode, layout issues, button placement, and the Acknowledge button." },
-                { version: "Ver.1.7", note: "Fixed an issue where entering fullscreen would be cancelled when changing display scale. Fundamentally resolved layout collapse and coordinate drift on scaling." },
-                { version: "Ver.1.6", note: "Fixed a layout bug (right-side margin) and a handwriting coordinate drift issue when changing display scale." },
-                { version: "Ver.1.5.1", note: "Fixed an issue where the handwriting area became too small on tablets with small screens." },
-                { version: "Ver.1.5", note: "Added a feature to assign shortcut keys to start/stop the timer and for each preset message." },
-                { version: "Ver.1.4", note: "Overhauled the PC version layout, resolving display issues on iPad. Fixed a bug causing double lines on the handwriting canvas. Removed PWA features." },
-                { version: "Ver.1.3", note: "Enhanced fullscreen functionality via 'Add to Home Screen' to replace PWA installation. Fixed a QR code display bug on server startup." },
-                { version: "Ver.1.2.3", note: "Fixed an issue where preset messages would not load on the initial display of the director screen." },
-                { version: "Ver.1.2.2", note: "Fixed a bug where a swipe after drawing would erase the canvas." },
-                { version: "Ver.1.2.1", note: "Fixed a bug causing time difference miscalculations when using cue sheet next/prev buttons. Improved time calculation accuracy during pause." },
-                { version: "Ver.1.2", note: "Enabled role selection (server/client) in the PC/Mac app. Added dark mode. Fixed a time difference calculation bug." },
-                { version: "Ver.1.1", note: "Added functionality to use an iPad as a director terminal." },
-                { version: "Ver.1.0", note: "First release as an offline version. Implemented all web version features plus easy connection via IP/QR code and two-way communication." },
-                { version: "Ver.0.9", note: "Supported 'minutes:seconds' format for cue sheet time input." },
-                { version: "Ver.0.8", note: "Added a feature to automatically calculate and display the total program time difference ('push/pull')." },
-                { version: "Ver.0.7", note: "Added a feature to specify and color-code cue sheet item types (talk, music, cm, etc.)." },
-                { version: "Ver.0.6", note: "Added a feature to save, load, and delete cue sheets as templates." },
-                { version: "Ver.0.5", note: "Added an 'Acknowledge' button from the personality for two-way communication." },
-                { version: "Ver.0.4", note: "Added a remaining time timer for each segment." },
-                { version: "Ver.0.3", note: "Added a feature for users to freely change and save preset messages to the browser." },
-                { version: "Ver.0.2", note: "Added timekeeper functionality." },
-                { version: "Ver.0.1", note: "Initial release of basic features." }
             ]
         },
         ja: {
-            changeDisplaySize: "表示サイズの変更",
-            display100: "表示: 100%",
-            display90: "表示: 90%",
-            display85: "表示: 85%",
-            display75: "表示: 75%",
-            display50: "表示: 50%",
-            display30: "表示: 30%",
-            shortcuts: "ショートカット",
-            updateHistory: "更新履歴",
-            startAsServer: "サーバーとして起動",
-            joinAsClient: "クライアントとして参加",
-            waitingForClientsTitle: "クライアントの接続を待っています",
-            waitingForClientsDesc: "他のPCやタブレットから、以下のQRコードまたはURLで接続してください。",
-            openDirectorWindow: "ディレクター画面を開く",
-            openPersonalityWindow: "パーソナリティ画面を開く",
-            enterServerIP: "サーバーPCのIPアドレスを入力",
-            joinAsDirector: "ディレクターとして参加",
-            joinAsPersonality: "パーソナリティとして参加",
-            cueSheet: "進行表",
-            prev: "前へ",
-            next: "次へ",
-            saveLog: "ログ保存",
-            programTimeRemaining: "番組残り時間",
-            programTimeElapsed: "番組経過時間",
-            segmentTimeRemaining: "コーナー残り時間",
-            segmentTimeElapsed: "コーナー経過時間",
-            timeDifference: "押し/巻き",
-            fullscreen: "全画面表示",
-            handwriting: "手書き指示",
-            acknowledged: "了解！",
-            clear: "消去",
-            presetMessages: "プリセットメッセージ",
-            settings: "設定",
-            endProgram: "番組終了",
-            instructions: "指示",
-            waitingForInstructions: "指示を待っています...",
-            acknowledge: "了解",
-            programSettings: "番組設定",
-            programTitle: "番組タイトル",
-            programDuration: "番組全体の時間（分）",
-            createCueSheet: "進行表の作成",
-            selectTemplate: "テンプレートを選択",
-            load: "読込",
-            save: "保存",
-            cornerName: "コーナー名",
-            minutes: "分",
-            seconds: "秒",
-            type: "タイプ",
-            addRow: "行を追加",
-            startProgramWithSettings: "この内容で番組を開始",
-            presetSettings: "プリセットメッセージ設定",
-            presetSettingsDesc: "カンマ区切りでメッセージを入力してください。",
-            saveBtn: "保存する",
-            cancel: "キャンセル",
-            shortcutSettings: "ショートカットキー設定",
-            shortcutSettingsDesc: "設定したい項目のボックスをクリックしてから、割り当てたいキーを押してください。",
-            saveSettings: "この設定を保存",
-            alert_connectionLost: "サーバーとの接続が切れました。ホーム画面に戻ります。",
-            alert_connectionFailed: "サーバーに接続できませんでした。",
-            alert_enterIP: "サーバーPCのIPアドレスを入力してください。",
-            alert_addCueItem: "進行表に項目を追加してください。",
-            alert_confirmEndProgram: "本当に番組を終了しますか？",
-            alert_noLogToDownload: "ダウンロードするログがありません。",
-            alert_templateSaved: (name) => `「${name}」という名前でテンプレートを保存しました。`,
-            alert_confirmDeleteTemplate: (name) => `テンプレート「${name}」を本当に削除しますか？`,
-            prompt_enterTemplateName: "テンプレート名を入力してください",
-            role_select: "役割を選択してください",
-            role_enterIP: "サーバーPCのIPアドレスを入力してください",
-            serverStarting: "サーバーを起動中...",
-            type_talk: "トーク",
-            type_music: "楽曲",
-            type_cm: "CM",
-            shortcut_timer: "タイマー開始 / 停止",
-            shortcut_preset: (name) => `プリセット: ${name}`,
+            changeDisplaySize: "表示サイズの変更", display100: "表示: 100%", display90: "表示: 90%", display85: "表示: 85%", display75: "表示: 75%", display50: "表示: 50%", display30: "表示: 30%", shortcuts: "ショートカット", updateHistory: "更新履歴", startAsServer: "サーバーとして起動", joinAsClient: "クライアントとして参加", waitingForClientsTitle: "クライアントの接続を待っています", waitingForClientsDesc: "他のPCやタブレットから、以下のQRコードまたはURLで接続してください。", openDirectorWindow: "ディレクター画面を開く", openPersonalityWindow: "パーソナリティ画面を開く", enterServerIP: "サーバーPCのIPアドレスを入力", joinAsDirector: "ディレクターとして参加", joinAsPersonality: "パーソナリティとして参加", cueSheet: "進行表", prev: "前へ", next: "次へ", saveLog: "ログ保存", programTimeRemaining: "番組残り時間", programTimeElapsed: "番組経過時間", segmentTimeRemaining: "コーナー残り時間", segmentTimeElapsed: "コーナー経過時間", timeDifference: "押し/巻き", fullscreen: "全画面表示", handwriting: "手書き指示", acknowledged: "了解！", clear: "消去", presetMessages: "プリセットメッセージ", settings: "設定", endProgram: "番組終了", instructions: "指示", waitingForInstructions: "指示を待っています...", acknowledge: "了解", programSettings: "番組設定", programTitle: "番組タイトル", programDuration: "番組全体の時間（分）", createCueSheet: "進行表の作成", selectTemplate: "テンプレートを選択", load: "読込", save: "保存", cornerName: "コーナー名", minutes: "分", seconds: "秒", type: "タイプ", addRow: "行を追加", startProgramWithSettings: "この内容で番組を開始", presetSettings: "プリセットメッセージ設定", presetSettingsDesc: "カンマ区切りでメッセージを入力してください。", saveBtn: "保存する", cancel: "キャンセル", shortcutSettings: "ショートカットキー設定", shortcutSettingsDesc: "設定したい項目のボックスをクリックしてから、割り当てたいキーを押してください。", saveSettings: "この設定を保存", alert_connectionLost: "サーバーとの接続が切れました。ホーム画面に戻ります。", alert_connectionFailed: "サーバーに接続できませんでした。", alert_enterIP: "サーバーPCのIPアドレスを入力してください。", alert_addCueItem: "進行表に項目を追加してください。", alert_confirmEndProgram: "本当に番組を終了しますか？", alert_noLogToDownload: "ダウンロードするログがありません。", alert_templateSaved: (name) => `「${name}」という名前でテンプレートを保存しました。`, alert_confirmDeleteTemplate: (name) => `テンプレート「${name}」を本当に削除しますか？`, prompt_enterTemplateName: "テンプレート名を入力してください", role_select: "役割を選択してください", role_enterIP: "サーバーPCのIPアドレスを入力してください", serverStarting: "サーバーを起動中...", copyURL: "URLをコピー", copied: "コピーしました！", type_talk: "トーク", type_music: "楽曲", type_cm: "CM", shortcut_timer: "タイマー開始 / 停止", shortcut_preset: (name) => `プリセット: ${name}`,
+            defaultProgramTitle: "マイラジオプログラム",
+            defaultCueOpening: "オープニング",
+            defaultCueMusic1: "楽曲1",
+            defaultCueCM: "CM",
+            defaultCueEnding: "エンディング",
+            defaultPresets: ['👍', 'OK!', '巻いて！', 'CMへ', 'あと30秒'],
             updateHistoryContent: [
+                { version: "Ver.2.1.2", note: "サーバーURLをコピーするボタンを追加。言語切替時にテキストが二重表示される不具合を修正。" },
+                { version: "Ver.2.1.1", note: "言語を切り替える際にテキストが二重に表示される不具合を修正。" },
                 { version: "Ver.2.1.0", note: "言語切替機能（日本語/英語）を追加。" },
                 { version: "Ver.2.0.1", note: "ショートカットキー設定画面のデザインを改善。" },
                 { version: "Ver.2.0.0", note: "サーバー画面からディレクター画面だけでなく、パーソナリティ画面も別ウィンドウで開ける機能を追加。" },
-                { version: "Ver.1.9.3", note: "拡大縮小機能が動作しない不具合を修正。" },
-                { version: "Ver.1.9.2", note: "拡大縮小機能、複数ウィンドウ起動時のUI、全画面表示時の手書き座標ずれなど、複数の不具合を修正。" },
-                { version: "Ver.1.9.1", note: "起動時にホーム画面が表示されない不具合を修正。" },
-                { version: "Ver.1.9", note: "サーバーとクライアントを1つのアプリから2つのウィンドウで起動する方式に変更。複数起動時のポート競合エラーを解消し、同一PCでの利用を簡素化。" },
-                { version: "Ver.1.8", note: "ダークモード、進行表設定画面のレイアウト、ボタン配置、iPadでの全画面維持、了解ボタンの動作と表示など、複数の不具合を修正。" },
-                { version: "Ver.1.7", note: "表示スケール変更時に全画面が解除される不具合を修正。また、スケール変更時のレイアウト崩れと手書き座標のずれを根本的に解決。" },
-                { version: "Ver.1.6", note: "表示スケール変更時に発生するレイアウトの崩れ（右側の余白）と、手書きキャンバスの座標がずれる不具合を修正。" },
-                { version: "Ver.1.5.1", note: "画面が小さいタブレットでも手書き入力が小さくなる問題を修正。" },
-                { version: "Ver.1.5", note: "タイマーの開始/停止、各プリセットメッセージにショートカットキーを割り当てられる機能を追加。" },
-                { version: "Ver.1.4", note: "PC版のレイアウトを大幅に刷新。iPadでの表示崩れを全面的に解消し、スクロールせずに全要素が表示されるように改善。手書きキャンバスで線が二重になる不具合を修正。PWA機能を廃止。" },
-                { version: "Ver.1.3", note: "PWAのインストール機能に代わり、「ホーム画面に追加」による全画面表示機能を強化。サーバー起動時のQRコード表示に関する不具合を修正。" },
-                { version: "Ver.1.2.3", note: "ディレクター画面の初回表示時にプリセットメッセージが読み込まれない問題を修正。" },
-                { version: "Ver.1.2.2", note: "手書きキャンバスで、書き終えた後にスワイプすると描画が消える問題を修正。" },
-                { version: "Ver.1.2.1", note: "進行表の次へ/前へボタン操作時に押し巻き時間がずれるバグを修正。一時停止時の時間計算精度を向上。" },
-                { version: "Ver.1.2", note: "PC/Macアプリでサーバー/クライアントの役割を選択可能に。ダークモードを追加。押し巻き時間の計算バグを修正。" },
-                { version: "Ver.1.1", note: "iPadをディレクター端末として使用する機能を追加。" },
-                { version: "Ver.1.0", note: "オフライン版として初回リリース。ウェブ版の全機能に加え、IPアドレス・QRコードによる簡単接続、双方向通信などを実装。" },
-                { version: "Ver.0.9", note: "進行表の時間入力を「分:秒」形式に対応。" },
-                { version: "Ver.0.8", note: "番組全体の時間の「押し/巻き」を自動計算して表示する機能を追加。" },
-                { version: "Ver.0.7", note: "進行表にタイプ（talk, music, cmなど）を指定し、色分け表示する機能を追加。" },
-                { version: "Ver.0.6", note: "進行表をテンプレートとして保存・読込・削除できる機能を追加。" },
-                { version: "Ver.0.5", note: "パーソナリティからの『了解』ボタンを追加し、双方向のコミュニケーションを可能に。" },
-                { version: "Ver.0.4", note: "コーナーごとの残り時間タイマー機能を追加。" },
-                { version: "Ver.0.3", note: "プリセットメッセージをユーザーが自由に変更し、ブラウザに保存できる機能を追加。" },
-                { version: "Ver.0.2", note: "タイムキーパー機能を追加。" },
-                { version: "Ver.0.1", note: "基本機能をリリース。" }
             ]
         }
     };
@@ -274,6 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const サーバーURLテキスト = document.getElementById('server-url-text');
     const openDirectorWindowBtn = document.getElementById('open-director-window-btn');
     const openPersonalityWindowBtn = document.getElementById('open-personality-window-btn');
+    const copyUrlBtn = document.getElementById('copy-url-btn');
     const 閉じるボタン群 = document.querySelectorAll('.close-btn');
     const 更新履歴ボタン = document.getElementById('history-log-btn');
     const 更新履歴リスト = document.getElementById('history-log-list');
@@ -632,7 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (保存されたメッセージ) {
             プリセットメッセージリスト = 保存されたメッセージ.split(',');
         } else {
-            プリセットメッセージリスト = ['👍', 'OK!', 'Roll!', 'To CM', '30s left'];
+            プリセットメッセージリスト = translations[currentLang].defaultPresets;
         }
     }
 
@@ -665,13 +560,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function 番組設定モーダルをリセットする() {
-        番組タイトル入力欄.value = 'My Radio Program';
+        const t = translations[currentLang];
+        番組タイトル入力欄.value = t.defaultProgramTitle;
         番組時間入力欄.value = '30';
         進行表行コンテナ.innerHTML = '';
-        addCueRow('Opening', '5', '0', 'talk');
-        addCueRow('Music 1', '4', '0', 'music');
-        addCueRow('CM', '1', '0', 'cm');
-        addCueRow('Ending', '1', '0', 'talk');
+        addCueRow(t.defaultCueOpening, '5', '0', 'talk');
+        addCueRow(t.defaultCueMusic1, '4', '0', 'music');
+        addCueRow(t.defaultCueCM, '1', '0', 'cm');
+        addCueRow(t.defaultCueEnding, '1', '0', 'talk');
     }
 
     function formatKeyCode(code) {
@@ -836,14 +732,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (result.error) {
             alert(`${translations[currentLang].alert_connectionFailed}: ${result.error}`);
             サーバー起動ボタン.disabled = false;
-            サーバー起動ボタン.innerHTML = `<i class="fas fa-server"></i> ${translations[currentLang].startAsServer}`;
+            サーバー起動ボタン.innerHTML = `<i class="fas fa-server"></i> <span data-i18n-key="startAsServer">${translations[currentLang].startAsServer}</span>`;
             return;
         }
         サーバーURLテキスト.textContent = result.url;
         サーバーQRコード画像.src = result.qr;
         サーバー情報.classList.remove('hidden');
         electronホーム.classList.add('hidden');
-        ホームタイトル.textContent = "";
     };
     openDirectorWindowBtn.onclick = () => {
         window.electronAPI.openDirectorWindow();
@@ -854,7 +749,6 @@ document.addEventListener('DOMContentLoaded', () => {
     クライアントとして参加ボタン.onclick = () => {
         electronホーム.classList.add('hidden');
         browserホーム.classList.remove('hidden');
-        ホームタイトル.textContent = translations[currentLang].role_enterIP;
     };
     director参加ボタン.onclick = () => 参加する('director');
     personality参加ボタン.onclick = () => 参加する('personality');
@@ -976,6 +870,24 @@ document.addEventListener('DOMContentLoaded', () => {
             テーマアイコン.classList.add('fa-moon');
         }
     };
+    copyUrlBtn.onclick = () => {
+        const urlToCopy = サーバーURLテキスト.textContent;
+        if (!urlToCopy || copyUrlBtn.disabled) return;
+
+        navigator.clipboard.writeText(urlToCopy).then(() => {
+            const t = translations[currentLang];
+            const originalIcon = '<i class="fas fa-copy"></i>';
+            copyUrlBtn.innerHTML = `<i class="fas fa-check"></i> ${t.copied}`;
+            copyUrlBtn.disabled = true;
+
+            setTimeout(() => {
+                copyUrlBtn.innerHTML = originalIcon;
+                copyUrlBtn.disabled = false;
+            }, 2000);
+        }).catch(err => {
+            console.error('URLのコピーに失敗しました: ', err);
+        });
+    };
     閉じるボタン群.forEach(btn => btn.onclick = () => btn.closest('.modal').classList.add('hidden'));
     window.onclick = (e) => { if (e.target.classList.contains('modal')) e.target.classList.add('hidden'); };
     if (全画面表示ボタン) {
@@ -990,6 +902,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
+    // --- 初期化 ---
     function 初期化() {
         setLanguage(localStorage.getItem('timeqLang') || 'ja');
 
@@ -1020,16 +933,12 @@ document.addEventListener('DOMContentLoaded', () => {
             画面を表示する(ホーム画面);
             if (isElectron) {
                 electronホーム.classList.remove('hidden');
-                ホームタイトル.textContent = translations[currentLang].role_select;
             } else {
                 browserホーム.classList.remove('hidden');
                 const urlParamsFromBrowser = new URLSearchParams(window.location.search);
                 const directorIP = urlParamsFromBrowser.get('directorIP');
                 if (directorIP) {
-                    ホームタイトル.textContent = translations[currentLang].role_select;
                     IP入力欄.value = directorIP;
-                } else {
-
                 }
             }
         }
