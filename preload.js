@@ -2,6 +2,8 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('electronAPI', {
     onConnectionInfo: (callback) => ipcRenderer.on('connection-info', (_event, value) => callback(value)),
-    // 変更点: main.jsに準備完了を通知する関数を追加
-    rendererReady: () => ipcRenderer.send('renderer-ready')
+    rendererReady: () => ipcRenderer.send('renderer-ready'),
+    startServer: () => ipcRenderer.invoke('start-server'),
+    openDirectorWindow: () => ipcRenderer.send('open-director-window'),
+    openPersonalityWindow: () => ipcRenderer.send('open-personality-window') // この行を追加
 });
