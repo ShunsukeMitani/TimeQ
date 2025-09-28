@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultCueMusic1: "楽曲1",
             defaultCueCM: "CM",
             defaultCueEnding: "エンディング",
-            defaultPresets: ['👍', 'OK!', '巻いて！', ' CMへ', 'あと30秒'],
+            defaultPresets: ['👍', 'OK!', '巻いて！', 'CMへ', 'あと30秒'],
             updateHistoryContent: [
                 { version: "Ver.2.1.2", note: "サーバーURLをコピーするボタンを追加。言語切替時にテキストが二重表示される不具合を修正。" },
                 { version: "Ver.2.1.1", note: "言語を切り替える際にテキストが二重に表示される不具合を修正。" },
