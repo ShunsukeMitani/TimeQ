@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
             saveBtn: "Save",
             cancel: "Cancel",
             shortcutSettings: "Shortcut Key Settings",
-            shortcutSettingsDesc: "Click the box for the item you want to set, then press the key you want to assign.",
+            shortcutSettingsDesc: "Click the box for the item you want to set, then press the key or key combination (e.g., Ctrl + S).",
             saveSettings: "Save These Settings",
             // Dynamic Alerts & Text
             alert_connectionLost: "Connection to the server was lost. Returning to home screen.",
@@ -91,9 +91,13 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultCueMusic1: "Music 1",
             defaultCueCM: "CM",
             defaultCueEnding: "Ending",
-            defaultPresets: ['👍', 'OK!', 'Roll!', 'To CM', '30s left'],
+            // ★★★ 修正点: プリセットメッセージを英語に修正 ★★★
+            defaultPresets: ['👍', 'OK!', 'Wrap it up!', 'Go to CM', '30s left'],
             // Update History
             updateHistoryContent: [
+                { version: "Ver.2.2.1", note: "Minor corrections" },
+                { version: "Ver.2.2.0", note: "Added the ability to set multi-key combinations (e.g., Ctrl + S) for shortcuts." },
+                { version: "Ver.2.1.3", note: "Fixed a bug where preset messages sent from the director were not displayed on the personality's screen." },
                 { version: "Ver.2.1.2", note: "Added a button to copy the server URL. Fixed a bug where text would duplicate when switching languages." },
                 { version: "Ver.2.1.1", note: "Fixed a bug that caused text to duplicate when switching languages." },
                 { version: "Ver.2.1.0", note: "Added a language switching feature (Japanese/English)." },
@@ -128,7 +132,9 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         ja: {
-            changeDisplaySize: "表示サイズの変更", display100: "表示: 100%", display90: "表示: 90%", display85: "表示: 85%", display75: "表示: 75%", display50: "表示: 50%", display30: "表示: 30%", shortcuts: "ショートカット", updateHistory: "更新履歴", startAsServer: "サーバーとして起動", joinAsClient: "クライアントとして参加", waitingForClientsTitle: "クライアントの接続を待っています", waitingForClientsDesc: "他のPCやタブレットから、以下のQRコードまたはURLで接続してください。", openDirectorWindow: "ディレクター画面を開く", openPersonalityWindow: "パーソナリティ画面を開く", enterServerIP: "サーバーPCのIPアドレスを入力", joinAsDirector: "ディレクターとして参加", joinAsPersonality: "パーソナリティとして参加", cueSheet: "進行表", prev: "前へ", next: "次へ", saveLog: "ログ保存", programTimeRemaining: "番組残り時間", programTimeElapsed: "番組経過時間", segmentTimeRemaining: "コーナー残り時間", segmentTimeElapsed: "コーナー経過時間", timeDifference: "押し/巻き", fullscreen: "全画面表示", handwriting: "手書き指示", acknowledged: "了解！", clear: "消去", presetMessages: "プリセットメッセージ", settings: "設定", endProgram: "番組終了", instructions: "指示", waitingForInstructions: "指示を待っています...", acknowledge: "了解", programSettings: "番組設定", programTitle: "番組タイトル", programDuration: "番組全体の時間（分）", createCueSheet: "進行表の作成", selectTemplate: "テンプレートを選択", load: "読込", save: "保存", cornerName: "コーナー名", minutes: "分", seconds: "秒", type: "タイプ", addRow: "行を追加", startProgramWithSettings: "この内容で番組を開始", presetSettings: "プリセットメッセージ設定", presetSettingsDesc: "カンマ区切りでメッセージを入力してください。", saveBtn: "保存する", cancel: "キャンセル", shortcutSettings: "ショートカットキー設定", shortcutSettingsDesc: "設定したい項目のボックスをクリックしてから、割り当てたいキーを押してください。", saveSettings: "この設定を保存", alert_connectionLost: "サーバーとの接続が切れました。ホーム画面に戻ります。", alert_connectionFailed: "サーバーに接続できませんでした。", alert_enterIP: "サーバーPCのIPアドレスを入力してください。", alert_addCueItem: "進行表に項目を追加してください。", alert_confirmEndProgram: "本当に番組を終了しますか？", alert_noLogToDownload: "ダウンロードするログがありません。", alert_templateSaved: (name) => `「${name}」という名前でテンプレートを保存しました。`, alert_confirmDeleteTemplate: (name) => `テンプレート「${name}」を本当に削除しますか？`, prompt_enterTemplateName: "テンプレート名を入力してください", role_select: "役割を選択してください", role_enterIP: "サーバーPCのIPアドレスを入力してください", serverStarting: "サーバーを起動中...", copyURL: "URLをコピー", copied: "コピーしました！", type_talk: "トーク", type_music: "楽曲", type_cm: "CM", shortcut_timer: "タイマー開始 / 停止", shortcut_preset: (name) => `プリセット: ${name}`,
+            changeDisplaySize: "表示サイズの変更", display100: "表示: 100%", display90: "表示: 90%", display85: "表示: 85%", display75: "表示: 75%", display50: "表示: 50%", display30: "表示: 30%", shortcuts: "ショートカット", updateHistory: "更新履歴", startAsServer: "サーバーとして起動", joinAsClient: "クライアントとして参加", waitingForClientsTitle: "クライアントの接続を待っています", waitingForClientsDesc: "他のPCやタブレットから、以下のQRコードまたはURLで接続してください。", openDirectorWindow: "ディレクター画面を開く", openPersonalityWindow: "パーソナリティ画面を開く", enterServerIP: "サーバーPCのIPアドレスを入力", joinAsDirector: "ディレクターとして参加", joinAsPersonality: "パーソナリティとして参加", cueSheet: "進行表", prev: "前へ", next: "次へ", saveLog: "ログ保存", programTimeRemaining: "番組残り時間", programTimeElapsed: "番組経過時間", segmentTimeRemaining: "コーナー残り時間", segmentTimeElapsed: "コーナー経過時間", timeDifference: "押し/巻き", fullscreen: "全画面表示", handwriting: "手書き指示", acknowledged: "了解！", clear: "消去", presetMessages: "プリセットメッセージ", settings: "設定", endProgram: "番組終了", instructions: "指示", waitingForInstructions: "指示を待っています...", acknowledge: "了解", programSettings: "番組設定", programTitle: "番組タイトル", programDuration: "番組全体の時間（分）", createCueSheet: "進行表の作成", selectTemplate: "テンプレートを選択", load: "読込", save: "保存", cornerName: "コーナー名", minutes: "分", seconds: "秒", type: "タイプ", addRow: "行を追加", startProgramWithSettings: "この内容で番組を開始", presetSettings: "プリセットメッセージ設定", presetSettingsDesc: "カンマ区切りでメッセージを入力してください。", saveBtn: "保存する", cancel: "キャンセル", shortcutSettings: "ショートカットキー設定",
+            shortcutSettingsDesc: "設定したい項目のボックスをクリックしてから、割り当てたいキーまたはキーの組み合わせ（例: Ctrl + S）を押してください。",
+            saveSettings: "この設定を保存", alert_connectionLost: "サーバーとの接続が切れました。ホーム画面に戻ります。", alert_connectionFailed: "サーバーに接続できませんでした。", alert_enterIP: "サーバーPCのIPアドレスを入力してください。", alert_addCueItem: "進行表に項目を追加してください。", alert_confirmEndProgram: "本当に番組を終了しますか？", alert_noLogToDownload: "ダウンロードするログがありません。", alert_templateSaved: (name) => `「${name}」という名前でテンプレートを保存しました。`, alert_confirmDeleteTemplate: (name) => `テンプレート「${name}」を本当に削除しますか？`, prompt_enterTemplateName: "テンプレート名を入力してください", role_select: "役割を選択してください", role_enterIP: "サーバーPCのIPアドレスを入力してください", serverStarting: "サーバーを起動中...", copyURL: "URLをコピー", copied: "コピーしました！", type_talk: "トーク", type_music: "楽曲", type_cm: "CM", shortcut_timer: "タイマー開始 / 停止", shortcut_preset: (name) => `プリセット: ${name}`,
             defaultProgramTitle: "マイラジオプログラム",
             defaultCueOpening: "オープニング",
             defaultCueMusic1: "楽曲1",
@@ -136,6 +142,9 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultCueEnding: "エンディング",
             defaultPresets: ['👍', 'OK!', '巻いて！', 'CMへ', 'あと30秒'],
             updateHistoryContent: [
+                { version: "Ver.2.2.1", note: "軽度な修正" },
+                { version: "Ver.2.2.0", note: "ショートカットキーにCtrlやShiftなどを組み合わせた複数キーを設定できる機能を追加。" },
+                { version: "Ver.2.1.3", note: "ディレクターから送信されたプリセットメッセージがパーソナリティに表示されない不具合を修正。" },
                 { version: "Ver.2.1.2", note: "サーバーURLをコピーするボタンを追加。言語切替時にテキストが二重表示される不具合を修正。" },
                 { version: "Ver.2.1.1", note: "言語を切り替える際にテキストが二重に表示される不具合を修正。" },
                 { version: "Ver.2.1.0", note: "言語切替機能（日本語/英語）を追加。" },
@@ -173,6 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentLang = localStorage.getItem('timeqLang') || 'ja';
 
+    // ★★★ ここから修正 ★★★
     function setLanguage(lang) {
         currentLang = lang;
         localStorage.setItem('timeqLang', lang);
@@ -197,7 +207,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         document.getElementById('language-select').value = lang;
+
+        // 言語に連動する動的コンテンツを再読み込み
+        プリセットメッセージを読み込む();
+        // ディレクター画面が表示されている場合、プリセットボタンも再描画する
+        if (!ディレクター画面.classList.contains('hidden')) {
+            プリセットボタンを描画する();
+        }
     }
+    // ★★★ ここまで修正 ★★★
 
     const 全ての画面 = document.querySelectorAll('main > div, .modal');
     const ホーム画面 = document.getElementById('home-screen');
@@ -543,6 +561,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return sign + [minutes, seconds].map(v => v.toString().padStart(2, '0')).join(':');
     }
 
+    function formatLogTime(totalMilliseconds) {
+        if (isNaN(totalMilliseconds)) totalMilliseconds = 0;
+        const totalSeconds = Math.floor(totalMilliseconds / 1000);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = Math.floor(totalSeconds % 60);
+        return [hours, minutes, seconds].map(v => v.toString().padStart(2, '0')).join(':');
+    }
+
     function 番組を開始する() {
         const t = translations[currentLang];
         const 進行表データ = [];
@@ -574,14 +601,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // ★★★ ここから修正 ★★★
     function プリセットメッセージを読み込む() {
-        const 保存されたメッセージ = localStorage.getItem('timeqPresetMessages');
+        // 現在の言語設定に応じたキーでlocalStorageから読み込む
+        const 保存されたメッセージ = localStorage.getItem(`timeqPresetMessages_${currentLang}`);
         if (保存されたメッセージ) {
             プリセットメッセージリスト = 保存されたメッセージ.split(',');
         } else {
+            // 保存されたものがなければ、現在の言語のデフォルト値を使用
             プリセットメッセージリスト = translations[currentLang].defaultPresets;
         }
     }
+    // ★★★ ここまで修正 ★★★
 
     function プリセットボタンを描画する() {
         プリセットボタンエリア.innerHTML = '';
@@ -594,13 +625,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ★★★ ここから修正 ★★★
     function プリセットメッセージを保存する() {
         const messages = プリセットメッセージ入力欄.value.split(',').map(m => m.trim()).filter(m => m);
         プリセットメッセージリスト = messages;
-        localStorage.setItem('timeqPresetMessages', messages.join(','));
+        // 現在の言語設定に応じたキーでlocalStorageに保存する
+        localStorage.setItem(`timeqPresetMessages_${currentLang}`, messages.join(','));
         プリセットボタンを描画する();
         プリセット設定モーダル.classList.add('hidden');
     }
+    // ★★★ ここまで修正 ★★★
 
     function addCueRow(title = '', minutes = '', seconds = '', type = 'talk') {
         const t = translations[currentLang];
@@ -622,15 +656,44 @@ document.addEventListener('DOMContentLoaded', () => {
         addCueRow(t.defaultCueEnding, '1', '0', 'talk');
     }
 
-    function formatKeyCode(code) {
-        if (!code) return translations[currentLang].settings || 'Not Set';
-        let formatted = code;
-        formatted = formatted.replace(/^(Key|Digit)/, '');
-        if (formatted === 'MetaLeft' || formatted === 'MetaRight') formatted = '⌘ / Win';
-        if (formatted === 'AltLeft' || formatted === 'AltRight') formatted = 'Alt';
-        if (formatted === 'ControlLeft' || formatted === 'ControlRight') formatted = 'Ctrl';
-        if (formatted === 'ShiftLeft' || formatted === 'ShiftRight') formatted = 'Shift';
-        return formatted;
+    // キーイベントからショートカット文字列を生成するヘルパー関数
+    function eventToShortcutString(e) {
+        const code = e.code;
+        // 修飾キー（Ctrl, Shiftなど）単体での押下は無視する
+        if (['ControlLeft', 'ControlRight', 'ShiftLeft', 'ShiftRight', 'AltLeft', 'AltRight', 'MetaLeft', 'MetaRight'].includes(code)) {
+            return null;
+        }
+
+        const parts = [];
+        if (e.ctrlKey) parts.push('Ctrl');
+        if (e.metaKey) parts.push('Meta'); // MacのCmdキー、WindowsのWinキー
+        if (e.altKey) parts.push('Alt');
+        if (e.shiftKey) parts.push('Shift');
+
+        parts.push(code);
+
+        return parts.join('+');
+    }
+
+    // 保存されたショートカット文字列を画面表示用にフォーマットする関数
+    function formatShortcutString(shortcutString) {
+        if (!shortcutString) return translations[currentLang].settings || 'Not Set';
+
+        const parts = shortcutString.split('+');
+        const formattedParts = parts.map(part => {
+            let formatted = part;
+            // KeyA -> A, Digit1 -> 1 のように整形
+            if (part.startsWith('Key')) {
+                formatted = part.substring(3);
+            } else if (part.startsWith('Digit')) {
+                formatted = part.substring(5);
+            } else if (part === 'Meta') {
+                formatted = '⌘ / Win'; // Mac / Windows での表示を考慮
+            }
+            return formatted;
+        });
+
+        return formattedParts.join(' + ');
     }
 
     function loadShortcuts() {
@@ -672,7 +735,7 @@ document.addEventListener('DOMContentLoaded', () => {
         labelEl.textContent = label;
         const keyInputEl = document.createElement('div');
         keyInputEl.className = 'shortcut-key-input';
-        keyInputEl.textContent = formatKeyCode(shortcuts[action]);
+        keyInputEl.textContent = formatShortcutString(shortcuts[action]);
         keyInputEl.dataset.key = shortcuts[action] || '';
         keyInputEl.addEventListener('click', () => listenForKey(keyInputEl));
         row.appendChild(labelEl);
@@ -683,17 +746,24 @@ document.addEventListener('DOMContentLoaded', () => {
     function listenForKey(targetElement) {
         document.querySelectorAll('.shortcut-key-input.recording').forEach(el => {
             el.classList.remove('recording');
-            el.textContent = formatKeyCode(el.dataset.key);
+            el.textContent = formatShortcutString(el.dataset.key);
         });
         targetElement.classList.add('recording');
         targetElement.textContent = '...';
+
         const keydownHandler = (e) => {
             e.preventDefault();
-            const keyName = e.code;
-            targetElement.textContent = formatKeyCode(keyName);
-            targetElement.dataset.key = keyName;
-            targetElement.classList.remove('recording');
-            window.removeEventListener('keydown', keydownHandler, { capture: true });
+            e.stopPropagation();
+
+            const shortcutString = eventToShortcutString(e);
+
+            // 修飾キー単体でない、有効な組み合わせの場合のみ設定
+            if (shortcutString) {
+                targetElement.textContent = formatShortcutString(shortcutString);
+                targetElement.dataset.key = shortcutString;
+                targetElement.classList.remove('recording');
+                window.removeEventListener('keydown', keydownHandler, { capture: true });
+            }
         };
         window.addEventListener('keydown', keydownHandler, { capture: true });
     }
@@ -702,7 +772,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const isTyping = ['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName);
         const isModalOpen = !!document.querySelector('.modal:not(.hidden)');
         if (isTyping || isModalOpen) return;
-        const action = Object.keys(shortcuts).find(act => shortcuts[act] === e.code);
+
+        const currentShortcut = eventToShortcutString(e);
+        if (!currentShortcut) return;
+
+        const action = Object.keys(shortcuts).find(act => shortcuts[act] === currentShortcut);
+
         if (action) {
             e.preventDefault();
             if (action === 'togglePlayPause') {
@@ -977,9 +1052,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (role) {
             IP入力欄.value = ip;
             if (role === 'director') {
-                director参加ボタン.click();
+                参加する('director'); // ボタンクリックの代わりに直接関数を呼ぶ
             } else if (role === 'personality') {
-                personality参加ボタン.click();
+                参加する('personality'); // ★★★ こちらも直接関数を呼ぶように変更 ★★★
             }
         } else {
             画面を表示する(ホーム画面);
