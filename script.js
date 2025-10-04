@@ -48,6 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
             programTitle: "Program Title",
             programDuration: "Total Program Duration (minutes)",
             createCueSheet: "Create Cue Sheet",
+            timeEntryModeIndividual: "Individual",
+            timeEntryModeCumulative: "Cumulative",
             selectTemplate: "Select Template",
             load: "Load",
             save: "Save",
@@ -55,6 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
             cornerName: "Segment Name",
             minutes: "Min",
             seconds: "Sec",
+            endTimeMinutes: "End(M)",
+            endTimeSeconds: "End(S)",
+            duration: "Duration",
+            totalTime: "Total Time:",
             type: "Type",
             addRow: "Add Row",
             startProgramWithSettings: "Start Program with These Settings",
@@ -88,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
             type_talk: "Talk",
             type_music: "Music",
             type_cm: "CM",
+            type_other: "Other",
             // Shortcut Items
             shortcut_timer: "Timer Start / Stop",
             shortcut_preset: (name) => `Preset: ${name}`,
@@ -102,6 +109,10 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultPersonalityPresets: ['👍', 'OK', 'Got it', 'Please repeat', 'Stand by'],
             // Update History
             updateHistoryContent: [
+                { version: "Ver.2.3.7", note: "Fixed an issue where the total time was calculated incorrectly in cumulative mode." },
+                { version: "Ver.2.3.6", note: "Added a total time display when in cumulative time entry mode." },
+                { version: "Ver.2.3.5", note: "Added a setting to switch cue sheet time entry between individual and cumulative. Added 'Other' to the cue sheet item types." },
+                { version: "Ver.2.3.4", note: "Prevented the program settings modal from closing on outside click. Templates now save and load the program title and duration. Cue sheet time entry is now cumulative." },
                 { version: "Ver.2.3.3", note: "Added a feature to automatically change the handwriting pen color to white in dark mode." },
                 { version: "Ver.2.3.2", note: "Added a feature to overwrite and save existing templates. Fixed an issue where the second window was always on top and did not appear in the taskbar." },
                 { version: "Ver.2.3.1", note: "Fixed an issue where personality preset settings were not loading or saving correctly. Improved the behavior when closing the program settings modal." },
@@ -142,8 +153,8 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         ja: {
-            changeDisplaySize: "表示サイズの変更", display100: "表示: 100%", display90: "表示: 90%", display85: "表示: 85%", display75: "表示: 75%", display50: "表示: 50%", display30: "表示: 30%", shortcuts: "ショートカット", updateHistory: "更新履歴", startAsServer: "サーバーとして起動", joinAsClient: "クライアントとして参加", returnToSettings: "番組設定に戻る", waitingForClientsTitle: "クライアントの接続を待っています", waitingForClientsDesc: "他のPCやタブレットから、以下のQRコードまたはURLで接続してください。", openDirectorWindow: "ディレクター画面を開く", openPersonalityWindow: "パーソナリティ画面を開く", enterServerIP: "サーバーPCのIPアドレスを入力", joinAsDirector: "ディレクターとして参加", joinAsPersonality: "パーソナリティとして参加", cueSheet: "進行表", prev: "前へ", next: "次へ", saveLog: "ログ保存", programTimeRemaining: "番組残り時間", programTimeElapsed: "番組経過時間", segmentTimeRemaining: "コーナー残り時間", segmentTimeElapsed: "コーナー経過時間", timeDifference: "押し/巻き", fullscreen: "全画面表示", handwriting: "手書き指示", acknowledged: "了解！", clear: "消去", presetMessages: "プリセットメッセージ", settings: "設定", endProgram: "番組終了", instructions: "指示", waitingForInstructions: "指示を待っています...", acknowledge: "了解", programSettings: "番組設定", programTitle: "番組タイトル", programDuration: "番組全体の時間（分）", createCueSheet: "進行表の作成", selectTemplate: "テンプレートを選択", load: "読込", save: "保存", overwrite: "上書き保存",
-            cornerName: "コーナー名", minutes: "分", seconds: "秒", type: "タイプ", addRow: "行を追加", startProgramWithSettings: "この内容で番組を開始", presetSettings: "プリセットメッセージ設定", presetSettingsDesc: "カンマ区切りでメッセージを入力してください。", personalityPresetSettings: "パーソナリティのプリセット設定", saveBtn: "保存する", cancel: "キャンセル", ok: "OK",
+            changeDisplaySize: "表示サイズの変更", display100: "表示: 100%", display90: "表示: 90%", display85: "表示: 85%", display75: "表示: 75%", display50: "表示: 50%", display30: "表示: 30%", shortcuts: "ショートカット", updateHistory: "更新履歴", startAsServer: "サーバーとして起動", joinAsClient: "クライアントとして参加", returnToSettings: "番組設定に戻る", waitingForClientsTitle: "クライアントの接続を待っています", waitingForClientsDesc: "他のPCやタブレットから、以下のQRコードまたはURLで接続してください。", openDirectorWindow: "ディレクター画面を開く", openPersonalityWindow: "パーソナリティ画面を開く", enterServerIP: "サーバーPCのIPアドレスを入力", joinAsDirector: "ディレクターとして参加", joinAsPersonality: "パーソナリティとして参加", cueSheet: "進行表", prev: "前へ", next: "次へ", saveLog: "ログ保存", programTimeRemaining: "番組残り時間", programTimeElapsed: "番組経過時間", segmentTimeRemaining: "コーナー残り時間", segmentTimeElapsed: "コーナー経過時間", timeDifference: "押し/巻き", fullscreen: "全画面表示", handwriting: "手書き指示", acknowledged: "了解！", clear: "消去", presetMessages: "プリセットメッセージ", settings: "設定", endProgram: "番組終了", instructions: "指示", waitingForInstructions: "指示を待っています...", acknowledge: "了解", programSettings: "番組設定", programTitle: "番組タイトル", programDuration: "番組全体の時間（分）", createCueSheet: "進行表の作成", timeEntryModeIndividual: "個別", timeEntryModeCumulative: "加算", selectTemplate: "テンプレートを選択", load: "読込", save: "保存", overwrite: "上書き保存",
+            cornerName: "コーナー名", minutes: "分", seconds: "秒", endTimeMinutes: "終了(分)", endTimeSeconds: "終了(秒)", duration: "時間", totalTime: "合計時間:", type: "タイプ", addRow: "行を追加", startProgramWithSettings: "この内容で番組を開始", presetSettings: "プリセットメッセージ設定", presetSettingsDesc: "カンマ区切りでメッセージを入力してください。", personalityPresetSettings: "パーソナリティのプリセット設定", saveBtn: "保存する", cancel: "キャンセル", ok: "OK",
             shortcutSettings: "ショートカットキー設定",
             shortcutSettingsDesc: "設定したい項目のボックスをクリックしてから、割り当てたいキーまたはキーの組み合わせ（例: Ctrl + S）を押してください。",
             saveSettings: "この設定を保存",
@@ -151,7 +162,8 @@ document.addEventListener('DOMContentLoaded', () => {
             toast_templateOverwritten: (name) => `テンプレート「${name}」を上書き保存しました。`,
             alert_connectionLost: "サーバーとの接続が切れました。ホーム画面に戻ります。", alert_connectionFailed: "サーバーに接続できませんでした。", alert_enterIP: "サーバーPCのIPアドレスを入力してください。", alert_addCueItem: "進行表に項目を追加してください。", alert_confirmEndProgram: "本当に番組を終了しますか？", alert_noLogToDownload: "ダウンロードするログがありません。", alert_confirmDeleteTemplate: (name) => `テンプレート「${name}」を本当に削除しますか？`,
             alert_confirmOverwriteTemplate: (name) => `テンプレート「${name}」を現在の内容で上書きしますか？`,
-            prompt_enterTemplateName: "テンプレート名を入力してください", role_select: "役割を選択してください", role_enterIP: "サーバーPCのIPアドレスを入力してください", serverStarting: "サーバーを起動中...", copyURL: "URLをコピー", copied: "コピーしました！", type_talk: "トーク", type_music: "楽曲", type_cm: "CM", shortcut_timer: "タイマー開始 / 停止", shortcut_preset: (name) => `プリセット: ${name}`, shortcut_personality_preset: (name) => `応答: ${name}`,
+            prompt_enterTemplateName: "テンプレート名を入力してください", role_select: "役割を選択してください", role_enterIP: "サーバーPCのIPアドレスを入力してください", serverStarting: "サーバーを起動中...", copyURL: "URLをコピー", copied: "コピーしました！", type_talk: "トーク", type_music: "楽曲", type_cm: "CM", type_other: "その他",
+            shortcut_timer: "タイマー開始 / 停止", shortcut_preset: (name) => `プリセット: ${name}`, shortcut_personality_preset: (name) => `応答: ${name}`,
             defaultProgramTitle: "マイラジオプログラム",
             defaultCueOpening: "オープニング",
             defaultCueMusic1: "楽曲1",
@@ -160,6 +172,10 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultPresets: ['👍', 'OK!', '巻いて！', 'CMへ', 'あと30秒'],
             defaultPersonalityPresets: ['👍', 'OK', '了解です', 'もう一度お願いします', '少し待ってください'],
             updateHistoryContent: [
+                { version: "Ver.2.3.7", note: "加算入力モードの合計時間の計算不具合を修正。" },
+                { version: "Ver.2.3.6", note: "加算入力モードの際に合計時間を表示する機能を追加。" },
+                { version: "Ver.2.3.5", note: "進行表の時間入力方式を個別・加算で切り替える設定を追加。「タイプ」に「その他」を追加。" },
+                { version: "Ver.2.3.4", note: "番組設定画面が外側クリックで閉じないように修正。テンプレートに番組名と放送時間を保存・読込する機能を追加。進行表の時間入力を加算方式に変更。" },
                 { version: "Ver.2.3.3", note: "ダークモード時に手書きの線の色を白に変更する機能を追加。" },
                 { version: "Ver.2.3.2", note: "既存のテンプレートを上書き保存する機能を追加。2つ目のウィンドウが常に最前面に表示され、タスクバーに表示されない問題を修正。" },
                 { version: "Ver.2.3.1", note: "パーソナリティのプリセット設定機能で、初期値の読み込みと保存が正しく行われるよう修正。番組設定モーダルを閉じる際の挙動を改善。" },
@@ -256,7 +272,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- DOM要素の取得 ---
     const 全ての画面 = document.querySelectorAll('main > div, .modal');
     const 閉じるボタン群 = document.querySelectorAll('.modal .close-btn');
-
     const ホーム画面 = document.getElementById('home-screen');
     const ディレクター画面 = document.getElementById('director-screen');
     const パーソナリティ画面 = document.getElementById('personality-screen');
@@ -331,6 +346,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const テーマアイコン = document.querySelector('#theme-toggle-btn i');
     const 全画面表示ボタン = document.getElementById('fullscreen-btn');
     const openPersonalityPresetSettingsBtn = document.getElementById('open-personality-preset-settings-btn');
+    const timeEntryModeToggle = document.getElementById('time-entry-mode-toggle');
+    const cueSheetHeader = document.querySelector('.cue-sheet-header');
+    const totalTimeDisplay = document.getElementById('total-time-display');
+    const totalTimeValue = document.getElementById('total-time-value');
 
     let socket;
     let 自分の役割 = null;
@@ -346,6 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastCanvasWidth = 1;
     let lastCanvasHeight = 1;
     let resizeTimer;
+    let isCumulativeTimeMode = false;
 
     // --- 動的UI生成 ---
     const returnToSettingsBtn = document.createElement('button');
@@ -755,12 +775,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function 番組を開始する() {
         const t = translations[currentLang];
+        recalculateDurations();
         const 進行表データ = [];
         document.querySelectorAll('#cue-sheet-rows-container .cue-sheet-row').forEach((row, index) => {
             進行表データ.push({
                 id: index,
                 title: row.querySelector('.cue-title-input').value || 'Untitled',
-                duration: (parseInt(row.querySelector('.cue-minutes-input').value, 10) || 0) * 60 + (parseInt(row.querySelector('.cue-seconds-input').value, 10) || 0),
+                duration: parseInt(row.dataset.duration, 10) || 0,
                 type: row.querySelector('.cue-type-select').value
             });
         });
@@ -832,14 +853,103 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-
     function addCueRow(title = '', minutes = '', seconds = '', type = 'talk') {
         const t = translations[currentLang];
         const row = document.createElement('div');
         row.className = 'cue-sheet-row';
-        row.innerHTML = `<div class="col-title"><input type="text" class="cue-title-input" placeholder="${t.cornerName}" value="${title}"></div><div class="col-min"><input type="number" class="cue-minutes-input" placeholder="${t.minutes}" value="${minutes}" min="0"></div><div class="col-sec"><input type="number" class="cue-seconds-input" placeholder="${t.seconds}" value="${seconds}" min="0" max="59"></div><div class="col-type"><select class="cue-type-select"><option value="talk" ${type === 'talk' ? 'selected' : ''}>${t.type_talk}</option><option value="music" ${type === 'music' ? 'selected' : ''}>${t.type_music}</option><option value="cm" ${type === 'cm' ? 'selected' : ''}>${t.type_cm}</option></select></div><div class="col-action"><button class="remove-cue-row-btn icon-btn danger-btn">×</button></div>`;
+
+        const typeOptions = `
+            <option value="talk" ${type === 'talk' ? 'selected' : ''}>${t.type_talk}</option>
+            <option value="music" ${type === 'music' ? 'selected' : ''}>${t.type_music}</option>
+            <option value="cm" ${type === 'cm' ? 'selected' : ''}>${t.type_cm}</option>
+            <option value="other" ${type === 'other' ? 'selected' : ''}>${t.type_other}</option>
+        `;
+
+        row.innerHTML = `
+            <div class="col-title"><input type="text" class="cue-title-input" placeholder="${t.cornerName}" value="${title}"></div>
+            <div class="col-time-min"><input type="number" class="cue-time-minutes-input" placeholder="${t.minutes}" value="${minutes}" min="0"></div>
+            <div class="col-time-sec"><input type="number" class="cue-time-seconds-input" placeholder="${t.seconds}" value="${seconds}" min="0" max="59"></div>
+            <div class="col-duration"><span class="cue-calculated-duration">0:00</span></div>
+            <div class="col-type"><select class="cue-type-select">${typeOptions}</select></div>
+            <div class="col-action"><button class="remove-cue-row-btn icon-btn danger-btn">×</button></div>`;
+
         進行表行コンテナ.appendChild(row);
-        row.querySelector('.remove-cue-row-btn').addEventListener('click', () => row.remove());
+        row.querySelector('.remove-cue-row-btn').addEventListener('click', () => {
+            row.remove();
+            recalculateDurations();
+        });
+    }
+
+    function recalculateDurations() {
+        let previousEndTimeSec = 0;
+        let totalDurationSec = 0; // ★★★ 修正点 ★★★
+        const rows = document.querySelectorAll('#cue-sheet-rows-container .cue-sheet-row');
+        rows.forEach(row => {
+            const minInput = row.querySelector('.cue-time-minutes-input');
+            const secInput = row.querySelector('.cue-time-seconds-input');
+            let durationSec = 0;
+
+            if (isCumulativeTimeMode) {
+                const durationDisplay = row.querySelector('.cue-calculated-duration');
+                const currentEndTimeSec = (parseInt(minInput.value, 10) || 0) * 60 + (parseInt(secInput.value, 10) || 0);
+                durationSec = currentEndTimeSec - previousEndTimeSec;
+
+                if (durationDisplay) {
+                    const durationMin = Math.floor(Math.abs(durationSec) / 60);
+                    const durationRemainingSec = Math.abs(durationSec) % 60;
+                    durationDisplay.textContent = `${durationSec < 0 ? '-' : ''}${durationMin}:${String(durationRemainingSec).padStart(2, '0')}`;
+                    durationDisplay.style.color = durationSec < 0 ? '#e74c3c' : '';
+                }
+                previousEndTimeSec = currentEndTimeSec;
+            } else {
+                durationSec = (parseInt(minInput.value, 10) || 0) * 60 + (parseInt(secInput.value, 10) || 0);
+            }
+            row.dataset.duration = durationSec;
+            totalDurationSec += durationSec; // ★★★ 修正点 ★★★
+        });
+
+        // 合計時間を計算して表示
+        if (rows.length > 0) {
+            const totalMinutes = Math.floor(totalDurationSec / 60); // ★★★ 修正点 ★★★
+            const totalSeconds = totalDurationSec % 60; // ★★★ 修正点 ★★★
+            totalTimeValue.textContent = `${totalMinutes}:${String(totalSeconds).padStart(2, '0')}`;
+            totalTimeDisplay.classList.remove('hidden');
+        } else {
+            totalTimeDisplay.classList.add('hidden');
+        }
+    }
+
+    function updateCueSheetLayout(isCumulative) {
+        const t = translations[currentLang];
+        isCumulativeTimeMode = isCumulative;
+
+        document.getElementById('cue-sheet-builder').classList.toggle('cumulative-mode', isCumulative);
+        document.getElementById('cue-sheet-builder').classList.toggle('individual-mode', !isCumulative);
+
+        const rows = Array.from(document.querySelectorAll('#cue-sheet-rows-container .cue-sheet-row'));
+        const rowData = rows.map(row => {
+            recalculateDurations();
+            return {
+                title: row.querySelector('.cue-title-input').value,
+                duration: parseInt(row.dataset.duration, 10) || 0,
+                type: row.querySelector('.cue-type-select').value
+            };
+        });
+
+        進行表行コンテナ.innerHTML = '';
+        let cumulativeTimeSec = 0;
+
+        rowData.forEach(data => {
+            const durationSec = data.duration;
+            if (isCumulative) {
+                cumulativeTimeSec += durationSec;
+                addCueRow(data.title, Math.floor(cumulativeTimeSec / 60), cumulativeTimeSec % 60, data.type);
+            } else {
+                addCueRow(data.title, Math.floor(durationSec / 60), durationSec % 60, data.type);
+            }
+        });
+
+        recalculateDurations();
     }
 
     function 番組設定モーダルをリセットする() {
@@ -847,10 +957,19 @@ document.addEventListener('DOMContentLoaded', () => {
         番組タイトル入力欄.value = t.defaultProgramTitle;
         番組時間入力欄.value = '30';
         進行表行コンテナ.innerHTML = '';
-        addCueRow(t.defaultCueOpening, '5', '0', 'talk');
-        addCueRow(t.defaultCueMusic1, '4', '0', 'music');
-        addCueRow(t.defaultCueCM, '1', '0', 'cm');
-        addCueRow(t.defaultCueEnding, '1', '0', 'talk');
+
+        if (isCumulativeTimeMode) {
+            addCueRow(t.defaultCueOpening, '5', '0', 'talk');
+            addCueRow(t.defaultCueMusic1, '9', '0', 'music');
+            addCueRow(t.defaultCueCM, '10', '0', 'cm');
+            addCueRow(t.defaultCueEnding, '11', '0', 'talk');
+        } else {
+            addCueRow(t.defaultCueOpening, '5', '0', 'talk');
+            addCueRow(t.defaultCueMusic1, '4', '0', 'music');
+            addCueRow(t.defaultCueCM, '1', '0', 'cm');
+            addCueRow(t.defaultCueEnding, '1', '0', 'talk');
+        }
+        recalculateDurations();
     }
 
     function eventToShortcutString(e) {
@@ -1018,6 +1137,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- イベントリスナー設定 ---
+    進行表行コンテナ.addEventListener('input', (e) => {
+        if (e.target.classList.contains('cue-time-minutes-input') || e.target.classList.contains('cue-time-seconds-input')) {
+            recalculateDurations();
+        }
+    });
+
+    timeEntryModeToggle.addEventListener('change', () => {
+        updateCueSheetLayout(timeEntryModeToggle.checked);
+    });
+
     言語選択.addEventListener('change', (e) => setLanguage(e.target.value));
     表示サイズ選択.addEventListener('change', (e) => {
         const newScale = e.target.value;
@@ -1081,7 +1210,20 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     ショートカット設定ボタン.onclick = openShortcutSettingsModal;
     ショートカット保存ボタン.onclick = saveShortcuts;
-    行追加ボタン.onclick = () => addCueRow();
+    行追加ボタン.onclick = () => {
+        const rows = document.querySelectorAll('#cue-sheet-rows-container .cue-sheet-row');
+        if (isCumulativeTimeMode && rows.length > 0) {
+            const lastRow = rows[rows.length - 1];
+            const minInput = lastRow.querySelector('.cue-time-minutes-input');
+            const secInput = lastRow.querySelector('.cue-time-seconds-input');
+            const lastEndTime = (parseInt(minInput.value, 10) || 0) * 60 + (parseInt(secInput.value, 10) || 0);
+            const newEndTime = lastEndTime + 60; // 最後に1分追加
+            addCueRow('', Math.floor(newEndTime / 60), newEndTime % 60);
+        } else {
+            addCueRow('', '1', '0');
+        }
+    };
+
     playPauseBtn.onclick = () => sendData('togglePlayPause');
     次へボタン.onclick = () => sendData('nextItem');
     前へボタン.onclick = () => sendData('prevItem');
@@ -1113,14 +1255,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const name = await getTemplateNameFromModal();
         if (name === null || name.trim() === '') return;
 
+        recalculateDurations();
         const templates = getTemplates();
         const rows = document.querySelectorAll('#cue-sheet-rows-container .cue-sheet-row');
-        const templateData = Array.from(rows).map(row => ({
-            title: row.querySelector('.cue-title-input').value,
-            minutes: row.querySelector('.cue-minutes-input').value,
-            seconds: row.querySelector('.cue-seconds-input').value,
-            type: row.querySelector('.cue-type-select').value
-        }));
+        const templateData = {
+            programTitle: 番組タイトル入力欄.value,
+            programDuration: 番組時間入力欄.value,
+            cueSheet: Array.from(rows).map(row => {
+                const durationSec = parseInt(row.dataset.duration, 10) || 0;
+                return {
+                    title: row.querySelector('.cue-title-input').value,
+                    minutes: String(Math.floor(durationSec / 60)),
+                    seconds: String(durationSec % 60),
+                    type: row.querySelector('.cue-type-select').value
+                };
+            })
+        };
         templates[name] = templateData;
         saveTemplates(templates);
         テンプレートリストを更新();
@@ -1134,7 +1284,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const templateData = templates[name];
         if (templateData) {
             進行表行コンテナ.innerHTML = '';
-            templateData.forEach(item => addCueRow(item.title, item.minutes, item.seconds, item.type));
+
+            let cueSheetItems;
+            if (Array.isArray(templateData)) {
+                番組タイトル入力欄.value = translations[currentLang].defaultProgramTitle;
+                番組時間入力欄.value = '30';
+                cueSheetItems = templateData;
+            } else {
+                番組タイトル入力欄.value = templateData.programTitle || '';
+                番組時間入力欄.value = templateData.programDuration || '30';
+                cueSheetItems = templateData.cueSheet || [];
+            }
+
+            let cumulativeTimeSec = 0;
+            cueSheetItems.forEach(item => {
+                const durationSec = (parseInt(item.minutes, 10) || 0) * 60 + (parseInt(item.seconds, 10) || 0);
+                if (isCumulativeTimeMode) {
+                    cumulativeTimeSec += durationSec;
+                    addCueRow(item.title, String(Math.floor(cumulativeTimeSec / 60)), String(cumulativeTimeSec % 60), item.type);
+                } else {
+                    addCueRow(item.title, item.minutes, item.seconds, item.type);
+                }
+            });
+
+            recalculateDurations();
+
             テンプレート上書き保存ボタン.disabled = false;
         }
     };
@@ -1145,14 +1319,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const t = translations[currentLang];
         if (confirm(t.alert_confirmOverwriteTemplate(name))) {
+            recalculateDurations();
             const templates = getTemplates();
             const rows = document.querySelectorAll('#cue-sheet-rows-container .cue-sheet-row');
-            const templateData = Array.from(rows).map(row => ({
-                title: row.querySelector('.cue-title-input').value,
-                minutes: row.querySelector('.cue-minutes-input').value,
-                seconds: row.querySelector('.cue-seconds-input').value,
-                type: row.querySelector('.cue-type-select').value
-            }));
+            const templateData = {
+                programTitle: 番組タイトル入力欄.value,
+                programDuration: 番組時間入力欄.value,
+                cueSheet: Array.from(rows).map(row => {
+                    const durationSec = parseInt(row.dataset.duration, 10) || 0;
+                    return {
+                        title: row.querySelector('.cue-title-input').value,
+                        minutes: String(Math.floor(durationSec / 60)),
+                        seconds: String(durationSec % 60),
+                        type: row.querySelector('.cue-type-select').value
+                    };
+                })
+            };
             templates[name] = templateData;
             saveTemplates(templates);
             showToast(t.toast_templateOverwritten(name));
@@ -1168,7 +1350,6 @@ document.addEventListener('DOMContentLoaded', () => {
             delete templates[name];
             saveTemplates(templates);
             テンプレートリストを更新();
-            // 削除後はボタンを無効化
             テンプレート読込ボタン.disabled = true;
             テンプレート上書き保存ボタン.disabled = true;
             テンプレート削除ボタン.disabled = true;
@@ -1215,6 +1396,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     };
+
     テーマ切替ボタン.onclick = () => {
         document.body.classList.toggle('dark-theme');
         let newPenColor;
@@ -1234,6 +1416,7 @@ document.addEventListener('DOMContentLoaded', () => {
             手書きパッド.penColor = newPenColor;
         }
     };
+
     copyUrlBtn.onclick = () => {
         const urlToCopy = サーバーURLテキスト.textContent;
         if (!urlToCopy || copyUrlBtn.disabled) return;
@@ -1275,9 +1458,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.onclick = (e) => {
         if (e.target.classList.contains('modal')) {
-            e.target.classList.add('hidden');
+            if (e.target.id !== 'program-settings-modal') {
+                e.target.classList.add('hidden');
+            }
         }
     };
+
     if (全画面表示ボタン) {
         全画面表示ボタン.onclick = () => {
             if (document.fullscreenElement) {
@@ -1302,6 +1488,8 @@ document.addEventListener('DOMContentLoaded', () => {
             テーマアイコン.classList.remove('fa-moon');
             テーマアイコン.classList.add('fa-sun');
         }
+
+        updateCueSheetLayout(timeEntryModeToggle.checked);
 
         const urlParams = new URLSearchParams(window.location.search);
         const role = urlParams.get('role');

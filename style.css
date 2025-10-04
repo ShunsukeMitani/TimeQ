@@ -339,6 +339,10 @@ button:disabled {
     background-color: #fffde7;
 }
 
+.cue-item.type-other {
+    background-color: #f3e5f5;
+}
+
 .cue-item.current {
     background-color: #f9a825 !important;
     color: white;
@@ -427,7 +431,6 @@ button:disabled {
     background-color: #2ecc71;
 }
 
-/* ▼▼▼ 修正点: 表示を大きくする ▼▼▼ */
 #ack-indicator {
     position: absolute;
     top: 1.875rem;
@@ -469,10 +472,10 @@ button:disabled {
     padding: 1.875rem 2.5rem;
     border-radius: 0.75rem;
     width: 90%;
-    max-width: 37.5rem;
+    max-width: 800px;
     position: relative;
     text-align: left;
-    max-height: 80vh;
+    max-height: 90vh;
     overflow-y: auto;
 }
 
@@ -504,6 +507,79 @@ button:disabled {
     margin-bottom: 1.25rem;
 }
 
+.cue-sheet-builder-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.time-entry-mode-switch {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+/* --- スイッチのスタイル --- */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #2196F3;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+    transform: translateX(18px);
+}
+
+.slider.round {
+    border-radius: 22px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* --- スイッチのスタイルここまで --- */
+
+/* ★★★ ここから修正 ★★★ */
 .cue-sheet-header,
 .cue-sheet-row {
     display: flex;
@@ -516,35 +592,13 @@ button:disabled {
     font-weight: bold;
     color: #555;
     font-size: 0.875rem;
-    padding-right: calc(2.5rem + 0.625rem);
+    padding-right: 30px;
+    /* 削除ボタンの幅分 */
 }
 
-.cue-sheet-header .col-title {
-    text-align: left;
-}
-
-.cue-sheet-header .col-min,
-.cue-sheet-header .col-sec,
-.cue-sheet-header .col-type {
-    text-align: center;
-}
-
-.col-title {
-    flex: 1;
-}
-
-.col-min,
-.col-sec {
-    width: 3.75rem;
-    text-align: center;
-}
-
-.col-type {
-    width: 7.5rem;
-}
-
-.col-action {
-    width: 2.5rem;
+.cue-sheet-header>div,
+.cue-sheet-row>div {
+    box-sizing: border-box;
 }
 
 .cue-sheet-row input,
@@ -552,13 +606,54 @@ button:disabled {
     margin-bottom: 0;
 }
 
+/* 列の定義 */
+.col-title {
+    flex: 1;
+    min-width: 150px;
+}
+
+.col-time-min {
+    width: 60px;
+    text-align: center;
+}
+
+.col-time-sec {
+    width: 60px;
+    text-align: center;
+}
+
+.col-duration {
+    width: 60px;
+    text-align: center;
+}
+
+.col-type {
+    width: 100px;
+}
+
+.col-action {
+    width: 30px;
+}
+
+.col-duration span {
+    display: block;
+    text-align: center;
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: #333;
+    padding: 0.625rem 0;
+    /* inputの高さと合わせる */
+}
+
 .remove-cue-row-btn {
     padding: 0;
-    width: 1.875rem;
-    height: 1.875rem;
+    width: 30px;
+    height: 30px;
     font-size: 1rem;
-    line-height: 1.875rem;
+    line-height: 30px;
 }
+
+/* ★★★ ここまで修正 ★★★ */
 
 #add-cue-row-btn {
     width: auto;
@@ -633,13 +728,10 @@ button:disabled {
     padding: 0.625rem 1rem;
 }
 
-/* ★★★ 修正点: personality-presets-area 内のボタンのスタイルを明確化 ★★★ */
 #personality-presets-area .icon-btn {
     background-color: #9b59b6;
     flex-grow: 1;
-    /* ボタンが均等に広がるように */
     min-width: 120px;
-    /* ボタンの最小幅を確保 */
 }
 
 .right-panel-footer {
@@ -817,6 +909,10 @@ body.dark-theme .cue-item.type-cm {
     background-color: #4e342e;
 }
 
+body.dark-theme .cue-item.type-other {
+    background-color: #4a148c;
+}
+
 body.dark-theme .cue-item.current {
     color: #111;
 }
@@ -882,4 +978,8 @@ body.dark-theme #language-select {
     z-index: 200;
     text-align: center;
     box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.5);
+}
+
+body.dark-theme .col-duration span {
+    color: #e0e0e0;
 }

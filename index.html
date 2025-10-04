@@ -197,7 +197,17 @@
             <label for="program-duration" data-i18n-key="programDuration">番組全体の時間（分）</label>
             <input type="number" id="program-duration" value="30" min="1">
             <div id="cue-sheet-builder">
-                <h3 data-i18n-key="createCueSheet">進行表の作成</h3>
+                <div class="cue-sheet-builder-header">
+                    <h3 data-i18n-key="createCueSheet">進行表の作成</h3>
+                    <div class="time-entry-mode-switch">
+                        <span data-i18n-key="timeEntryModeIndividual">個別</span>
+                        <label class="switch">
+                            <input type="checkbox" id="time-entry-mode-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                        <span data-i18n-key="timeEntryModeCumulative">加算</span>
+                    </div>
+                </div>
                 <div class="template-management">
                     <select id="template-select">
                         <option value="" data-i18n-key="selectTemplate">テンプレートを選択</option>
@@ -213,14 +223,20 @@
                 </div>
                 <div class="cue-sheet-header">
                     <div class="col-title" data-i18n-key="cornerName">コーナー名</div>
-                    <div class="col-min" data-i18n-key="minutes">分</div>
-                    <div class="col-sec" data-i18n-key="seconds">秒</div>
+                    <div class="col-time-min" data-i18n-key="minutes">分</div>
+                    <div class="col-time-sec" data-i18n-key="seconds">秒</div>
                     <div class="col-type" data-i18n-key="type">タイプ</div>
                     <div class="col-action"></div>
                 </div>
                 <div id="cue-sheet-rows-container"></div>
-                <button id="add-cue-row-btn"><i class="fas fa-plus"></i> <span
-                        data-i18n-key="addRow">行を追加</span></button>
+                <div class="cue-sheet-footer">
+                    <button id="add-cue-row-btn"><i class="fas fa-plus"></i> <span
+                            data-i18n-key="addRow">行を追加</span></button>
+                    <div id="total-time-display" class="hidden">
+                        <strong data-i18n-key="totalTime">合計時間:</strong>
+                        <span id="total-time-value">0:00</span>
+                    </div>
+                </div>
             </div>
             <button id="start-program-btn"><i class="fas fa-rocket"></i> <span
                     data-i18n-key="startProgramWithSettings">この内容で番組を開始</span></button>
