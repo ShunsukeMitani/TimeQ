@@ -7,7 +7,7 @@ const qrcode = require('qrcode');
 
 let win;
 let directorWin = null;
-let personalityWin = null; // パーソナリティ用ウィンドウを保持する変数
+let personalityWin = null;
 
 const gotTheLock = app.requestSingleInstanceLock();
 
@@ -56,7 +56,7 @@ if (!gotTheLock) {
     directorWin = new BrowserWindow({
       width: 1280,
       height: 800,
-      parent: win,
+      // parent: win, // ★★★ 修正点: この行を削除またはコメントアウト ★★★
       webPreferences: {
         preload: path.join(__dirname, 'preload.js'),
       },
@@ -70,7 +70,6 @@ if (!gotTheLock) {
     });
   }
 
-  // ▼▼▼ パーソナリティ用ウィンドウを作成する関数を追加 ▼▼▼
   function createPersonalityWindow() {
     if (personalityWin) {
       personalityWin.focus();
@@ -79,7 +78,7 @@ if (!gotTheLock) {
     personalityWin = new BrowserWindow({
       width: 1024,
       height: 768,
-      parent: win,
+      // parent: win, // ★★★ 修正点: この行を削除またはコメントアウト ★★★
       webPreferences: {
         preload: path.join(__dirname, 'preload.js'),
       },
@@ -100,7 +99,7 @@ if (!gotTheLock) {
   });
 
   ipcMain.on('open-director-window', createDirectorWindow);
-  ipcMain.on('open-personality-window', createPersonalityWindow); // この行を追加
+  ipcMain.on('open-personality-window', createPersonalityWindow);
 
   ipcMain.handle('start-server', async () => {
     try {
@@ -111,9 +110,16 @@ if (!gotTheLock) {
       const httpApp = express();
       httpApp.use(express.static(path.join(__dirname)));
 
-      // ネットワーク上のすべてのIPアドレスで待ち受ける設定
-      httpApp.listen(httpPort, '0.0.0.0', () => {
-        console.log(`Webサーバーが http://${ip}:${httpPort} で起動しました。`);
+      await new Promise((resolve, reject) => {
+        const server = httpApp.listen(httpPort, '0.0.0.0');
+        server.on('listening', () => {
+          console.log(`Webサーバーが http://${ip}:${httpPort} で起動しました。`);
+          resolve(server);
+        });
+        server.on('error', (err) => {
+          console.error('HTTPサーバーの起動エラー:', err);
+          reject(err);
+        });
       });
 
       const wss = new WebSocketServer({ port: wsPort });
@@ -149,7 +155,6 @@ if (!gotTheLock) {
               }
               break;
             case 'nextItem':
-              // ▼▼▼ ログを追加 ▼▼▼
               console.log(`[サーバー] nextItem 受信。現在のインデックス: ${programState.currentItemIndex}`);
               if (programState.currentItemIndex < programState.cueSheet.length - 1) {
                 const finishedItem = programState.cueSheet[programState.currentItemIndex];
@@ -157,19 +162,16 @@ if (!gotTheLock) {
                 programState.currentItemIndex++;
                 programState.currentItemStartTime = Date.now();
                 programState.timeDifference = recalculateTimeDifference();
-                // ▼▼▼ ログを追加 ▼▼▼
                 console.log(`[サーバー] -> 更新後のインデックス: ${programState.currentItemIndex}`);
               }
               break;
             case 'prevItem':
-              // ▼▼▼ ログを追加 ▼▼▼
               console.log(`[サーバー] prevItem 受信。現在のインデックス: ${programState.currentItemIndex}`);
               if (programState.currentItemIndex > 0) {
                 programState.cueSheet[programState.currentItemIndex - 1].actualDuration = null;
                 programState.currentItemIndex--;
                 programState.currentItemStartTime = Date.now();
                 programState.timeDifference = recalculateTimeDifference();
-                // ▼▼▼ ログを追加 ▼▼▼
                 console.log(`[サーバー] -> 更新後のインデックス: ${programState.currentItemIndex}`);
               }
               break;
@@ -177,10 +179,14 @@ if (!gotTheLock) {
               broadcastToOthers(ws, { type: 'handwritingUpdate', payload: data.payload });
               return;
             case 'presetMessage':
-              // ▼▼▼ ログを追加 ▼▼▼
               console.log('[サーバー] presetMessage を受信。他のクライアントへ転送します。ペイロード:', data.payload);
               broadcastToOthers(ws, { type: 'presetMessage', payload: data.payload });
-              break; // ★★★ 修正点: returnをbreakに変更し、後続のbroadcastStateが実行されるようにする
+              break;
+            case 'personalityMessage':
+              if (directorWs && directorWs.readyState === directorWs.OPEN) {
+                directorWs.send(JSON.stringify({ type: 'personalityMessage', payload: data.payload }));
+              }
+              return;
             case 'acknowledgement':
               if (directorWs && directorWs.readyState === directorWs.OPEN) {
                 directorWs.send(JSON.stringify({ type: 'acknowledged' }));

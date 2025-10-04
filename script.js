@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Home Screen
             startAsServer: "Start as Server",
             joinAsClient: "Join as Client",
+            returnToSettings: "Return to Program Settings",
             waitingForClientsTitle: "Waiting for Client Connections",
             waitingForClientsDesc: "Connect from other PCs or tablets using the QR code or URL below.",
             openDirectorWindow: "Open Director Window",
@@ -50,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             selectTemplate: "Select Template",
             load: "Load",
             save: "Save",
+            overwrite: "Overwrite",
             cornerName: "Segment Name",
             minutes: "Min",
             seconds: "Sec",
@@ -58,20 +60,24 @@ document.addEventListener('DOMContentLoaded', () => {
             startProgramWithSettings: "Start Program with These Settings",
             presetSettings: "Preset Message Settings",
             presetSettingsDesc: "Enter messages separated by commas.",
+            personalityPresetSettings: "Personality Preset Message Settings",
             saveBtn: "Save",
             cancel: "Cancel",
+            ok: "OK",
             shortcutSettings: "Shortcut Key Settings",
             shortcutSettingsDesc: "Click the box for the item you want to set, then press the key or key combination (e.g., Ctrl + S).",
             saveSettings: "Save These Settings",
             // Dynamic Alerts & Text
+            toast_templateSaved: (name) => `Template "${name}" saved.`,
+            toast_templateOverwritten: (name) => `Template "${name}" has been overwritten.`,
             alert_connectionLost: "Connection to the server was lost. Returning to home screen.",
             alert_connectionFailed: "Could not connect to the server.",
             alert_enterIP: "Please enter the server PC's IP address.",
             alert_addCueItem: "Please add at least one item to the cue sheet.",
             alert_confirmEndProgram: "Are you sure you want to end the program?",
             alert_noLogToDownload: "There is no log to download.",
-            alert_templateSaved: (name) => `Template saved as "${name}".`,
             alert_confirmDeleteTemplate: (name) => `Are you sure you want to delete the template "${name}"?`,
+            alert_confirmOverwriteTemplate: (name) => `Are you sure you want to overwrite the template "${name}" with the current content?`,
             prompt_enterTemplateName: "Enter a name for the template",
             role_select: "Select Your Role",
             role_enterIP: "Enter Server PC's IP Address",
@@ -85,17 +91,20 @@ document.addEventListener('DOMContentLoaded', () => {
             // Shortcut Items
             shortcut_timer: "Timer Start / Stop",
             shortcut_preset: (name) => `Preset: ${name}`,
+            shortcut_personality_preset: (name) => `Response: ${name}`,
             // Default Data
             defaultProgramTitle: "My Radio Program",
             defaultCueOpening: "Opening",
             defaultCueMusic1: "Music 1",
             defaultCueCM: "CM",
             defaultCueEnding: "Ending",
-            // ★★★ 修正点: プリセットメッセージを英語に修正 ★★★
             defaultPresets: ['👍', 'OK!', 'Wrap it up!', 'Go to CM', '30s left'],
+            defaultPersonalityPresets: ['👍', 'OK', 'Got it', 'Please repeat', 'Stand by'],
             // Update History
             updateHistoryContent: [
-                { version: "Ver.2.2.1", note: "Minor corrections" },
+                { version: "Ver.2.3.2", note: "Added a feature to overwrite and save existing templates. Fixed an issue where the second window was always on top and did not appear in the taskbar." },
+                { version: "Ver.2.3.1", note: "Fixed an issue where personality preset settings were not loading or saving correctly. Improved the behavior when closing the program settings modal." },
+                { version: "Ver.2.3.0", note: "Fixed an issue where template inputs became disabled after saving. Added a 'Return to Settings' button after closing the initial setup. Implemented a settings feature for personality preset messages." },
                 { version: "Ver.2.2.0", note: "Added the ability to set multi-key combinations (e.g., Ctrl + S) for shortcuts." },
                 { version: "Ver.2.1.3", note: "Fixed a bug where preset messages sent from the director were not displayed on the personality's screen." },
                 { version: "Ver.2.1.2", note: "Added a button to copy the server URL. Fixed a bug where text would duplicate when switching languages." },
@@ -132,17 +141,27 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         ja: {
-            changeDisplaySize: "表示サイズの変更", display100: "表示: 100%", display90: "表示: 90%", display85: "表示: 85%", display75: "表示: 75%", display50: "表示: 50%", display30: "表示: 30%", shortcuts: "ショートカット", updateHistory: "更新履歴", startAsServer: "サーバーとして起動", joinAsClient: "クライアントとして参加", waitingForClientsTitle: "クライアントの接続を待っています", waitingForClientsDesc: "他のPCやタブレットから、以下のQRコードまたはURLで接続してください。", openDirectorWindow: "ディレクター画面を開く", openPersonalityWindow: "パーソナリティ画面を開く", enterServerIP: "サーバーPCのIPアドレスを入力", joinAsDirector: "ディレクターとして参加", joinAsPersonality: "パーソナリティとして参加", cueSheet: "進行表", prev: "前へ", next: "次へ", saveLog: "ログ保存", programTimeRemaining: "番組残り時間", programTimeElapsed: "番組経過時間", segmentTimeRemaining: "コーナー残り時間", segmentTimeElapsed: "コーナー経過時間", timeDifference: "押し/巻き", fullscreen: "全画面表示", handwriting: "手書き指示", acknowledged: "了解！", clear: "消去", presetMessages: "プリセットメッセージ", settings: "設定", endProgram: "番組終了", instructions: "指示", waitingForInstructions: "指示を待っています...", acknowledge: "了解", programSettings: "番組設定", programTitle: "番組タイトル", programDuration: "番組全体の時間（分）", createCueSheet: "進行表の作成", selectTemplate: "テンプレートを選択", load: "読込", save: "保存", cornerName: "コーナー名", minutes: "分", seconds: "秒", type: "タイプ", addRow: "行を追加", startProgramWithSettings: "この内容で番組を開始", presetSettings: "プリセットメッセージ設定", presetSettingsDesc: "カンマ区切りでメッセージを入力してください。", saveBtn: "保存する", cancel: "キャンセル", shortcutSettings: "ショートカットキー設定",
+            changeDisplaySize: "表示サイズの変更", display100: "表示: 100%", display90: "表示: 90%", display85: "表示: 85%", display75: "表示: 75%", display50: "表示: 50%", display30: "表示: 30%", shortcuts: "ショートカット", updateHistory: "更新履歴", startAsServer: "サーバーとして起動", joinAsClient: "クライアントとして参加", returnToSettings: "番組設定に戻る", waitingForClientsTitle: "クライアントの接続を待っています", waitingForClientsDesc: "他のPCやタブレットから、以下のQRコードまたはURLで接続してください。", openDirectorWindow: "ディレクター画面を開く", openPersonalityWindow: "パーソナリティ画面を開く", enterServerIP: "サーバーPCのIPアドレスを入力", joinAsDirector: "ディレクターとして参加", joinAsPersonality: "パーソナリティとして参加", cueSheet: "進行表", prev: "前へ", next: "次へ", saveLog: "ログ保存", programTimeRemaining: "番組残り時間", programTimeElapsed: "番組経過時間", segmentTimeRemaining: "コーナー残り時間", segmentTimeElapsed: "コーナー経過時間", timeDifference: "押し/巻き", fullscreen: "全画面表示", handwriting: "手書き指示", acknowledged: "了解！", clear: "消去", presetMessages: "プリセットメッセージ", settings: "設定", endProgram: "番組終了", instructions: "指示", waitingForInstructions: "指示を待っています...", acknowledge: "了解", programSettings: "番組設定", programTitle: "番組タイトル", programDuration: "番組全体の時間（分）", createCueSheet: "進行表の作成", selectTemplate: "テンプレートを選択", load: "読込", save: "保存", overwrite: "上書き保存",
+            cornerName: "コーナー名", minutes: "分", seconds: "秒", type: "タイプ", addRow: "行を追加", startProgramWithSettings: "この内容で番組を開始", presetSettings: "プリセットメッセージ設定", presetSettingsDesc: "カンマ区切りでメッセージを入力してください。", personalityPresetSettings: "パーソナリティのプリセット設定", saveBtn: "保存する", cancel: "キャンセル", ok: "OK",
+            shortcutSettings: "ショートカットキー設定",
             shortcutSettingsDesc: "設定したい項目のボックスをクリックしてから、割り当てたいキーまたはキーの組み合わせ（例: Ctrl + S）を押してください。",
-            saveSettings: "この設定を保存", alert_connectionLost: "サーバーとの接続が切れました。ホーム画面に戻ります。", alert_connectionFailed: "サーバーに接続できませんでした。", alert_enterIP: "サーバーPCのIPアドレスを入力してください。", alert_addCueItem: "進行表に項目を追加してください。", alert_confirmEndProgram: "本当に番組を終了しますか？", alert_noLogToDownload: "ダウンロードするログがありません。", alert_templateSaved: (name) => `「${name}」という名前でテンプレートを保存しました。`, alert_confirmDeleteTemplate: (name) => `テンプレート「${name}」を本当に削除しますか？`, prompt_enterTemplateName: "テンプレート名を入力してください", role_select: "役割を選択してください", role_enterIP: "サーバーPCのIPアドレスを入力してください", serverStarting: "サーバーを起動中...", copyURL: "URLをコピー", copied: "コピーしました！", type_talk: "トーク", type_music: "楽曲", type_cm: "CM", shortcut_timer: "タイマー開始 / 停止", shortcut_preset: (name) => `プリセット: ${name}`,
+            saveSettings: "この設定を保存",
+            toast_templateSaved: (name) => `テンプレート「${name}」を保存しました。`,
+            toast_templateOverwritten: (name) => `テンプレート「${name}」を上書き保存しました。`,
+            alert_connectionLost: "サーバーとの接続が切れました。ホーム画面に戻ります。", alert_connectionFailed: "サーバーに接続できませんでした。", alert_enterIP: "サーバーPCのIPアドレスを入力してください。", alert_addCueItem: "進行表に項目を追加してください。", alert_confirmEndProgram: "本当に番組を終了しますか？", alert_noLogToDownload: "ダウンロードするログがありません。", alert_confirmDeleteTemplate: (name) => `テンプレート「${name}」を本当に削除しますか？`,
+            alert_confirmOverwriteTemplate: (name) => `テンプレート「${name}」を現在の内容で上書きしますか？`,
+            prompt_enterTemplateName: "テンプレート名を入力してください", role_select: "役割を選択してください", role_enterIP: "サーバーPCのIPアドレスを入力してください", serverStarting: "サーバーを起動中...", copyURL: "URLをコピー", copied: "コピーしました！", type_talk: "トーク", type_music: "楽曲", type_cm: "CM", shortcut_timer: "タイマー開始 / 停止", shortcut_preset: (name) => `プリセット: ${name}`, shortcut_personality_preset: (name) => `応答: ${name}`,
             defaultProgramTitle: "マイラジオプログラム",
             defaultCueOpening: "オープニング",
             defaultCueMusic1: "楽曲1",
             defaultCueCM: "CM",
             defaultCueEnding: "エンディング",
             defaultPresets: ['👍', 'OK!', '巻いて！', 'CMへ', 'あと30秒'],
+            defaultPersonalityPresets: ['👍', 'OK', '了解です', 'もう一度お願いします', '少し待ってください'],
             updateHistoryContent: [
-                { version: "Ver.2.2.1", note: "軽度な修正" },
+                { version: "Ver.2.3.2", note: "既存のテンプレートを上書き保存する機能を追加。2つ目のウィンドウが常に最前面に表示され、タスクバーに表示されない問題を修正。" },
+                { version: "Ver.2.3.1", note: "パーソナリティのプリセット設定機能で、初期値の読み込みと保存が正しく行われるよう修正。番組設定モーダルを閉じる際の挙動を改善。" },
+                { version: "Ver.2.3.0", note: "テンプレート保存後に入力不可になる不具合を修正。初期設定を閉じた際にホームへ戻り「設定に戻る」ボタンを表示するよう変更。パーソナリティ側のプリセット設定機能を追加。" },
                 { version: "Ver.2.2.0", note: "ショートカットキーにCtrlやShiftなどを組み合わせた複数キーを設定できる機能を追加。" },
                 { version: "Ver.2.1.3", note: "ディレクターから送信されたプリセットメッセージがパーソナリティに表示されない不具合を修正。" },
                 { version: "Ver.2.1.2", note: "サーバーURLをコピーするボタンを追加。言語切替時にテキストが二重表示される不具合を修正。" },
@@ -182,7 +201,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentLang = localStorage.getItem('timeqLang') || 'ja';
 
-    // ★★★ ここから修正 ★★★
     function setLanguage(lang) {
         currentLang = lang;
         localStorage.setItem('timeqLang', lang);
@@ -190,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const t = translations[lang];
         document.querySelectorAll('[data-i18n-key]').forEach(el => {
             const key = el.dataset.i18nKey;
-            if (t[key]) {
+            if (t[key] && typeof t[key] === 'string') {
                 el.innerHTML = t[key];
             }
         });
@@ -208,16 +226,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         document.getElementById('language-select').value = lang;
 
-        // 言語に連動する動的コンテンツを再読み込み
+        if (document.getElementById('return-to-settings-btn')) {
+            const span = document.querySelector('#return-to-settings-btn span');
+            if (span) span.textContent = t.returnToSettings;
+        }
+        if (document.getElementById('personality-preset-settings-modal')) {
+            document.querySelector('#personality-preset-settings-modal h2').textContent = t.personalityPresetSettings;
+            document.querySelector('#personality-preset-settings-modal p').textContent = t.presetSettingsDesc;
+            document.querySelector('#save-personality-preset-messages-btn span').textContent = t.saveBtn;
+        }
+        const pSettingsBtnSpan = document.querySelector('#open-personality-preset-settings-btn span');
+        if (pSettingsBtnSpan) {
+            pSettingsBtnSpan.textContent = t.settings;
+        }
+
         プリセットメッセージを読み込む();
-        // ディレクター画面が表示されている場合、プリセットボタンも再描画する
-        if (!ディレクター画面.classList.contains('hidden')) {
+        loadPersonalityPresets();
+
+        if (自分の役割 === 'director' && !ディレクター画面.classList.contains('hidden')) {
             プリセットボタンを描画する();
         }
+        if (自分の役割 === 'personality' && !パーソナリティ画面.classList.contains('hidden')) {
+            createPersonalityPresetButtons();
+        }
     }
-    // ★★★ ここまで修正 ★★★
 
+    // --- DOM要素の取得 ---
     const 全ての画面 = document.querySelectorAll('main > div, .modal');
+    const 閉じるボタン群 = document.querySelectorAll('.modal .close-btn');
+
     const ホーム画面 = document.getElementById('home-screen');
     const ディレクター画面 = document.getElementById('director-screen');
     const パーソナリティ画面 = document.getElementById('personality-screen');
@@ -225,6 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const 更新履歴モーダル = document.getElementById('history-log-modal');
     const プリセット設定モーダル = document.getElementById('preset-settings-modal');
     const ショートカット設定モーダル = document.getElementById('shortcut-settings-modal');
+    const personalityPresetModal = document.getElementById('personality-preset-settings-modal');
     const ホームタイトル = document.getElementById('home-title');
     const electronホーム = document.getElementById('electron-home');
     const browserホーム = document.getElementById('browser-home');
@@ -239,7 +277,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const openDirectorWindowBtn = document.getElementById('open-director-window-btn');
     const openPersonalityWindowBtn = document.getElementById('open-personality-window-btn');
     const copyUrlBtn = document.getElementById('copy-url-btn');
-    const 閉じるボタン群 = document.querySelectorAll('.close-btn');
     const 更新履歴ボタン = document.getElementById('history-log-btn');
     const 更新履歴リスト = document.getElementById('history-log-list');
     const ショートカット設定ボタン = document.getElementById('shortcut-settings-btn');
@@ -279,20 +316,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const 番組開始ボタン = document.getElementById('start-program-btn');
     const プリセットメッセージ入力欄 = document.getElementById('preset-messages-input');
     const プリセット保存ボタン = document.getElementById('save-preset-messages-btn');
+    const personalityPresetMessagesInput = document.getElementById('personality-preset-messages-input');
+    const savePersonalityPresetMessagesBtn = document.getElementById('save-personality-preset-messages-btn');
     const 進行表行コンテナ = document.getElementById('cue-sheet-rows-container');
     const 行追加ボタン = document.getElementById('add-cue-row-btn');
     const テンプレート保存ボタン = document.getElementById('save-template-btn');
     const テンプレート選択 = document.getElementById('template-select');
     const テンプレート読込ボタン = document.getElementById('load-template-btn');
     const テンプレート削除ボタン = document.getElementById('delete-template-btn');
-    const カスタムプロンプトモーダル = document.getElementById('custom-prompt-modal');
-    const プロンプトタイトル = document.getElementById('prompt-title');
-    const プロンプト入力欄 = document.getElementById('prompt-input');
-    const プロンプトOKボタン = document.getElementById('prompt-ok-btn');
-    const プロンプトキャンセルボタン = document.getElementById('prompt-cancel-btn');
+    const テンプレート上書き保存ボタン = document.getElementById('overwrite-template-btn');
     const テーマ切替ボタン = document.getElementById('theme-toggle-btn');
     const テーマアイコン = document.querySelector('#theme-toggle-btn i');
     const 全画面表示ボタン = document.getElementById('fullscreen-btn');
+    const openPersonalityPresetSettingsBtn = document.getElementById('open-personality-preset-settings-btn');
 
     let socket;
     let 自分の役割 = null;
@@ -300,6 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let timerMode = 'countdown';
     let 手書きパッド;
     let プリセットメッセージリスト = [];
+    let personalityPresetMessagesList = [];
     let programLog = [];
     let currentProgramState = null;
     let shortcuts = {};
@@ -307,6 +344,123 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastCanvasWidth = 1;
     let lastCanvasHeight = 1;
     let resizeTimer;
+
+    // --- 動的UI生成 ---
+    const returnToSettingsBtn = document.createElement('button');
+    if (electronホーム) {
+        returnToSettingsBtn.innerHTML = `<i class="fas fa-cog"></i> <span data-i18n-key="returnToSettings">番組設定に戻る</span>`;
+        returnToSettingsBtn.id = 'return-to-settings-btn';
+        returnToSettingsBtn.classList.add('hidden');
+        returnToSettingsBtn.style.marginTop = '1rem';
+        electronホーム.appendChild(returnToSettingsBtn);
+    }
+
+    const templateNameModal = document.createElement('div');
+    templateNameModal.id = 'template-name-modal';
+    templateNameModal.className = 'modal hidden';
+    templateNameModal.innerHTML = `
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="close-btn">&times;</span>
+            <h3 id="template-name-modal-title"></h3>
+            <input type="text" id="template-name-modal-input">
+            <div class="prompt-buttons" style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1rem;">
+                <button id="template-name-modal-cancel-btn"></button>
+                <button id="template-name-modal-ok-btn"></button>
+            </div>
+        </div>`;
+    document.body.appendChild(templateNameModal);
+
+    if (了解インジケーター) {
+        了解インジケーター.style.padding = '1rem 2rem';
+        了解インジケーター.style.fontSize = '1.25rem';
+        了解インジケーター.style.top = '2.5rem';
+        了解インジケーター.style.right = '2.5rem';
+    }
+
+    function initializePersonalityUI() {
+        if (document.body.hasAttribute('data-personality-ui-initialized')) return;
+        document.body.setAttribute('data-personality-ui-initialized', 'true');
+
+        if (openPersonalityPresetSettingsBtn) {
+            openPersonalityPresetSettingsBtn.onclick = () => {
+                if (personalityPresetModal && personalityPresetMessagesInput) {
+                    loadPersonalityPresets();
+                    personalityPresetMessagesInput.value = personalityPresetMessagesList.join(',');
+                    personalityPresetModal.classList.remove('hidden');
+                }
+            };
+        }
+        createPersonalityPresetButtons();
+    }
+
+    function createPersonalityPresetButtons() {
+        const area = document.getElementById('personality-presets-area');
+        if (!area) return;
+        area.innerHTML = '';
+        personalityPresetMessagesList.forEach(text => {
+            const btn = document.createElement('button');
+            btn.textContent = text;
+            btn.className = 'icon-btn';
+            btn.onclick = () => {
+                sendData('personalityMessage', { text: text });
+            };
+            area.appendChild(btn);
+        });
+    }
+
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.textContent = message;
+        toast.style.position = 'fixed';
+        toast.style.top = '20px';
+        toast.style.right = '20px';
+        toast.style.backgroundColor = 'rgba(0,0,0,0.7)';
+        toast.style.color = 'white';
+        toast.style.padding = '10px 20px';
+        toast.style.borderRadius = '5px';
+        toast.style.zIndex = '1001';
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.style.opacity = '1', 10);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    function getTemplateNameFromModal() {
+        return new Promise(resolve => {
+            const modal = document.getElementById('template-name-modal');
+            const titleEl = document.getElementById('template-name-modal-title');
+            const inputEl = document.getElementById('template-name-modal-input');
+            const okBtn = document.getElementById('template-name-modal-ok-btn');
+            const cancelBtn = document.getElementById('template-name-modal-cancel-btn');
+            const closeBtn = modal.querySelector('.close-btn');
+            const t = translations[currentLang];
+
+            titleEl.textContent = t.prompt_enterTemplateName;
+            okBtn.textContent = t.ok;
+            cancelBtn.textContent = t.cancel;
+
+            inputEl.value = '';
+            modal.classList.remove('hidden');
+            inputEl.focus();
+
+            const cleanupAndResolve = (value) => {
+                okBtn.onclick = null;
+                cancelBtn.onclick = null;
+                if (closeBtn) closeBtn.onclick = null;
+                modal.classList.add('hidden');
+                resolve(value);
+            };
+
+            okBtn.onclick = () => cleanupAndResolve(inputEl.value);
+            cancelBtn.onclick = () => cleanupAndResolve(null);
+            if (closeBtn) closeBtn.onclick = () => cleanupAndResolve(null);
+        });
+    }
+
 
     function 初期化手書きパッド() {
         if (!手書きキャンバス) return;
@@ -362,7 +516,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 100);
 
     function 画面を表示する(表示する画面) {
-        全ての画面.forEach(画面 => 画面.classList.add('hidden'));
+        全ての画面.forEach(画面 => {
+            if (!画面.classList.contains('modal')) {
+                画面.classList.add('hidden');
+            }
+        });
         if (表示する画面) 表示する画面.classList.remove('hidden');
     }
 
@@ -373,10 +531,12 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('サーバーに接続しました。');
             if (自分の役割 === 'director') {
                 sendData('identify', { role: 'director' });
+                画面を表示する(ディレクター画面);
                 番組設定モーダルをリセットする();
                 番組設定モーダル.classList.remove('hidden');
             } else {
                 画面を表示する(パーソナリティ画面);
+                initializePersonalityUI();
             }
         };
         socket.onmessage = (event) => {
@@ -454,10 +614,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (data.type === 'acknowledged') {
             if (自分の役割 === 'director') {
+                了解インジケーター.textContent = t.acknowledged;
                 了解インジケーター.classList.add('show');
                 setTimeout(() => {
                     了解インジケーター.classList.remove('show');
                 }, 2000);
+            }
+        }
+        if (data.type === 'personalityMessage') {
+            if (自分の役割 === 'director') {
+                const { text } = data.payload;
+                了解インジケーター.textContent = text;
+                了解インジケーター.classList.add('show');
+                setTimeout(() => {
+                    了解インジケーター.classList.remove('show');
+                    setTimeout(() => {
+                        了解インジケーター.textContent = t.acknowledged;
+                    }, 300);
+                }, 3000);
             }
         }
         if (data.type === 'programEnded') {
@@ -480,6 +654,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(t.alert_enterIP);
             return;
         }
+        loadShortcuts();
         connectToServer(ipAddress);
     }
 
@@ -601,18 +776,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ★★★ ここから修正 ★★★
     function プリセットメッセージを読み込む() {
-        // 現在の言語設定に応じたキーでlocalStorageから読み込む
         const 保存されたメッセージ = localStorage.getItem(`timeqPresetMessages_${currentLang}`);
         if (保存されたメッセージ) {
             プリセットメッセージリスト = 保存されたメッセージ.split(',');
         } else {
-            // 保存されたものがなければ、現在の言語のデフォルト値を使用
             プリセットメッセージリスト = translations[currentLang].defaultPresets;
         }
     }
-    // ★★★ ここまで修正 ★★★
 
     function プリセットボタンを描画する() {
         プリセットボタンエリア.innerHTML = '';
@@ -625,16 +796,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ★★★ ここから修正 ★★★
     function プリセットメッセージを保存する() {
         const messages = プリセットメッセージ入力欄.value.split(',').map(m => m.trim()).filter(m => m);
         プリセットメッセージリスト = messages;
-        // 現在の言語設定に応じたキーでlocalStorageに保存する
         localStorage.setItem(`timeqPresetMessages_${currentLang}`, messages.join(','));
         プリセットボタンを描画する();
         プリセット設定モーダル.classList.add('hidden');
     }
-    // ★★★ ここまで修正 ★★★
+
+    function loadPersonalityPresets() {
+        const saved = localStorage.getItem(`timeqPersonalityPresets_${currentLang}`);
+        if (saved !== null) {
+            personalityPresetMessagesList = saved === '' ? [] : saved.split(',');
+        } else {
+            personalityPresetMessagesList = translations[currentLang].defaultPersonalityPresets;
+        }
+    }
+
+    function savePersonalityPresets() {
+        if (!personalityPresetMessagesInput) return;
+        const messages = personalityPresetMessagesInput.value.split(',').map(m => m.trim()).filter(m => m);
+        personalityPresetMessagesList = messages;
+        localStorage.setItem(`timeqPersonalityPresets_${currentLang}`, messages.join(','));
+        createPersonalityPresetButtons();
+        if (personalityPresetModal) {
+            personalityPresetModal.classList.add('hidden');
+        }
+    }
+
 
     function addCueRow(title = '', minutes = '', seconds = '', type = 'talk') {
         const t = translations[currentLang];
@@ -656,48 +845,39 @@ document.addEventListener('DOMContentLoaded', () => {
         addCueRow(t.defaultCueEnding, '1', '0', 'talk');
     }
 
-    // キーイベントからショートカット文字列を生成するヘルパー関数
     function eventToShortcutString(e) {
         const code = e.code;
-        // 修飾キー（Ctrl, Shiftなど）単体での押下は無視する
         if (['ControlLeft', 'ControlRight', 'ShiftLeft', 'ShiftRight', 'AltLeft', 'AltRight', 'MetaLeft', 'MetaRight'].includes(code)) {
             return null;
         }
-
         const parts = [];
         if (e.ctrlKey) parts.push('Ctrl');
-        if (e.metaKey) parts.push('Meta'); // MacのCmdキー、WindowsのWinキー
+        if (e.metaKey) parts.push('Meta');
         if (e.altKey) parts.push('Alt');
         if (e.shiftKey) parts.push('Shift');
-
         parts.push(code);
-
         return parts.join('+');
     }
 
-    // 保存されたショートカット文字列を画面表示用にフォーマットする関数
     function formatShortcutString(shortcutString) {
         if (!shortcutString) return translations[currentLang].settings || 'Not Set';
-
         const parts = shortcutString.split('+');
         const formattedParts = parts.map(part => {
             let formatted = part;
-            // KeyA -> A, Digit1 -> 1 のように整形
             if (part.startsWith('Key')) {
                 formatted = part.substring(3);
             } else if (part.startsWith('Digit')) {
                 formatted = part.substring(5);
             } else if (part === 'Meta') {
-                formatted = '⌘ / Win'; // Mac / Windows での表示を考慮
+                formatted = '⌘ / Win';
             }
             return formatted;
         });
-
         return formattedParts.join(' + ');
     }
 
     function loadShortcuts() {
-        shortcuts = JSON.parse(localStorage.getItem('timeqShortcuts') || '{}');
+        shortcuts = JSON.parse(localStorage.getItem(`timeqShortcuts_${自分の役割}`) || '{}');
     }
 
     function saveShortcuts() {
@@ -711,7 +891,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         shortcuts = newShortcuts;
-        localStorage.setItem('timeqShortcuts', JSON.stringify(shortcuts));
+        localStorage.setItem(`timeqShortcuts_${自分の役割}`, JSON.stringify(shortcuts));
         alert(translations[currentLang].saveSettings);
         ショートカット設定モーダル.classList.add('hidden');
     }
@@ -719,10 +899,18 @@ document.addEventListener('DOMContentLoaded', () => {
     function openShortcutSettingsModal() {
         const t = translations[currentLang];
         ショートカットリストコンテナ.innerHTML = '';
-        createShortcutRow('togglePlayPause', t.shortcut_timer);
-        プリセットメッセージリスト.forEach((msg, index) => {
-            createShortcutRow(`preset_${index}`, t.shortcut_preset(msg));
-        });
+
+        if (自分の役割 === 'director') {
+            createShortcutRow('togglePlayPause', t.shortcut_timer);
+            プリセットメッセージリスト.forEach((msg, index) => {
+                createShortcutRow(`preset_${index}`, t.shortcut_preset(msg));
+            });
+        } else if (自分の役割 === 'personality') {
+            createShortcutRow('acknowledge', t.acknowledge);
+            personalityPresetMessagesList.forEach((msg, index) => {
+                createShortcutRow(`personality_preset_${index}`, t.shortcut_personality_preset(msg));
+            });
+        }
         ショートカット設定モーダル.classList.remove('hidden');
     }
 
@@ -750,14 +938,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         targetElement.classList.add('recording');
         targetElement.textContent = '...';
-
         const keydownHandler = (e) => {
             e.preventDefault();
             e.stopPropagation();
-
             const shortcutString = eventToShortcutString(e);
-
-            // 修飾キー単体でない、有効な組み合わせの場合のみ設定
             if (shortcutString) {
                 targetElement.textContent = formatShortcutString(shortcutString);
                 targetElement.dataset.key = shortcutString;
@@ -780,13 +964,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (action) {
             e.preventDefault();
-            if (action === 'togglePlayPause') {
-                playPauseBtn.click();
-            } else if (action.startsWith('preset_')) {
-                const index = parseInt(action.split('_')[1], 10);
-                const presetButtons = プリセットボタンエリア.querySelectorAll('.preset-btn');
-                if (presetButtons[index]) {
-                    presetButtons[index].click();
+            if (自分の役割 === 'director') {
+                if (action === 'togglePlayPause') {
+                    playPauseBtn.click();
+                } else if (action.startsWith('preset_')) {
+                    const index = parseInt(action.split('_')[1], 10);
+                    const presetButtons = プリセットボタンエリア.querySelectorAll('.preset-btn');
+                    if (presetButtons[index]) {
+                        presetButtons[index].click();
+                    }
+                }
+            } else if (自分の役割 === 'personality') {
+                if (action === 'acknowledge') {
+                    了解ボタン.click();
+                } else if (action.startsWith('personality_preset_')) {
+                    const index = parseInt(action.split('_')[2], 10);
+                    const presetButtons = document.querySelectorAll('#personality-presets-area button');
+                    if (presetButtons[index]) {
+                        presetButtons[index].click();
+                    }
                 }
             }
         }
@@ -797,30 +993,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentProgramState) {
             updateAllTimers(currentProgramState);
         }
-    }
-
-    function showCustomPrompt(title) {
-        return new Promise((resolve) => {
-            プロンプトタイトル.textContent = title;
-            プロンプト入力欄.value = '';
-            カスタムプロンプトモーダル.classList.remove('hidden');
-            プロンプト入力欄.focus();
-            const onOk = () => { cleanup(); resolve(プロンプト入力欄.value); };
-            const onCancel = () => { cleanup(); resolve(null); };
-            const onKeyDown = (e) => {
-                if (e.key === 'Enter') onOk();
-                if (e.key === 'Escape') onCancel();
-            };
-            プロンプトOKボタン.onclick = onOk;
-            プロンプトキャンセルボタン.onclick = onCancel;
-            プロンプト入力欄.addEventListener('keydown', onKeyDown);
-            function cleanup() {
-                プロンプトOKボタン.onclick = null;
-                プロンプトキャンセルボタン.onclick = null;
-                プロンプト入力欄.removeEventListener('keydown', onKeyDown);
-                カスタムプロンプトモーダル.classList.add('hidden');
-            }
-        });
     }
 
     function getTemplates() { return JSON.parse(localStorage.getItem('timeqCueTemplates') || '{}'); }
@@ -877,6 +1049,15 @@ document.addEventListener('DOMContentLoaded', () => {
         electronホーム.classList.add('hidden');
         browserホーム.classList.remove('hidden');
     };
+    returnToSettingsBtn.onclick = () => {
+        画面を表示する(ディレクター画面);
+        番組設定モーダル.classList.remove('hidden');
+        returnToSettingsBtn.classList.add('hidden');
+        if (isElectron) {
+            const buttonGroup = electronホーム.querySelector('.button-group');
+            if (buttonGroup) buttonGroup.classList.remove('hidden');
+        }
+    };
     director参加ボタン.onclick = () => 参加する('director');
     personality参加ボタン.onclick = () => 参加する('personality');
     番組開始ボタン.onclick = 番組を開始する;
@@ -907,6 +1088,10 @@ document.addEventListener('DOMContentLoaded', () => {
         プリセット設定モーダル.classList.remove('hidden');
     };
     プリセット保存ボタン.onclick = プリセットメッセージを保存する;
+    if (savePersonalityPresetMessagesBtn) {
+        savePersonalityPresetMessagesBtn.onclick = savePersonalityPresets;
+    }
+
     プリセットボタンエリア.addEventListener('click', (e) => {
         if (e.target.classList.contains('preset-btn')) {
             const message = e.target.dataset.message;
@@ -914,10 +1099,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     了解ボタン.onclick = () => { sendData('acknowledgement'); };
+
     テンプレート保存ボタン.onclick = async () => {
         const t = translations[currentLang];
-        const name = await showCustomPrompt(t.prompt_enterTemplateName);
-        if (!name) return;
+        const name = await getTemplateNameFromModal();
+        if (name === null || name.trim() === '') return;
+
         const templates = getTemplates();
         const rows = document.querySelectorAll('#cue-sheet-rows-container .cue-sheet-row');
         const templateData = Array.from(rows).map(row => ({
@@ -929,8 +1116,9 @@ document.addEventListener('DOMContentLoaded', () => {
         templates[name] = templateData;
         saveTemplates(templates);
         テンプレートリストを更新();
-        alert(t.alert_templateSaved(name));
+        showToast(t.toast_templateSaved(name));
     };
+
     テンプレート読込ボタン.onclick = () => {
         const name = テンプレート選択.value;
         if (!name) return;
@@ -939,8 +1127,30 @@ document.addEventListener('DOMContentLoaded', () => {
         if (templateData) {
             進行表行コンテナ.innerHTML = '';
             templateData.forEach(item => addCueRow(item.title, item.minutes, item.seconds, item.type));
+            テンプレート上書き保存ボタン.disabled = false;
         }
     };
+
+    テンプレート上書き保存ボタン.onclick = () => {
+        const name = テンプレート選択.value;
+        if (!name) return;
+
+        const t = translations[currentLang];
+        if (confirm(t.alert_confirmOverwriteTemplate(name))) {
+            const templates = getTemplates();
+            const rows = document.querySelectorAll('#cue-sheet-rows-container .cue-sheet-row');
+            const templateData = Array.from(rows).map(row => ({
+                title: row.querySelector('.cue-title-input').value,
+                minutes: row.querySelector('.cue-minutes-input').value,
+                seconds: row.querySelector('.cue-seconds-input').value,
+                type: row.querySelector('.cue-type-select').value
+            }));
+            templates[name] = templateData;
+            saveTemplates(templates);
+            showToast(t.toast_templateOverwritten(name));
+        }
+    };
+
     テンプレート削除ボタン.onclick = () => {
         const name = テンプレート選択.value;
         if (!name) return;
@@ -950,8 +1160,20 @@ document.addEventListener('DOMContentLoaded', () => {
             delete templates[name];
             saveTemplates(templates);
             テンプレートリストを更新();
+            // 削除後はボタンを無効化
+            テンプレート読込ボタン.disabled = true;
+            テンプレート上書き保存ボタン.disabled = true;
+            テンプレート削除ボタン.disabled = true;
         }
     };
+
+    テンプレート選択.addEventListener('change', () => {
+        const isTemplateSelected = テンプレート選択.value !== "";
+        テンプレート読込ボタン.disabled = !isTemplateSelected;
+        テンプレート上書き保存ボタン.disabled = !isTemplateSelected;
+        テンプレート削除ボタン.disabled = !isTemplateSelected;
+    });
+
     タイマー表示エリア.onclick = toggleTimerMode;
     タイマー表示エリア_パーソナリティ.onclick = toggleTimerMode;
     番組終了ボタン.onclick = () => {
@@ -978,7 +1200,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        const safeTitle = (currentProgramState?.title || 'program').replace(/[^a-z0-9]/gi, '_').toLowerCase();
+        const safeTitle = (currentProgramState?.title || 'program').replace(/[^a-z0-j]/gi, '_').toLowerCase();
         a.download = `log_${safeTitle}_${new Date().toISOString().slice(0, 10)}.txt`;
         document.body.appendChild(a);
         a.click();
@@ -1000,13 +1222,11 @@ document.addEventListener('DOMContentLoaded', () => {
     copyUrlBtn.onclick = () => {
         const urlToCopy = サーバーURLテキスト.textContent;
         if (!urlToCopy || copyUrlBtn.disabled) return;
-
         navigator.clipboard.writeText(urlToCopy).then(() => {
             const t = translations[currentLang];
             const originalIcon = '<i class="fas fa-copy"></i>';
             copyUrlBtn.innerHTML = `<i class="fas fa-check"></i> ${t.copied}`;
             copyUrlBtn.disabled = true;
-
             setTimeout(() => {
                 copyUrlBtn.innerHTML = originalIcon;
                 copyUrlBtn.disabled = false;
@@ -1015,8 +1235,34 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('URLのコピーに失敗しました: ', err);
         });
     };
-    閉じるボタン群.forEach(btn => btn.onclick = () => btn.closest('.modal').classList.add('hidden'));
-    window.onclick = (e) => { if (e.target.classList.contains('modal')) e.target.classList.add('hidden'); };
+
+    閉じるボタン群.forEach(btn => {
+        btn.onclick = () => {
+            const modal = btn.closest('.modal');
+            if (!modal) return;
+
+            if (modal.id === 'program-settings-modal' && !currentProgramState) {
+                modal.classList.add('hidden');
+                画面を表示する(ホーム画面);
+                if (isElectron) {
+                    electronホーム.classList.remove('hidden');
+                    const buttonGroup = electronホーム.querySelector('.button-group');
+                    if (buttonGroup) {
+                        buttonGroup.classList.add('hidden');
+                    }
+                    returnToSettingsBtn.classList.remove('hidden');
+                }
+            } else {
+                modal.classList.add('hidden');
+            }
+        };
+    });
+
+    window.onclick = (e) => {
+        if (e.target.classList.contains('modal')) {
+            e.target.classList.add('hidden');
+        }
+    };
     if (全画面表示ボタン) {
         全画面表示ボタン.onclick = () => {
             if (document.fullscreenElement) {
@@ -1029,13 +1275,10 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // --- 初期化 ---
+    // --- 初期化処理 ---
     function 初期化() {
         setLanguage(localStorage.getItem('timeqLang') || 'ja');
-
-        プリセットメッセージを読み込む();
         テンプレートリストを更新();
-        loadShortcuts();
         loadDisplayScale();
         window.addEventListener('keydown', handleGlobalKeyDown);
 
@@ -1052,9 +1295,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (role) {
             IP入力欄.value = ip;
             if (role === 'director') {
-                参加する('director'); // ボタンクリックの代わりに直接関数を呼ぶ
+                参加する('director');
             } else if (role === 'personality') {
-                参加する('personality'); // ★★★ こちらも直接関数を呼ぶように変更 ★★★
+                参加する('personality');
             }
         } else {
             画面を表示する(ホーム画面);

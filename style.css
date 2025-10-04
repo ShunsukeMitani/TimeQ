@@ -427,14 +427,16 @@ button:disabled {
     background-color: #2ecc71;
 }
 
+/* ▼▼▼ 修正点: 表示を大きくする ▼▼▼ */
 #ack-indicator {
     position: absolute;
     top: 1.875rem;
     right: 1.875rem;
     background-color: #2ecc71;
     color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 1.25rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 1.5rem;
+    font-size: 1.25rem;
     font-weight: bold;
     opacity: 0;
     visibility: hidden;
@@ -491,7 +493,8 @@ button:disabled {
 }
 
 #start-program-btn,
-#save-preset-messages-btn {
+#save-preset-messages-btn,
+#save-personality-preset-messages-btn {
     width: 100%;
     margin-top: 1rem;
 }
@@ -612,7 +615,8 @@ button:disabled {
     font-size: 1.375rem;
 }
 
-#preset-buttons-area {
+#preset-buttons-area,
+#personality-presets-area {
     display: flex;
     flex-wrap: wrap;
     gap: 0.625rem;
@@ -627,6 +631,15 @@ button:disabled {
     background-color: #1abc9c;
     font-size: 1rem;
     padding: 0.625rem 1rem;
+}
+
+/* ★★★ 修正点: personality-presets-area 内のボタンのスタイルを明確化 ★★★ */
+#personality-presets-area .icon-btn {
+    background-color: #9b59b6;
+    flex-grow: 1;
+    /* ボタンが均等に広がるように */
+    min-width: 120px;
+    /* ボタンの最小幅を確保 */
 }
 
 .right-panel-footer {
@@ -855,7 +868,7 @@ body.dark-theme #language-select {
     color: #e0e0e0;
 }
 
-#preset-message-display {
+.message-display-overlay {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -869,5 +882,4 @@ body.dark-theme #language-select {
     z-index: 200;
     text-align: center;
     box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.5);
-    /* .hidden クラスによって表示・非表示が制御されます */
 }

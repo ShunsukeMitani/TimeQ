@@ -101,6 +101,7 @@
                 </div>
             </div>
             <div class="right-panel">
+                <div id="personality-message-display" class="message-display-overlay hidden"></div>
                 <div id="timer-display" class="timer-display-area">
                     <div>
                         <div id="program-timer-label" class="timer-label" data-i18n-key="programTimeRemaining">番組残り時間
@@ -176,6 +177,13 @@
                     <button id="ack-btn"><i class="fas fa-check"></i> <span
                             data-i18n-key="acknowledge">了解</span></button>
                 </div>
+
+                <div class="sub-heading-with-button">
+                    <h2 data-i18n-key="personalityPresets"><i class="fas fa-bolt"></i>プリセットメッセージ</h2>
+                    <button id="open-personality-preset-settings-btn" class="icon-btn"><i class="fas fa-cog"></i>
+                        <span data-i18n-key="settings">設定</span></button>
+                </div>
+                <div id="personality-presets-area"></div>
             </div>
         </div>
     </main>
@@ -194,11 +202,14 @@
                     <select id="template-select">
                         <option value="" data-i18n-key="selectTemplate">テンプレートを選択</option>
                     </select>
-                    <button id="load-template-btn" class="icon-btn"><i class="fas fa-folder-open"></i><span
-                            data-i18n-key="load">読込</span></button>
-                    <button id="save-template-btn" class="icon-btn"><i class="fas fa-save"></i><span
-                            data-i18n-key="save">保存</span></button>
-                    <button id="delete-template-btn" class="icon-btn danger-btn"><i class="fas fa-trash"></i></button>
+                    <button id="load-template-btn" class="icon-btn" title="選択したテンプレートを読み込みます" disabled><i
+                            class="fas fa-folder-open"></i><span data-i18n-key="load">読込</span></button>
+                    <button id="overwrite-template-btn" class="icon-btn" title="テンプレートを選択してから使用できます" disabled><i
+                            class="fas fa-sync-alt"></i><span data-i18n-key="overwrite">上書き保存</span></button>
+                    <button id="save-template-btn" class="icon-btn" title="現在の進行表を新しいテンプレートとして保存します"><i
+                            class="fas fa-save"></i><span data-i18n-key="save">保存</span></button>
+                    <button id="delete-template-btn" class="icon-btn danger-btn" title="選択したテンプレートを削除します" disabled><i
+                            class="fas fa-trash"></i></button>
                 </div>
                 <div class="cue-sheet-header">
                     <div class="col-title" data-i18n-key="cornerName">コーナー名</div>
@@ -235,6 +246,16 @@
         </div>
     </div>
 
+    <div id="personality-preset-settings-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 data-i18n-key="personalityPresetSettings">パーソナリティ プリセット設定</h2>
+            <p data-i18n-key="presetSettingsDesc">カンマ区切りでメッセージを入力してください。</p>
+            <textarea id="personality-preset-messages-input" rows="5"></textarea>
+            <button id="save-personality-preset-messages-btn"><i class="fas fa-save"></i> <span
+                    data-i18n-key="saveBtn">保存する</span></button>
+        </div>
+    </div>
     <div id="custom-prompt-modal" class="modal hidden">
         <div class="modal-content">
             <h3 id="prompt-title"></h3>
@@ -257,7 +278,7 @@
         </div>
     </div>
 
-    <div id="preset-message-display" class="hidden"></div>
+    <div id="preset-message-display" class="message-display-overlay hidden"></div>
 
     <script src="signature_pad.js"></script>
     <script src="script.js"></script>
