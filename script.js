@@ -102,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultPersonalityPresets: ['👍', 'OK', 'Got it', 'Please repeat', 'Stand by'],
             // Update History
             updateHistoryContent: [
+                { version: "Ver.2.3.3", note: "Added a feature to automatically change the handwriting pen color to white in dark mode." },
                 { version: "Ver.2.3.2", note: "Added a feature to overwrite and save existing templates. Fixed an issue where the second window was always on top and did not appear in the taskbar." },
                 { version: "Ver.2.3.1", note: "Fixed an issue where personality preset settings were not loading or saving correctly. Improved the behavior when closing the program settings modal." },
                 { version: "Ver.2.3.0", note: "Fixed an issue where template inputs became disabled after saving. Added a 'Return to Settings' button after closing the initial setup. Implemented a settings feature for personality preset messages." },
@@ -159,6 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultPresets: ['👍', 'OK!', '巻いて！', 'CMへ', 'あと30秒'],
             defaultPersonalityPresets: ['👍', 'OK', '了解です', 'もう一度お願いします', '少し待ってください'],
             updateHistoryContent: [
+                { version: "Ver.2.3.3", note: "ダークモード時に手書きの線の色を白に変更する機能を追加。" },
                 { version: "Ver.2.3.2", note: "既存のテンプレートを上書き保存する機能を追加。2つ目のウィンドウが常に最前面に表示され、タスクバーに表示されない問題を修正。" },
                 { version: "Ver.2.3.1", note: "パーソナリティのプリセット設定機能で、初期値の読み込みと保存が正しく行われるよう修正。番組設定モーダルを閉じる際の挙動を改善。" },
                 { version: "Ver.2.3.0", note: "テンプレート保存後に入力不可になる不具合を修正。初期設定を閉じた際にホームへ戻り「設定に戻る」ボタンを表示するよう変更。パーソナリティ側のプリセット設定機能を追加。" },
@@ -471,7 +473,13 @@ document.addEventListener('DOMContentLoaded', () => {
         手書きキャンバス.width = 手書きキャンバス.offsetWidth * ratio;
         手書きキャンバス.height = 手書きキャンバス.offsetHeight * ratio;
         手書きキャンバス.getContext("2d").scale(ratio, ratio);
-        手書きパッド = new SignaturePad(手書きキャンバス);
+
+        const isDarkMode = document.body.classList.contains('dark-theme');
+        const penColor = isDarkMode ? 'white' : 'black';
+
+        手書きパッド = new SignaturePad(手書きキャンバス, {
+            penColor: penColor
+        });
         lastCanvasWidth = 手書きキャンバス.offsetWidth;
         lastCanvasHeight = 手書きキャンバス.offsetHeight;
         手書きパッド.addEventListener("afterUpdateStroke", 手書き更新処理);
@@ -1209,14 +1217,21 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     テーマ切替ボタン.onclick = () => {
         document.body.classList.toggle('dark-theme');
+        let newPenColor;
         if (document.body.classList.contains('dark-theme')) {
             localStorage.setItem('theme', 'dark');
             テーマアイコン.classList.remove('fa-moon');
             テーマアイコン.classList.add('fa-sun');
+            newPenColor = 'white';
         } else {
             localStorage.setItem('theme', 'light');
             テーマアイコン.classList.remove('fa-sun');
             テーマアイコン.classList.add('fa-moon');
+            newPenColor = 'black';
+        }
+
+        if (手書きパッド) {
+            手書きパッド.penColor = newPenColor;
         }
     };
     copyUrlBtn.onclick = () => {
