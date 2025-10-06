@@ -182,6 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultPresets: ['👍', 'OK!', '巻いて！', 'CMへ', 'あと30秒'],
             defaultPersonalityPresets: ['👍', 'OK', '了解です', 'もう一度お願いします', '少し待ってください'],
             updateHistoryContent: [
+                { version: "Ver.2.5.0", note: "本番前カウントダウンを追加" },
                 { version: "Ver.2.4.2", note: "カスタム確認ダイアログを導入し、Electron環境でテンプレート上書き保存後に入力不可になる不具合を修正。番組設定が表示されない不具合を修正。" },
                 { version: "Ver.2.4.1", note: "テンプレートの上書き保存・読込後に進行表が入力できなくなる不具合を修正。" },
                 { version: "Ver.2.4.0", note: "テンプレートの読込・上書き保存後に進行表が入力できなくなる不具合を修正。" },
