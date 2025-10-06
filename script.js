@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
             programSettings: "Program Settings",
             programTitle: "Program Title",
             programDuration: "Total Program Duration (minutes)",
+            countdownDuration: "Pre-Broadcast Countdown (seconds)",
             createCueSheet: "Create Cue Sheet",
             timeEntryModeIndividual: "Individual",
             timeEntryModeCumulative: "Cumulative",
@@ -90,6 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
             serverStarting: "Starting server...",
             copyURL: "Copy URL",
             copied: "Copied!",
+            countdownStandby: "STANDBY...",
+            countdownStart: "START!",
+            countdownMessage: (sec) => `ON AIR IN ${sec}s`,
             // Cue Sheet Types
             type_talk: "Talk",
             type_music: "Music",
@@ -107,8 +111,13 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultCueEnding: "Ending",
             defaultPresets: ['👍', 'OK!', 'Wrap it up!', 'Go to CM', '30s left'],
             defaultPersonalityPresets: ['👍', 'OK', 'Got it', 'Please repeat', 'Stand by'],
-            // Update History
+            // Update History is omitted for brevity but should be kept in your file
             updateHistoryContent: [
+                { version: "Ver.2.4.2", note: "Fixed a critical bug where the program settings modal would not appear. Implemented a custom confirmation dialog to prevent inputs from becoming disabled in the app version." },
+                { version: "Ver.2.4.1", note: "Fixed a bug that disabled inputs after loading or overwriting a template." },
+                { version: "Ver.2.4.0", note: "Fixed a bug that disabled inputs after loading or overwriting a template." },
+                { version: "Ver.2.3.9", note: "Fixed a bug that made all inputs in the program settings modal unusable." },
+                { version: "Ver.2.3.8", note: "Added a pre-broadcast countdown feature." },
                 { version: "Ver.2.3.7", note: "Fixed an issue where the total time was calculated incorrectly in cumulative mode." },
                 { version: "Ver.2.3.6", note: "Added a total time display when in cumulative time entry mode." },
                 { version: "Ver.2.3.5", note: "Added a setting to switch cue sheet time entry between individual and cumulative. Added 'Other' to the cue sheet item types." },
@@ -153,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         ja: {
-            changeDisplaySize: "表示サイズの変更", display100: "表示: 100%", display90: "表示: 90%", display85: "表示: 85%", display75: "表示: 75%", display50: "表示: 50%", display30: "表示: 30%", shortcuts: "ショートカット", updateHistory: "更新履歴", startAsServer: "サーバーとして起動", joinAsClient: "クライアントとして参加", returnToSettings: "番組設定に戻る", waitingForClientsTitle: "クライアントの接続を待っています", waitingForClientsDesc: "他のPCやタブレットから、以下のQRコードまたはURLで接続してください。", openDirectorWindow: "ディレクター画面を開く", openPersonalityWindow: "パーソナリティ画面を開く", enterServerIP: "サーバーPCのIPアドレスを入力", joinAsDirector: "ディレクターとして参加", joinAsPersonality: "パーソナリティとして参加", cueSheet: "進行表", prev: "前へ", next: "次へ", saveLog: "ログ保存", programTimeRemaining: "番組残り時間", programTimeElapsed: "番組経過時間", segmentTimeRemaining: "コーナー残り時間", segmentTimeElapsed: "コーナー経過時間", timeDifference: "押し/巻き", fullscreen: "全画面表示", handwriting: "手書き指示", acknowledged: "了解！", clear: "消去", presetMessages: "プリセットメッセージ", settings: "設定", endProgram: "番組終了", instructions: "指示", waitingForInstructions: "指示を待っています...", acknowledge: "了解", programSettings: "番組設定", programTitle: "番組タイトル", programDuration: "番組全体の時間（分）", createCueSheet: "進行表の作成", timeEntryModeIndividual: "個別", timeEntryModeCumulative: "加算", selectTemplate: "テンプレートを選択", load: "読込", save: "保存", overwrite: "上書き保存",
+            changeDisplaySize: "表示サイズの変更", display100: "表示: 100%", display90: "表示: 90%", display85: "表示: 85%", display75: "表示: 75%", display50: "表示: 50%", display30: "表示: 30%", shortcuts: "ショートカット", updateHistory: "更新履歴", startAsServer: "サーバーとして起動", joinAsClient: "クライアントとして参加", returnToSettings: "番組設定に戻る", waitingForClientsTitle: "クライアントの接続を待っています", waitingForClientsDesc: "他のPCやタブレットから、以下のQRコードまたはURLで接続してください。", openDirectorWindow: "ディレクター画面を開く", openPersonalityWindow: "パーソナリティ画面を開く", enterServerIP: "サーバーPCのIPアドレスを入力", joinAsDirector: "ディレクターとして参加", joinAsPersonality: "パーソナリティとして参加", cueSheet: "進行表", prev: "前へ", next: "次へ", saveLog: "ログ保存", programTimeRemaining: "番組残り時間", programTimeElapsed: "番組経過時間", segmentTimeRemaining: "コーナー残り時間", segmentTimeElapsed: "コーナー経過時間", timeDifference: "押し/巻き", fullscreen: "全画面表示", handwriting: "手書き指示", acknowledged: "了解！", clear: "消去", presetMessages: "プリセットメッセージ", settings: "設定", endProgram: "番組終了", instructions: "指示", waitingForInstructions: "指示を待っています...", acknowledge: "了解", programSettings: "番組設定", programTitle: "番組タイトル", programDuration: "番組全体の時間（分）", countdownDuration: "本番開始カウントダウン（秒）", createCueSheet: "進行表の作成", timeEntryModeIndividual: "個別", timeEntryModeCumulative: "加算", selectTemplate: "テンプレートを選択", load: "読込", save: "保存", overwrite: "上書き保存",
             cornerName: "コーナー名", minutes: "分", seconds: "秒", endTimeMinutes: "終了(分)", endTimeSeconds: "終了(秒)", duration: "時間", totalTime: "合計時間:", type: "タイプ", addRow: "行を追加", startProgramWithSettings: "この内容で番組を開始", presetSettings: "プリセットメッセージ設定", presetSettingsDesc: "カンマ区切りでメッセージを入力してください。", personalityPresetSettings: "パーソナリティのプリセット設定", saveBtn: "保存する", cancel: "キャンセル", ok: "OK",
             shortcutSettings: "ショートカットキー設定",
             shortcutSettingsDesc: "設定したい項目のボックスをクリックしてから、割り当てたいキーまたはキーの組み合わせ（例: Ctrl + S）を押してください。",
@@ -162,7 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
             toast_templateOverwritten: (name) => `テンプレート「${name}」を上書き保存しました。`,
             alert_connectionLost: "サーバーとの接続が切れました。ホーム画面に戻ります。", alert_connectionFailed: "サーバーに接続できませんでした。", alert_enterIP: "サーバーPCのIPアドレスを入力してください。", alert_addCueItem: "進行表に項目を追加してください。", alert_confirmEndProgram: "本当に番組を終了しますか？", alert_noLogToDownload: "ダウンロードするログがありません。", alert_confirmDeleteTemplate: (name) => `テンプレート「${name}」を本当に削除しますか？`,
             alert_confirmOverwriteTemplate: (name) => `テンプレート「${name}」を現在の内容で上書きしますか？`,
-            prompt_enterTemplateName: "テンプレート名を入力してください", role_select: "役割を選択してください", role_enterIP: "サーバーPCのIPアドレスを入力してください", serverStarting: "サーバーを起動中...", copyURL: "URLをコピー", copied: "コピーしました！", type_talk: "トーク", type_music: "楽曲", type_cm: "CM", type_other: "その他",
+            prompt_enterTemplateName: "テンプレート名を入力してください", role_select: "役割を選択してください", role_enterIP: "サーバーPCのIPアドレスを入力してください", serverStarting: "サーバーを起動中...", copyURL: "URLをコピー", copied: "コピーしました！", countdownStandby: "まもなく本番です...", countdownStart: "スタート！", countdownMessage: (sec) => `本番まであと ${sec} 秒`,
+            type_talk: "トーク", type_music: "楽曲", type_cm: "CM", type_other: "その他",
             shortcut_timer: "タイマー開始 / 停止", shortcut_preset: (name) => `プリセット: ${name}`, shortcut_personality_preset: (name) => `応答: ${name}`,
             defaultProgramTitle: "マイラジオプログラム",
             defaultCueOpening: "オープニング",
@@ -172,6 +182,11 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultPresets: ['👍', 'OK!', '巻いて！', 'CMへ', 'あと30秒'],
             defaultPersonalityPresets: ['👍', 'OK', '了解です', 'もう一度お願いします', '少し待ってください'],
             updateHistoryContent: [
+                { version: "Ver.2.4.2", note: "カスタム確認ダイアログを導入し、Electron環境でテンプレート上書き保存後に入力不可になる不具合を修正。番組設定が表示されない不具合を修正。" },
+                { version: "Ver.2.4.1", note: "テンプレートの上書き保存・読込後に進行表が入力できなくなる不具合を修正。" },
+                { version: "Ver.2.4.0", note: "テンプレートの読込・上書き保存後に進行表が入力できなくなる不具合を修正。" },
+                { version: "Ver.2.3.9", note: "番組設定画面の全ての入力項目が操作不能になる不具合を修正。" },
+                { version: "Ver.2.3.8", note: "本番開始前のカウントダウン機能を追加。" },
                 { version: "Ver.2.3.7", note: "加算入力モードの合計時間の計算不具合を修正。" },
                 { version: "Ver.2.3.6", note: "加算入力モードの際に合計時間を表示する機能を追加。" },
                 { version: "Ver.2.3.5", note: "進行表の時間入力方式を個別・加算で切り替える設定を追加。「タイプ」に「その他」を追加。" },
@@ -218,6 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     let currentLang = localStorage.getItem('timeqLang') || 'ja';
+    let clientSideCountdownValue = 0;
 
     function setLanguage(lang) {
         currentLang = lang;
@@ -280,6 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const プリセット設定モーダル = document.getElementById('preset-settings-modal');
     const ショートカット設定モーダル = document.getElementById('shortcut-settings-modal');
     const personalityPresetModal = document.getElementById('personality-preset-settings-modal');
+    const customPromptModal = document.getElementById('custom-prompt-modal');
     const ホームタイトル = document.getElementById('home-title');
     const electronホーム = document.getElementById('electron-home');
     const browserホーム = document.getElementById('browser-home');
@@ -330,6 +347,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const 了解ボタン = document.getElementById('ack-btn');
     const 番組タイトル入力欄 = document.getElementById('program-title');
     const 番組時間入力欄 = document.getElementById('program-duration');
+    const countdownDurationInput = document.getElementById('countdown-duration');
+    const mainCountdownOverlay = document.getElementById('main-countdown-overlay');
     const 番組開始ボタン = document.getElementById('start-program-btn');
     const プリセットメッセージ入力欄 = document.getElementById('preset-messages-input');
     const プリセット保存ボタン = document.getElementById('save-preset-messages-btn');
@@ -366,6 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastCanvasHeight = 1;
     let resizeTimer;
     let isCumulativeTimeMode = false;
+    let countdownInterval = null;
 
     // --- 動的UI生成 ---
     const returnToSettingsBtn = document.createElement('button');
@@ -376,21 +396,6 @@ document.addEventListener('DOMContentLoaded', () => {
         returnToSettingsBtn.style.marginTop = '1rem';
         electronホーム.appendChild(returnToSettingsBtn);
     }
-
-    const templateNameModal = document.createElement('div');
-    templateNameModal.id = 'template-name-modal';
-    templateNameModal.className = 'modal hidden';
-    templateNameModal.innerHTML = `
-        <div class="modal-content" style="max-width: 400px;">
-            <span class="close-btn">&times;</span>
-            <h3 id="template-name-modal-title"></h3>
-            <input type="text" id="template-name-modal-input">
-            <div class="prompt-buttons" style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1rem;">
-                <button id="template-name-modal-cancel-btn"></button>
-                <button id="template-name-modal-ok-btn"></button>
-            </div>
-        </div>`;
-    document.body.appendChild(templateNameModal);
 
     if (了解インジケーター) {
         了解インジケーター.style.padding = '1rem 2rem';
@@ -451,35 +456,61 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
-    function getTemplateNameFromModal() {
+    function showCustomConfirm(message) {
         return new Promise(resolve => {
-            const modal = document.getElementById('template-name-modal');
-            const titleEl = document.getElementById('template-name-modal-title');
-            const inputEl = document.getElementById('template-name-modal-input');
-            const okBtn = document.getElementById('template-name-modal-ok-btn');
-            const cancelBtn = document.getElementById('template-name-modal-cancel-btn');
-            const closeBtn = modal.querySelector('.close-btn');
+            const modal = document.getElementById('custom-prompt-modal');
+            const titleEl = document.getElementById('prompt-title');
+            const inputEl = document.getElementById('prompt-input');
+            const okBtn = document.getElementById('prompt-ok-btn');
+            const cancelBtn = document.getElementById('prompt-cancel-btn');
             const t = translations[currentLang];
 
-            titleEl.textContent = t.prompt_enterTemplateName;
+            titleEl.textContent = message;
+            inputEl.style.display = 'none';
             okBtn.textContent = t.ok;
             cancelBtn.textContent = t.cancel;
 
+            modal.classList.remove('hidden');
+
+            const cleanupAndResolve = (value) => {
+                okBtn.onclick = null;
+                cancelBtn.onclick = null;
+                modal.classList.add('hidden');
+                resolve(value);
+            };
+
+            okBtn.onclick = () => cleanupAndResolve(true);
+            cancelBtn.onclick = () => cleanupAndResolve(false);
+        });
+    }
+
+    function getTemplateNameFromModal() {
+        return new Promise(resolve => {
+            const modal = document.getElementById('custom-prompt-modal');
+            const titleEl = document.getElementById('prompt-title');
+            const inputEl = document.getElementById('prompt-input');
+            const okBtn = document.getElementById('prompt-ok-btn');
+            const cancelBtn = document.getElementById('prompt-cancel-btn');
+            const t = translations[currentLang];
+
+            titleEl.textContent = t.prompt_enterTemplateName;
+            inputEl.style.display = 'block';
             inputEl.value = '';
+            okBtn.textContent = t.ok;
+            cancelBtn.textContent = t.cancel;
+
             modal.classList.remove('hidden');
             inputEl.focus();
 
             const cleanupAndResolve = (value) => {
                 okBtn.onclick = null;
                 cancelBtn.onclick = null;
-                if (closeBtn) closeBtn.onclick = null;
                 modal.classList.add('hidden');
                 resolve(value);
             };
 
             okBtn.onclick = () => cleanupAndResolve(inputEl.value);
             cancelBtn.onclick = () => cleanupAndResolve(null);
-            if (closeBtn) closeBtn.onclick = () => cleanupAndResolve(null);
         });
     }
 
@@ -584,11 +615,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleServerMessage(data) {
         const t = translations[currentLang];
+
         if (data.type === 'stateUpdate') {
             const prevState = currentProgramState;
             currentProgramState = data.payload;
             const state = currentProgramState;
             if (!state) return;
+
+            if (state.programStatus === 'standby') {
+                return;
+            }
+
             if (自分の役割 === 'director') {
                 画面を表示する(ディレクター画面);
                 if (state.programStatus === 'running') {
@@ -632,12 +669,43 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
+        // ★★★ 修正箇所1: presetMessageの処理を修正 ★★★
         if (data.type === 'presetMessage') {
             if (自分の役割 === 'personality') {
                 const { text } = data.payload;
-                プリセットメッセージ表示.textContent = text;
-                プリセットメッセージ表示.classList.remove('hidden');
-                setTimeout(() => プリセットメッセージ表示.classList.add('hidden'), 5000);
+                const t = translations[currentLang];
+                const overlay = プリセットメッセージ表示;
+
+                if (!text) {
+                    overlay.classList.add('hidden');
+                    return;
+                }
+
+                overlay.textContent = text;
+                overlay.classList.remove('hidden');
+
+                const countdownBaseString = t.countdownMessage(0).split('0')[0];
+                const isCountdown = text.startsWith(countdownBaseString);
+                const isStart = text === t.countdownStart;
+                const isStandby = text === t.countdownStandby;
+
+                // Color logic
+                overlay.style.color = 'white'; // Default
+                if (isStart) {
+                    overlay.style.color = '#2ecc71'; // Green
+                } else if (isCountdown) {
+                    const match = text.match(/\d+/);
+                    if (match && parseInt(match[0], 10) <= 3) {
+                        overlay.style.color = '#e74c3c'; // Red
+                    }
+                }
+
+                // Auto-hide logic for regular messages only
+                if (!isCountdown && !isStart && !isStandby) {
+                    setTimeout(() => {
+                        overlay.classList.add('hidden');
+                    }, 5000);
+                }
             }
         }
         if (data.type === 'acknowledged') {
@@ -663,7 +731,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         if (data.type === 'programEnded') {
-            alert(t.alert_confirmEndProgram);
+            clientSideCountdownValue = 0;
             window.location.reload();
         }
     }
@@ -790,10 +858,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        const countdown = parseInt(countdownDurationInput.value, 10) || 0;
+        clientSideCountdownValue = countdown;
+
         const 番組データ = {
             title: 番組タイトル入力欄.value,
             totalDuration: parseInt(番組時間入力欄.value, 10) * 60,
             cueSheet: 進行表データ,
+            countdown: countdown
         };
         programLog = [`[00:00:00] - Program Start: ${番組データ.title}`];
         sendData('startProgram', 番組データ);
@@ -857,6 +929,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const t = translations[currentLang];
         const row = document.createElement('div');
         row.className = 'cue-sheet-row';
+        row.classList.add(isCumulativeTimeMode ? 'cumulative-mode' : 'individual-mode');
 
         const typeOptions = `
             <option value="talk" ${type === 'talk' ? 'selected' : ''}>${t.type_talk}</option>
@@ -882,7 +955,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function recalculateDurations() {
         let previousEndTimeSec = 0;
-        let totalDurationSec = 0; // ★★★ 修正点 ★★★
+        let totalDurationSec = 0;
         const rows = document.querySelectorAll('#cue-sheet-rows-container .cue-sheet-row');
         rows.forEach(row => {
             const minInput = row.querySelector('.cue-time-minutes-input');
@@ -905,13 +978,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 durationSec = (parseInt(minInput.value, 10) || 0) * 60 + (parseInt(secInput.value, 10) || 0);
             }
             row.dataset.duration = durationSec;
-            totalDurationSec += durationSec; // ★★★ 修正点 ★★★
+            totalDurationSec += durationSec;
         });
 
-        // 合計時間を計算して表示
         if (rows.length > 0) {
-            const totalMinutes = Math.floor(totalDurationSec / 60); // ★★★ 修正点 ★★★
-            const totalSeconds = totalDurationSec % 60; // ★★★ 修正点 ★★★
+            const totalMinutes = Math.floor(totalDurationSec / 60);
+            const totalSeconds = totalDurationSec % 60;
             totalTimeValue.textContent = `${totalMinutes}:${String(totalSeconds).padStart(2, '0')}`;
             totalTimeDisplay.classList.remove('hidden');
         } else {
@@ -923,29 +995,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const t = translations[currentLang];
         isCumulativeTimeMode = isCumulative;
 
-        document.getElementById('cue-sheet-builder').classList.toggle('cumulative-mode', isCumulative);
-        document.getElementById('cue-sheet-builder').classList.toggle('individual-mode', !isCumulative);
+        const builder = document.getElementById('cue-sheet-builder');
+        builder.classList.toggle('cumulative-mode', isCumulative);
+        builder.classList.toggle('individual-mode', !isCumulative);
 
         const rows = Array.from(document.querySelectorAll('#cue-sheet-rows-container .cue-sheet-row'));
-        const rowData = rows.map(row => {
-            recalculateDurations();
-            return {
-                title: row.querySelector('.cue-title-input').value,
-                duration: parseInt(row.dataset.duration, 10) || 0,
-                type: row.querySelector('.cue-type-select').value
-            };
-        });
 
-        進行表行コンテナ.innerHTML = '';
         let cumulativeTimeSec = 0;
+        rows.forEach(row => {
+            const minInput = row.querySelector('.cue-time-minutes-input');
+            const secInput = row.querySelector('.cue-time-seconds-input');
 
-        rowData.forEach(data => {
-            const durationSec = data.duration;
             if (isCumulative) {
+                const durationSec = parseInt(row.dataset.duration, 10) || 0;
                 cumulativeTimeSec += durationSec;
-                addCueRow(data.title, Math.floor(cumulativeTimeSec / 60), cumulativeTimeSec % 60, data.type);
+                minInput.value = Math.floor(cumulativeTimeSec / 60);
+                secInput.value = cumulativeTimeSec % 60;
             } else {
-                addCueRow(data.title, Math.floor(durationSec / 60), durationSec % 60, data.type);
+                const durationSec = parseInt(row.dataset.duration, 10) || 0;
+                minInput.value = Math.floor(durationSec / 60);
+                secInput.value = durationSec % 60;
             }
         });
 
@@ -956,6 +1025,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const t = translations[currentLang];
         番組タイトル入力欄.value = t.defaultProgramTitle;
         番組時間入力欄.value = '30';
+        countdownDurationInput.value = '10';
         進行表行コンテナ.innerHTML = '';
 
         if (isCumulativeTimeMode) {
@@ -998,7 +1068,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (part === 'Meta') {
                 formatted = '⌘ / Win';
             }
-            return formatted;
+            return formattedParts.join(' + ');
         });
         return formattedParts.join(' + ');
     }
@@ -1161,31 +1231,39 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('fullscreenchange', () => {
         setTimeout(handleCanvasResize, 250);
     });
-    サーバー起動ボタン.onclick = async () => {
-        サーバー起動ボタン.disabled = true;
-        サーバー起動ボタン.textContent = translations[currentLang].serverStarting;
-        const result = await window.electronAPI.startServer();
-        if (result.error) {
-            alert(`${translations[currentLang].alert_connectionFailed}: ${result.error}`);
-            サーバー起動ボタン.disabled = false;
-            サーバー起動ボタン.innerHTML = `<i class="fas fa-server"></i> <span data-i18n-key="startAsServer">${translations[currentLang].startAsServer}</span>`;
-            return;
-        }
-        サーバーURLテキスト.textContent = result.url;
-        サーバーQRコード画像.src = result.qr;
-        サーバー情報.classList.remove('hidden');
-        electronホーム.classList.add('hidden');
-    };
-    openDirectorWindowBtn.onclick = () => {
-        window.electronAPI.openDirectorWindow();
-    };
-    openPersonalityWindowBtn.onclick = () => {
-        window.electronAPI.openPersonalityWindow();
-    };
-    クライアントとして参加ボタン.onclick = () => {
-        electronホーム.classList.add('hidden');
-        browserホーム.classList.remove('hidden');
-    };
+    if (サーバー起動ボタン) {
+        サーバー起動ボタン.onclick = async () => {
+            サーバー起動ボタン.disabled = true;
+            サーバー起動ボタン.textContent = translations[currentLang].serverStarting;
+            const result = await window.electronAPI.startServer();
+            if (result.error) {
+                alert(`${translations[currentLang].alert_connectionFailed}: ${result.error}`);
+                サーバー起動ボタン.disabled = false;
+                サーバー起動ボタン.innerHTML = `<i class="fas fa-server"></i> <span data-i18n-key="startAsServer">${translations[currentLang].startAsServer}</span>`;
+                return;
+            }
+            サーバーURLテキスト.textContent = result.url;
+            サーバーQRコード画像.src = result.qr;
+            サーバー情報.classList.remove('hidden');
+            electronホーム.classList.add('hidden');
+        };
+    }
+    if (openDirectorWindowBtn) {
+        openDirectorWindowBtn.onclick = () => {
+            window.electronAPI.openDirectorWindow();
+        };
+    }
+    if (openPersonalityWindowBtn) {
+        openPersonalityWindowBtn.onclick = () => {
+            window.electronAPI.openPersonalityWindow();
+        };
+    }
+    if (クライアントとして参加ボタン) {
+        クライアントとして参加ボタン.onclick = () => {
+            electronホーム.classList.add('hidden');
+            browserホーム.classList.remove('hidden');
+        };
+    }
     returnToSettingsBtn.onclick = () => {
         画面を表示する(ディレクター画面);
         番組設定モーダル.classList.remove('hidden');
@@ -1222,9 +1300,58 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             addCueRow('', '1', '0');
         }
+        recalculateDurations();
     };
 
-    playPauseBtn.onclick = () => sendData('togglePlayPause');
+    // ★★★ 修正箇所2: STARTボタンの処理 ★★★
+    playPauseBtn.onclick = () => {
+        if (clientSideCountdownValue > 0) {
+            let remaining = clientSideCountdownValue;
+            const t = translations[currentLang];
+            const initialMessage = t.countdownStandby;
+
+            clientSideCountdownValue = 0;
+            playPauseBtn.disabled = true;
+
+            const directorOverlay = (自分の役割 === 'director') ? mainCountdownOverlay : プリセットメッセージ表示;
+
+            directorOverlay.classList.remove('hidden');
+            directorOverlay.textContent = initialMessage;
+            directorOverlay.style.color = 'white';
+            sendData('presetMessage', { text: initialMessage });
+
+            setTimeout(() => {
+                const localCountdownInterval = setInterval(() => {
+                    if (remaining > 0) {
+                        const message = t.countdownMessage(remaining);
+                        directorOverlay.textContent = message;
+                        sendData('presetMessage', { text: message });
+
+                        if (remaining <= 3) directorOverlay.style.color = '#e74c3c';
+
+                        remaining--;
+                    } else {
+                        clearInterval(localCountdownInterval);
+                        const startMessage = t.countdownStart;
+                        directorOverlay.textContent = startMessage;
+                        directorOverlay.style.color = '#2ecc71';
+                        sendData('presetMessage', { text: startMessage });
+
+                        sendData('togglePlayPause');
+
+                        setTimeout(() => {
+                            directorOverlay.classList.add('hidden');
+                            sendData('presetMessage', { text: '' });
+                            playPauseBtn.disabled = false;
+                        }, 1000);
+                    }
+                }, 1000);
+            }, 500);
+        } else {
+            sendData('togglePlayPause');
+        }
+    };
+
     次へボタン.onclick = () => sendData('nextItem');
     前へボタン.onclick = () => sendData('prevItem');
     キャンバス消去ボタン.onclick = () => {
@@ -1313,12 +1440,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    テンプレート上書き保存ボタン.onclick = () => {
+    テンプレート上書き保存ボタン.onclick = async () => {
         const name = テンプレート選択.value;
         if (!name) return;
 
         const t = translations[currentLang];
-        if (confirm(t.alert_confirmOverwriteTemplate(name))) {
+        const confirmed = await showCustomConfirm(t.alert_confirmOverwriteTemplate(name));
+
+        if (confirmed) {
             recalculateDurations();
             const templates = getTemplates();
             const rows = document.querySelectorAll('#cue-sheet-rows-container .cue-sheet-row');
@@ -1341,11 +1470,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    テンプレート削除ボタン.onclick = () => {
+    テンプレート削除ボタン.onclick = async () => {
         const name = テンプレート選択.value;
         if (!name) return;
         const t = translations[currentLang];
-        if (confirm(t.alert_confirmDeleteTemplate(name))) {
+        const confirmed = await showCustomConfirm(t.alert_confirmDeleteTemplate(name));
+        if (confirmed) {
             const templates = getTemplates();
             delete templates[name];
             saveTemplates(templates);
@@ -1364,9 +1494,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     タイマー表示エリア.onclick = toggleTimerMode;
-    タイマー表示エリア_パーソナリティ.onclick = toggleTimerMode;
-    番組終了ボタン.onclick = () => {
-        if (confirm(translations[currentLang].alert_confirmEndProgram)) {
+    if (タイマー表示エリア_パーソナリティ) {
+        タイマー表示エリア_パーソナリティ.onclick = toggleTimerMode;
+    }
+    番組終了ボタン.onclick = async () => {
+        const t = translations[currentLang];
+        const confirmed = await showCustomConfirm(t.alert_confirmEndProgram);
+        if (confirmed) {
             sendData('endProgram');
         }
     };
@@ -1389,7 +1523,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        const safeTitle = (currentProgramState?.title || 'program').replace(/[^a-z0-j]/gi, '_').toLowerCase();
+        const safeTitle = (currentProgramState?.title || 'program').replace(/[^a-z0-9]/gi, '_').toLowerCase();
         a.download = `log_${safeTitle}_${new Date().toISOString().slice(0, 10)}.txt`;
         document.body.appendChild(a);
         a.click();
@@ -1458,7 +1592,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.onclick = (e) => {
         if (e.target.classList.contains('modal')) {
-            if (e.target.id !== 'program-settings-modal') {
+            if (e.target.id !== 'program-settings-modal' && e.target.id !== 'custom-prompt-modal') {
                 e.target.classList.add('hidden');
             }
         }
@@ -1495,7 +1629,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const role = urlParams.get('role');
         const ip = urlParams.get('ip');
 
-        if (role) {
+        if (role && ip) {
             IP入力欄.value = ip;
             if (role === 'director') {
                 参加する('director');
@@ -1508,11 +1642,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 electronホーム.classList.remove('hidden');
             } else {
                 browserホーム.classList.remove('hidden');
-                const urlParamsFromBrowser = new URLSearchParams(window.location.search);
-                const directorIP = urlParamsFromBrowser.get('directorIP');
-                if (directorIP) {
-                    IP入力欄.value = directorIP;
-                }
             }
         }
     }

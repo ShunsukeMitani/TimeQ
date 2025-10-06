@@ -196,6 +196,8 @@
             <input type="text" id="program-title" value="My Radio Program">
             <label for="program-duration" data-i18n-key="programDuration">番組全体の時間（分）</label>
             <input type="number" id="program-duration" value="30" min="1">
+            <label for="countdown-duration" data-i18n-key="countdownDuration">本番開始カウントダウン（秒）</label>
+            <input type="number" id="countdown-duration" value="10" min="0">
             <div id="cue-sheet-builder">
                 <div class="cue-sheet-builder-header">
                     <h3 data-i18n-key="createCueSheet">進行表の作成</h3>
@@ -296,6 +298,7 @@
 
     <div id="preset-message-display" class="message-display-overlay hidden"></div>
 
+    <div id="main-countdown-overlay" class="message-display-overlay hidden"></div>
     <script src="signature_pad.js"></script>
     <script src="script.js"></script>
 

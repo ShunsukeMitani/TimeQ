@@ -1,6 +1,6 @@
 {
   "name": "time-q-offline",
-  "version": "2.3.7",
+  "version": "2.3.11",
   "description": "Offline Time Keeper App",
   "main": "main.js",
   "scripts": {

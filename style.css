@@ -579,7 +579,6 @@ input:checked+.slider:before {
 
 /* --- スイッチのスタイルここまで --- */
 
-/* ★★★ ここから修正 ★★★ */
 .cue-sheet-header,
 .cue-sheet-row {
     display: flex;
@@ -612,27 +611,45 @@ input:checked+.slider:before {
     min-width: 150px;
 }
 
-.col-time-min {
-    width: 60px;
+.col-time-min,
+.cue-sheet-header .col-time-min {
+    width: 80px;
     text-align: center;
 }
 
-.col-time-sec {
-    width: 60px;
+.col-time-sec,
+.cue-sheet-header .col-time-sec {
+    width: 80px;
     text-align: center;
 }
 
-.col-duration {
-    width: 60px;
+.col-duration,
+.cue-sheet-header .col-duration {
+    width: 80px;
     text-align: center;
 }
 
 .col-type {
-    width: 100px;
+    width: 120px;
 }
 
 .col-action {
     width: 30px;
+}
+
+.cue-sheet-builder.individual-mode .col-duration,
+.cue-sheet-builder.cumulative-mode .col-time-min,
+.cue-sheet-builder.cumulative-mode .col-time-sec {
+    display: none;
+}
+
+.cue-sheet-builder.individual-mode .col-time-min,
+.cue-sheet-builder.individual-mode .col-time-sec {
+    display: block;
+}
+
+.cue-sheet-builder.cumulative-mode .col-duration {
+    display: block;
 }
 
 .col-duration span {
@@ -653,11 +670,22 @@ input:checked+.slider:before {
     line-height: 30px;
 }
 
-/* ★★★ ここまで修正 ★★★ */
-
 #add-cue-row-btn {
     width: auto;
 }
+
+.cue-sheet-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+#total-time-display {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
 
 /* 更新履歴モーダル */
 #history-log-list {
@@ -812,6 +840,35 @@ input:checked+.slider:before {
     color: #2980b9;
     border-color: #3498db;
     box-shadow: 0 2px 0 #a9cce3;
+}
+
+/* カスタムプロンプトモーダル */
+#custom-prompt-modal .modal-content {
+    max-width: 400px;
+    text-align: center;
+}
+
+#custom-prompt-modal h3 {
+    margin-top: 0;
+}
+
+#custom-prompt-modal input {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.prompt-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.prompt-buttons button {
+    flex-grow: 1;
+}
+
+#prompt-cancel-btn {
+    background-color: #7f8c8d;
 }
 
 /* レスポンシブ対応 */
@@ -978,6 +1035,7 @@ body.dark-theme #language-select {
     z-index: 200;
     text-align: center;
     box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.5);
+    pointer-events: none;
 }
 
 body.dark-theme .col-duration span {
