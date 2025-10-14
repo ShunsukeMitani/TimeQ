@@ -48,6 +48,13 @@ document.addEventListener('DOMContentLoaded', () => {
             programTitle: "Program Title",
             programDuration: "Total Program Duration (minutes)",
             countdownDuration: "Pre-Broadcast Countdown (seconds)",
+            fontSizeSettings: "Display Font Size Settings",
+            overlayFontSizeLabel: "Instructions/Countdown",
+            indicatorFontSizeLabel: "Ack/Response",
+            fontSizeSmall: "Small",
+            fontSizeMedium: "Medium",
+            fontSizeLarge: "Large",
+            fontSizeExtraLarge: "Extra Large",
             createCueSheet: "Create Cue Sheet",
             timeEntryModeIndividual: "Individual",
             timeEntryModeCumulative: "Cumulative",
@@ -162,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         ja: {
-            changeDisplaySize: "表示サイズの変更", display100: "表示: 100%", display90: "表示: 90%", display85: "表示: 85%", display75: "表示: 75%", display50: "表示: 50%", display30: "表示: 30%", shortcuts: "ショートカット", updateHistory: "更新履歴", startAsServer: "サーバーとして起動", joinAsClient: "クライアントとして参加", returnToSettings: "番組設定に戻る", waitingForClientsTitle: "クライアントの接続を待っています", waitingForClientsDesc: "他のPCやタブレットから、以下のQRコードまたはURLで接続してください。", openDirectorWindow: "ディレクター画面を開く", openPersonalityWindow: "パーソナリティ画面を開く", enterServerIP: "サーバーPCのIPアドレスを入力", joinAsDirector: "ディレクターとして参加", joinAsPersonality: "パーソナリティとして参加", cueSheet: "進行表", prev: "前へ", next: "次へ", saveLog: "ログ保存", programTimeRemaining: "番組残り時間", programTimeElapsed: "番組経過時間", segmentTimeRemaining: "コーナー残り時間", segmentTimeElapsed: "コーナー経過時間", timeDifference: "押し/巻き", fullscreen: "全画面表示", handwriting: "手書き指示", acknowledged: "了解！", clear: "消去", presetMessages: "プリセットメッセージ", settings: "設定", endProgram: "番組終了", instructions: "指示", waitingForInstructions: "指示を待っています...", acknowledge: "了解", programSettings: "番組設定", programTitle: "番組タイトル", programDuration: "番組全体の時間（分）", countdownDuration: "本番開始カウントダウン（秒）", createCueSheet: "進行表の作成", timeEntryModeIndividual: "個別", timeEntryModeCumulative: "加算", selectTemplate: "テンプレートを選択", load: "読込", save: "保存", overwrite: "上書き保存",
+            changeDisplaySize: "表示サイズの変更", display100: "表示: 100%", display90: "表示: 90%", display85: "表示: 85%", display75: "表示: 75%", display50: "表示: 50%", display30: "表示: 30%", shortcuts: "ショートカット", updateHistory: "更新履歴", startAsServer: "サーバーとして起動", joinAsClient: "クライアントとして参加", returnToSettings: "番組設定に戻る", waitingForClientsTitle: "クライアントの接続を待っています", waitingForClientsDesc: "他のPCやタブレットから、以下のQRコードまたはURLで接続してください。", openDirectorWindow: "ディレクター画面を開く", openPersonalityWindow: "パーソナリティ画面を開く", enterServerIP: "サーバーPCのIPアドレスを入力", joinAsDirector: "ディレクターとして参加", joinAsPersonality: "パーソナリティとして参加", cueSheet: "進行表", prev: "前へ", next: "次へ", saveLog: "ログ保存", programTimeRemaining: "番組残り時間", programTimeElapsed: "番組経過時間", segmentTimeRemaining: "コーナー残り時間", segmentTimeElapsed: "コーナー経過時間", timeDifference: "押し/巻き", fullscreen: "全画面表示", handwriting: "手書き指示", acknowledged: "了解！", clear: "消去", presetMessages: "プリセットメッセージ", settings: "設定", endProgram: "番組終了", instructions: "指示", waitingForInstructions: "指示を待っています...", acknowledge: "了解", programSettings: "番組設定", programTitle: "番組タイトル", programDuration: "番組全体の時間（分）", countdownDuration: "本番開始カウントダウン（秒）", fontSizeSettings: "表示フォントサイズ設定", overlayFontSizeLabel: "指示/カウントダウン", indicatorFontSizeLabel: "了解/応答", fontSizeSmall: "小", fontSizeMedium: "中", fontSizeLarge: "大", fontSizeExtraLarge: "特大", createCueSheet: "進行表の作成", timeEntryModeIndividual: "個別", timeEntryModeCumulative: "加算", selectTemplate: "テンプレートを選択", load: "読込", save: "保存", overwrite: "上書き保存",
             cornerName: "コーナー名", minutes: "分", seconds: "秒", endTimeMinutes: "終了(分)", endTimeSeconds: "終了(秒)", duration: "時間", totalTime: "合計時間:", type: "タイプ", addRow: "行を追加", startProgramWithSettings: "この内容で番組を開始", presetSettings: "プリセットメッセージ設定", presetSettingsDesc: "カンマ区切りでメッセージを入力してください。", personalityPresetSettings: "パーソナリティのプリセット設定", saveBtn: "保存する", cancel: "キャンセル", ok: "OK",
             shortcutSettings: "ショートカットキー設定",
             shortcutSettingsDesc: "設定したい項目のボックスをクリックしてから、割り当てたいキーまたはキーの組み合わせ（例: Ctrl + S）を押してください。",
@@ -370,6 +377,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const cueSheetHeader = document.querySelector('.cue-sheet-header');
     const totalTimeDisplay = document.getElementById('total-time-display');
     const totalTimeValue = document.getElementById('total-time-value');
+    const overlayFontSizeInput = document.getElementById('overlay-font-size');
+    const indicatorFontSizeInput = document.getElementById('indicator-font-size');
 
     let socket;
     let 自分の役割 = null;
@@ -400,7 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (了解インジケーター) {
         了解インジケーター.style.padding = '1rem 2rem';
-        了解インジケーター.style.fontSize = '1.25rem';
+        // 了解インジケーター.style.fontSize = '1.25rem'; // CSS変数で管理するため削除
         了解インジケーター.style.top = '2.5rem';
         了解インジケーター.style.right = '2.5rem';
     }
@@ -591,10 +600,14 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('サーバーに接続しました。');
             if (自分の役割 === 'director') {
                 sendData('identify', { role: 'director' });
-                画面を表示する(ディレクター画面);
-                番組設定モーダルをリセットする();
-                番組設定モーダル.classList.remove('hidden');
+                // 初回接続時は設定モーダルを表示するが、再接続時はstateUpdateを待つ
+                if (!currentProgramState) {
+                    画面を表示する(ディレクター画面);
+                    番組設定モーダルをリセットする();
+                    番組設定モーダル.classList.remove('hidden');
+                }
             } else {
+                sendData('identify', { role: 'personality' });
                 画面を表示する(パーソナリティ画面);
                 initializePersonalityUI();
             }
@@ -623,6 +636,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const state = currentProgramState;
             if (!state) return;
 
+            if (state.programStatus === 'ready') {
+                clientSideCountdownValue = state.countdown || 0;
+            } else {
+                clientSideCountdownValue = 0;
+            }
+
             if (state.programStatus === 'standby') {
                 return;
             }
@@ -635,6 +654,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     playPauseBtn.innerHTML = `<i class="fas fa-play"></i> START`;
                     playPauseBtn.classList.remove('paused');
+                }
+                // ★★★ 修正箇所: 後から参加したディレクターも手書き機能を初期化する ★★★
+                if (!手書きパッド) {
+                    プリセットボタンを描画する();
+                    setTimeout(初期化手書きパッド, 100);
                 }
             } else {
                 画面を表示する(パーソナリティ画面);
@@ -670,7 +694,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-        // ★★★ 修正箇所1: presetMessageの処理を修正 ★★★
         if (data.type === 'presetMessage') {
             if (自分の役割 === 'personality') {
                 const { text } = data.payload;
@@ -685,28 +708,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 overlay.textContent = text;
                 overlay.classList.remove('hidden');
 
-                const countdownBaseString = t.countdownMessage(0).split('0')[0];
-                const isCountdown = text.startsWith(countdownBaseString);
-                const isStart = text === t.countdownStart;
-                const isStandby = text === t.countdownStandby;
-
-                // Color logic
-                overlay.style.color = 'white'; // Default
-                if (isStart) {
-                    overlay.style.color = '#2ecc71'; // Green
-                } else if (isCountdown) {
-                    const match = text.match(/\d+/);
-                    if (match && parseInt(match[0], 10) <= 3) {
-                        overlay.style.color = '#e74c3c'; // Red
-                    }
-                }
-
-                // Auto-hide logic for regular messages only
-                if (!isCountdown && !isStart && !isStandby) {
-                    setTimeout(() => {
-                        overlay.classList.add('hidden');
-                    }, 5000);
-                }
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                }, 5000);
             }
         }
         if (data.type === 'acknowledged') {
@@ -734,6 +738,34 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.type === 'programEnded') {
             clientSideCountdownValue = 0;
             window.location.reload();
+        }
+
+        if (data.type === 'countdownTick') {
+            const { text } = data.payload;
+            const t = translations[currentLang];
+            const overlay = (自分の役割 === 'director') ? mainCountdownOverlay : プリセットメッセージ表示;
+
+            if (!text) {
+                overlay.classList.add('hidden');
+                return;
+            }
+
+            overlay.textContent = text;
+            overlay.classList.remove('hidden');
+
+            const isStart = text === t.countdownStart;
+            const countdownBaseString = t.countdownMessage(0).split('0')[0];
+            const isCountdown = text.startsWith(countdownBaseString);
+
+            overlay.style.color = 'white'; // Default
+            if (isStart) {
+                overlay.style.color = '#2ecc71'; // Green
+            } else if (isCountdown) {
+                const match = text.match(/\d+/);
+                if (match && parseInt(match[0], 10) <= 3) {
+                    overlay.style.color = '#e74c3c'; // Red
+                }
+            }
         }
     }
 
@@ -1195,6 +1227,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getTemplates() { return JSON.parse(localStorage.getItem('timeqCueTemplates') || '{}'); }
     function saveTemplates(templates) { localStorage.setItem('timeqCueTemplates', JSON.stringify(templates)); }
+
+    function saveFontSizes() {
+        const settings = {
+            overlay: overlayFontSizeInput.value,
+            indicator: indicatorFontSizeInput.value
+        };
+        localStorage.setItem('timeqFontSizes', JSON.stringify(settings));
+    }
+
+    function loadAndApplyFontSizes() {
+        const savedSettings = localStorage.getItem('timeqFontSizes');
+        const defaultSettings = { overlay: '2.25', indicator: '1.25' };
+        const settings = savedSettings ? JSON.parse(savedSettings) : defaultSettings;
+
+        overlayFontSizeInput.value = settings.overlay;
+        indicatorFontSizeInput.value = settings.indicator;
+
+        document.documentElement.style.setProperty('--overlay-font-size', settings.overlay + 'rem');
+        document.documentElement.style.setProperty('--indicator-font-size', settings.indicator + 'rem');
+    }
+
     function テンプレートリストを更新() {
         const templates = getTemplates();
         const t = translations[currentLang];
@@ -1213,6 +1266,18 @@ document.addEventListener('DOMContentLoaded', () => {
             recalculateDurations();
         }
     });
+
+    if (overlayFontSizeInput && indicatorFontSizeInput) {
+        overlayFontSizeInput.addEventListener('change', () => {
+            document.documentElement.style.setProperty('--overlay-font-size', overlayFontSizeInput.value + 'rem');
+            saveFontSizes();
+        });
+
+        indicatorFontSizeInput.addEventListener('change', () => {
+            document.documentElement.style.setProperty('--indicator-font-size', indicatorFontSizeInput.value + 'rem');
+            saveFontSizes();
+        });
+    }
 
     timeEntryModeToggle.addEventListener('change', () => {
         updateCueSheetLayout(timeEntryModeToggle.checked);
@@ -1304,7 +1369,6 @@ document.addEventListener('DOMContentLoaded', () => {
         recalculateDurations();
     };
 
-    // ★★★ 修正箇所2: STARTボタンの処理 ★★★
     playPauseBtn.onclick = () => {
         if (clientSideCountdownValue > 0) {
             let remaining = clientSideCountdownValue;
@@ -1314,19 +1378,19 @@ document.addEventListener('DOMContentLoaded', () => {
             clientSideCountdownValue = 0;
             playPauseBtn.disabled = true;
 
-            const directorOverlay = (自分の役割 === 'director') ? mainCountdownOverlay : プリセットメッセージ表示;
+            const directorOverlay = mainCountdownOverlay;
 
             directorOverlay.classList.remove('hidden');
             directorOverlay.textContent = initialMessage;
             directorOverlay.style.color = 'white';
-            sendData('presetMessage', { text: initialMessage });
+            sendData('countdownTick', { text: initialMessage });
 
             setTimeout(() => {
                 const localCountdownInterval = setInterval(() => {
                     if (remaining > 0) {
                         const message = t.countdownMessage(remaining);
                         directorOverlay.textContent = message;
-                        sendData('presetMessage', { text: message });
+                        sendData('countdownTick', { text: message });
 
                         if (remaining <= 3) directorOverlay.style.color = '#e74c3c';
 
@@ -1336,13 +1400,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         const startMessage = t.countdownStart;
                         directorOverlay.textContent = startMessage;
                         directorOverlay.style.color = '#2ecc71';
-                        sendData('presetMessage', { text: startMessage });
+                        sendData('countdownTick', { text: startMessage });
 
                         sendData('togglePlayPause');
 
                         setTimeout(() => {
                             directorOverlay.classList.add('hidden');
-                            sendData('presetMessage', { text: '' });
+                            sendData('countdownTick', { text: '' });
                             playPauseBtn.disabled = false;
                         }, 1000);
                     }
@@ -1616,6 +1680,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setLanguage(localStorage.getItem('timeqLang') || 'ja');
         テンプレートリストを更新();
         loadDisplayScale();
+        loadAndApplyFontSizes();
         window.addEventListener('keydown', handleGlobalKeyDown);
 
         if (localStorage.getItem('theme') === 'dark') {

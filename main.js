@@ -56,7 +56,6 @@ if (!gotTheLock) {
     directorWin = new BrowserWindow({
       width: 1280,
       height: 800,
-      // parent: win, // ★★★ 修正点: この行を削除またはコメントアウト ★★★
       webPreferences: {
         preload: path.join(__dirname, 'preload.js'),
       },
@@ -78,7 +77,6 @@ if (!gotTheLock) {
     personalityWin = new BrowserWindow({
       width: 1024,
       height: 768,
-      // parent: win, // ★★★ 修正点: この行を削除またはコメントアウト ★★★
       webPreferences: {
         preload: path.join(__dirname, 'preload.js'),
       },
@@ -124,14 +122,58 @@ if (!gotTheLock) {
 
       const wss = new WebSocketServer({ port: wsPort });
       let programState = null;
-      let directorWs = null;
 
       wss.on('connection', (ws) => {
+        ws.role = null;
+
         if (programState) { ws.send(JSON.stringify({ type: 'stateUpdate', payload: programState })); }
 
         ws.on('message', (message) => {
           const data = JSON.parse(message.toString());
-          if (data.type === 'identify' && data.payload.role === 'director') { directorWs = ws; }
+
+          if (data.type === 'identify') {
+            ws.role = data.payload.role;
+            console.log(`[サーバー] クライアントを識別しました。役割: ${ws.role}`);
+            return;
+          }
+
+          // ★★★ 修正箇所1: カウントダウンメッセージを全員に転送 ★★★
+          // カウントダウンは役割に関わらず送信者以外全員に転送する
+          if (data.type === 'countdownTick') {
+            wss.clients.forEach(client => {
+              if (client !== ws && client.readyState === client.OPEN) {
+                client.send(message.toString());
+              }
+            });
+            return;
+          }
+
+          if (ws.role === 'director' && (data.type === 'handwritingUpdate' || data.type === 'presetMessage')) {
+            wss.clients.forEach(client => {
+              if (client.role === 'personality' && client.readyState === ws.OPEN) {
+                client.send(message.toString());
+              }
+            });
+            return;
+          }
+
+          if (ws.role === 'personality' && (data.type === 'acknowledgement' || data.type === 'personalityMessage')) {
+            wss.clients.forEach(client => {
+              if (client.role === 'director' && client.readyState === ws.OPEN) {
+                if (data.type === 'acknowledgement') {
+                  client.send(JSON.stringify({ type: 'acknowledged' }));
+                } else {
+                  client.send(message.toString());
+                }
+              }
+            });
+            return;
+          }
+
+          if (ws.role !== 'director') {
+            return;
+          }
+
           if (!programState && data.type !== 'startProgram') return;
 
           switch (data.type) {
@@ -155,59 +197,39 @@ if (!gotTheLock) {
               }
               break;
             case 'nextItem':
-              console.log(`[サーバー] nextItem 受信。現在のインデックス: ${programState.currentItemIndex}`);
               if (programState.currentItemIndex < programState.cueSheet.length - 1) {
                 const finishedItem = programState.cueSheet[programState.currentItemIndex];
                 if (programState.programStatus === 'running' && programState.currentItemStartTime > 0) finishedItem.actualDuration = (Date.now() - programState.currentItemStartTime) / 1000;
                 programState.currentItemIndex++;
                 programState.currentItemStartTime = Date.now();
                 programState.timeDifference = recalculateTimeDifference();
-                console.log(`[サーバー] -> 更新後のインデックス: ${programState.currentItemIndex}`);
               }
               break;
             case 'prevItem':
-              console.log(`[サーバー] prevItem 受信。現在のインデックス: ${programState.currentItemIndex}`);
               if (programState.currentItemIndex > 0) {
                 programState.cueSheet[programState.currentItemIndex - 1].actualDuration = null;
                 programState.currentItemIndex--;
                 programState.currentItemStartTime = Date.now();
                 programState.timeDifference = recalculateTimeDifference();
-                console.log(`[サーバー] -> 更新後のインデックス: ${programState.currentItemIndex}`);
               }
               break;
-            case 'handwritingUpdate':
-              broadcastToOthers(ws, { type: 'handwritingUpdate', payload: data.payload });
-              return;
-            case 'presetMessage':
-              console.log('[サーバー] presetMessage を受信。他のクライアントへ転送します。ペイロード:', data.payload);
-              broadcastToOthers(ws, { type: 'presetMessage', payload: data.payload });
-              break;
-            case 'personalityMessage':
-              if (directorWs && directorWs.readyState === directorWs.OPEN) {
-                directorWs.send(JSON.stringify({ type: 'personalityMessage', payload: data.payload }));
-              }
-              return;
-            case 'acknowledgement':
-              if (directorWs && directorWs.readyState === directorWs.OPEN) {
-                directorWs.send(JSON.stringify({ type: 'acknowledged' }));
-              }
-              return;
             case 'endProgram':
               programState = null;
-              directorWs = null;
               wss.clients.forEach(client => { if (client.readyState === client.OPEN) client.send(JSON.stringify({ type: 'programEnded' })); });
               return;
           }
           broadcastState();
+        });
+
+        ws.on('close', () => {
+          console.log(`[サーバー] クライアントが切断しました。役割: ${ws.role}`);
         });
       });
 
       function broadcastState() {
         if (programState) wss.clients.forEach(c => c.readyState === c.OPEN && c.send(JSON.stringify({ type: 'stateUpdate', payload: programState })));
       }
-      function broadcastToOthers(sender, msg) {
-        wss.clients.forEach(c => c !== sender && c.readyState === c.OPEN && c.send(JSON.stringify(msg)));
-      }
+
       function recalculateTimeDifference() {
         if (!programState) return 0;
         return programState.cueSheet.slice(0, programState.currentItemIndex).reduce((acc, item) => acc + (item.actualDuration !== null ? item.actualDuration - item.duration : 0), 0);

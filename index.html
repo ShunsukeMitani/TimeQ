@@ -198,6 +198,31 @@
             <input type="number" id="program-duration" value="30" min="1">
             <label for="countdown-duration" data-i18n-key="countdownDuration">本番開始カウントダウン（秒）</label>
             <input type="number" id="countdown-duration" value="10" min="0">
+
+            <div id="font-size-settings" style="margin-top: 1.25rem; border-top: 1px solid #eee; padding-top: 1.25rem;">
+                <h3 data-i18n-key="fontSizeSettings">表示フォントサイズ設定</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div>
+                        <label for="overlay-font-size" data-i18n-key="overlayFontSizeLabel">指示/カウントダウン</label>
+                        <select id="overlay-font-size">
+                            <option value="1.5" data-i18n-key="fontSizeSmall">小</option>
+                            <option value="2.25" data-i18n-key="fontSizeMedium">中</option>
+                            <option value="3" data-i18n-key="fontSizeLarge">大</option>
+                            <option value="4" data-i18n-key="fontSizeExtraLarge">特大</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="indicator-font-size" data-i18n-key="indicatorFontSizeLabel">了解/応答</label>
+                        <select id="indicator-font-size">
+                            <option value="0.8" data-i18n-key="fontSizeSmall">小</option>
+                            <option value="1.25" data-i18n-key="fontSizeMedium">中</option>
+                            <option value="1.75" data-i18n-key="fontSizeLarge">大</option>
+                            <option value="2.5" data-i18n-key="fontSizeExtraLarge">特大</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
             <div id="cue-sheet-builder">
                 <div class="cue-sheet-builder-header">
                     <h3 data-i18n-key="createCueSheet">進行表の作成</h3>

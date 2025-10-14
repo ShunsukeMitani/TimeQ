@@ -439,7 +439,7 @@ button:disabled {
     color: white;
     padding: 0.75rem 1.5rem;
     border-radius: 1.5rem;
-    font-size: 1.25rem;
+    font-size: var(--indicator-font-size, 1.25rem);
     font-weight: bold;
     opacity: 0;
     visibility: hidden;
@@ -503,7 +503,7 @@ button:disabled {
 }
 
 #cue-sheet-builder {
-    margin-top: 0.625rem;
+    margin-top: 1.25rem;
     margin-bottom: 1.25rem;
 }
 
@@ -1030,7 +1030,7 @@ body.dark-theme #language-select {
     color: white;
     padding: 1.25rem 2.5rem;
     border-radius: 0.5rem;
-    font-size: 2.25rem;
+    font-size: var(--overlay-font-size, 2.25rem);
     font-weight: bold;
     z-index: 200;
     text-align: center;
