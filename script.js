@@ -120,6 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultPersonalityPresets: ['👍', 'OK', 'Got it', 'Please repeat', 'Stand by'],
             // Update History is omitted for brevity but should be kept in your file
             updateHistoryContent: [
+                { version: "Ver.2.6.0", note: "Added the ability to change the font size for Message from the Director,Response from the Personality,Acknowledgement Display, and Countdown." },
+                { version: "Ver.2.5.0", note: "Added pre-show countdown" },
                 { version: "Ver.2.4.2", note: "Fixed a critical bug where the program settings modal would not appear. Implemented a custom confirmation dialog to prevent inputs from becoming disabled in the app version." },
                 { version: "Ver.2.4.1", note: "Fixed a bug that disabled inputs after loading or overwriting a template." },
                 { version: "Ver.2.4.0", note: "Fixed a bug that disabled inputs after loading or overwriting a template." },
@@ -189,6 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultPresets: ['👍', 'OK!', '巻いて！', 'CMへ', 'あと30秒'],
             defaultPersonalityPresets: ['👍', 'OK', '了解です', 'もう一度お願いします', '少し待ってください'],
             updateHistoryContent: [
+                { version: "Ver.2.6.0", note: "「ディレクターからのメッセージ」「パーソナリティからの応答」「了解表示」「カウントダウン」のフォントサイズを変更できる機能を追加" },
                 { version: "Ver.2.5.0", note: "本番前カウントダウンを追加" },
                 { version: "Ver.2.4.2", note: "カスタム確認ダイアログを導入し、Electron環境でテンプレート上書き保存後に入力不可になる不具合を修正。番組設定が表示されない不具合を修正。" },
                 { version: "Ver.2.4.1", note: "テンプレートの上書き保存・読込後に進行表が入力できなくなる不具合を修正。" },
