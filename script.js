@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
             openDirectorWindow: "Open Director Window",
             openPersonalityWindow: "Open Personality Window",
             enterServerIP: "Enter Server PC's IP Address",
+            enterRoomId: "Enter 4-digit Room ID",
+            roomIdLabel: "Room ID",
             joinAsDirector: "Join as Director",
             joinAsPersonality: "Join as Personality",
             // Director & Personality Screens
@@ -40,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             presetMessages: "Preset Messages",
             settings: "Settings",
             endProgram: "End Program",
+            restartProgram: "Restart",
             instructions: "Instructions",
             waitingForInstructions: "Waiting for instructions...",
             acknowledge: "Acknowledge",
@@ -62,6 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
             load: "Load",
             save: "Save",
             overwrite: "Overwrite",
+            exportTemplates: "Export",
+            importTemplates: "Import",
+            exportTemplatesTitle: "Export all templates to a file",
+            importTemplatesTitle: "Import templates from a file",
             cornerName: "Segment Name",
             minutes: "Min",
             seconds: "Sec",
@@ -87,8 +94,15 @@ document.addEventListener('DOMContentLoaded', () => {
             alert_connectionLost: "Connection to the server was lost. Returning to home screen.",
             alert_connectionFailed: "Could not connect to the server.",
             alert_enterIP: "Please enter the server PC's IP address.",
+            alert_invalidRoomId: "Invalid Room ID. Please check and try again.",
             alert_addCueItem: "Please add at least one item to the cue sheet.",
             alert_confirmEndProgram: "Are you sure you want to end the program?",
+            alert_confirmRestartProgram: "Are you sure you want to reset the current program and start over?",
+            alert_noTemplatesToExport: "There are no templates to export.",
+            toast_templatesExported: "Templates exported successfully.",
+            toast_templatesImported: "Templates imported successfully.",
+            alert_invalidTemplateFile: "The selected file is not a valid template file.",
+            alert_confirmImport: "This will merge templates from the file. Existing templates with the same name will be overwritten. Do you want to continue?",
             alert_noLogToDownload: "There is no log to download.",
             alert_confirmDeleteTemplate: (name) => `Are you sure you want to delete the template "${name}"?`,
             alert_confirmOverwriteTemplate: (name) => `Are you sure you want to overwrite the template "${name}" with the current content?`,
@@ -118,8 +132,9 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultCueEnding: "Ending",
             defaultPresets: ['👍', 'OK!', 'Wrap it up!', 'Go to CM', '30s left'],
             defaultPersonalityPresets: ['👍', 'OK', 'Got it', 'Please repeat', 'Stand by'],
-            // Update History is omitted for brevity but should be kept in your file
             updateHistoryContent: [
+                { version: "Ver.2.8.0", note: "Fixed so that program setting templates can be shared" },
+                { version: "Ver.2.7.0", note: "Added a redo function for the actual performance, corrected the room ID to be entered as a four-digit number, and fixed the difficulty of writing with the iPad handwriting function." },
                 { version: "Ver.2.6.0", note: "Added the ability to change the font size for Message from the Director,Response from the Personality,Acknowledgement Display, and Countdown." },
                 { version: "Ver.2.5.0", note: "Added pre-show countdown" },
                 { version: "Ver.2.4.2", note: "Fixed a critical bug where the program settings modal would not appear. Implemented a custom confirmation dialog to prevent inputs from becoming disabled in the app version." },
@@ -171,14 +186,14 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         ja: {
-            changeDisplaySize: "表示サイズの変更", display100: "表示: 100%", display90: "表示: 90%", display85: "表示: 85%", display75: "表示: 75%", display50: "表示: 50%", display30: "表示: 30%", shortcuts: "ショートカット", updateHistory: "更新履歴", startAsServer: "サーバーとして起動", joinAsClient: "クライアントとして参加", returnToSettings: "番組設定に戻る", waitingForClientsTitle: "クライアントの接続を待っています", waitingForClientsDesc: "他のPCやタブレットから、以下のQRコードまたはURLで接続してください。", openDirectorWindow: "ディレクター画面を開く", openPersonalityWindow: "パーソナリティ画面を開く", enterServerIP: "サーバーPCのIPアドレスを入力", joinAsDirector: "ディレクターとして参加", joinAsPersonality: "パーソナリティとして参加", cueSheet: "進行表", prev: "前へ", next: "次へ", saveLog: "ログ保存", programTimeRemaining: "番組残り時間", programTimeElapsed: "番組経過時間", segmentTimeRemaining: "コーナー残り時間", segmentTimeElapsed: "コーナー経過時間", timeDifference: "押し/巻き", fullscreen: "全画面表示", handwriting: "手書き指示", acknowledged: "了解！", clear: "消去", presetMessages: "プリセットメッセージ", settings: "設定", endProgram: "番組終了", instructions: "指示", waitingForInstructions: "指示を待っています...", acknowledge: "了解", programSettings: "番組設定", programTitle: "番組タイトル", programDuration: "番組全体の時間（分）", countdownDuration: "本番開始カウントダウン（秒）", fontSizeSettings: "表示フォントサイズ設定", overlayFontSizeLabel: "指示/カウントダウン", indicatorFontSizeLabel: "了解/応答", fontSizeSmall: "小", fontSizeMedium: "中", fontSizeLarge: "大", fontSizeExtraLarge: "特大", createCueSheet: "進行表の作成", timeEntryModeIndividual: "個別", timeEntryModeCumulative: "加算", selectTemplate: "テンプレートを選択", load: "読込", save: "保存", overwrite: "上書き保存",
+            changeDisplaySize: "表示サイズの変更", display100: "表示: 100%", display90: "表示: 90%", display85: "表示: 85%", display75: "表示: 75%", display50: "表示: 50%", display30: "表示: 30%", shortcuts: "ショートカット", updateHistory: "更新履歴", startAsServer: "サーバーとして起動", joinAsClient: "クライアントとして参加", returnToSettings: "番組設定に戻る", waitingForClientsTitle: "クライアントの接続を待っています", waitingForClientsDesc: "他のPCやタブレットから、以下のQRコードまたはURLで接続してください。", openDirectorWindow: "ディレクター画面を開く", openPersonalityWindow: "パーソナリティ画面を開く", enterServerIP: "サーバーPCのIPアドレスを入力", enterRoomId: "4桁のルームIDを入力", roomIdLabel: "ルームID", joinAsDirector: "ディレクターとして参加", joinAsPersonality: "パーソナリティとして参加", cueSheet: "進行表", prev: "前へ", next: "次へ", saveLog: "ログ保存", programTimeRemaining: "番組残り時間", programTimeElapsed: "番組経過時間", segmentTimeRemaining: "コーナー残り時間", segmentTimeElapsed: "コーナー経過時間", timeDifference: "押し/巻き", fullscreen: "全画面表示", handwriting: "手書き指示", acknowledged: "了解！", clear: "消去", presetMessages: "プリセットメッセージ", settings: "設定", endProgram: "番組終了", restartProgram: "やり直し", instructions: "指示", waitingForInstructions: "指示を待っています...", acknowledge: "了解", programSettings: "番組設定", programTitle: "番組タイトル", programDuration: "番組全体の時間（分）", countdownDuration: "本番開始カウントダウン（秒）", fontSizeSettings: "表示フォントサイズ設定", overlayFontSizeLabel: "指示/カウントダウン", indicatorFontSizeLabel: "了解/応答", fontSizeSmall: "小", fontSizeMedium: "中", fontSizeLarge: "大", fontSizeExtraLarge: "特大", createCueSheet: "進行表の作成", timeEntryModeIndividual: "個別", timeEntryModeCumulative: "加算", selectTemplate: "テンプレートを選択", load: "読込", save: "保存", overwrite: "上書き保存", exportTemplates: "エクスポート", importTemplates: "インポート", exportTemplatesTitle: "全テンプレートをファイルに書き出します", importTemplatesTitle: "ファイルからテンプレートを読み込みます",
             cornerName: "コーナー名", minutes: "分", seconds: "秒", endTimeMinutes: "終了(分)", endTimeSeconds: "終了(秒)", duration: "時間", totalTime: "合計時間:", type: "タイプ", addRow: "行を追加", startProgramWithSettings: "この内容で番組を開始", presetSettings: "プリセットメッセージ設定", presetSettingsDesc: "カンマ区切りでメッセージを入力してください。", personalityPresetSettings: "パーソナリティのプリセット設定", saveBtn: "保存する", cancel: "キャンセル", ok: "OK",
             shortcutSettings: "ショートカットキー設定",
             shortcutSettingsDesc: "設定したい項目のボックスをクリックしてから、割り当てたいキーまたはキーの組み合わせ（例: Ctrl + S）を押してください。",
             saveSettings: "この設定を保存",
             toast_templateSaved: (name) => `テンプレート「${name}」を保存しました。`,
             toast_templateOverwritten: (name) => `テンプレート「${name}」を上書き保存しました。`,
-            alert_connectionLost: "サーバーとの接続が切れました。ホーム画面に戻ります。", alert_connectionFailed: "サーバーに接続できませんでした。", alert_enterIP: "サーバーPCのIPアドレスを入力してください。", alert_addCueItem: "進行表に項目を追加してください。", alert_confirmEndProgram: "本当に番組を終了しますか？", alert_noLogToDownload: "ダウンロードするログがありません。", alert_confirmDeleteTemplate: (name) => `テンプレート「${name}」を本当に削除しますか？`,
+            alert_connectionLost: "サーバーとの接続が切れました。ホーム画面に戻ります。", alert_connectionFailed: "サーバーに接続できませんでした。", alert_enterIP: "サーバーPCのIPアドレスを入力してください。", alert_invalidRoomId: "ルームIDが無効です。確認してもう一度お試しください。", alert_addCueItem: "進行表に項目を追加してください。", alert_confirmEndProgram: "本当に番組を終了しますか？", alert_confirmRestartProgram: "現在の番組をリセットして最初からやり直しますか？この操作は元に戻せません。", alert_noTemplatesToExport: "エクスポートするテンプレートがありません。", toast_templatesExported: "テンプレートをエクスポートしました。", toast_templatesImported: "テンプレートをインポートしました。", alert_invalidTemplateFile: "無効なテンプレートファイルです。", alert_confirmImport: "ファイルからテンプレートを読み込みます。同じ名前の既存テンプレートは上書きされます。よろしいですか？", alert_noLogToDownload: "ダウンロードするログがありません。", alert_confirmDeleteTemplate: (name) => `テンプレート「${name}」を本当に削除しますか？`,
             alert_confirmOverwriteTemplate: (name) => `テンプレート「${name}」を現在の内容で上書きしますか？`,
             prompt_enterTemplateName: "テンプレート名を入力してください", role_select: "役割を選択してください", role_enterIP: "サーバーPCのIPアドレスを入力してください", serverStarting: "サーバーを起動中...", copyURL: "URLをコピー", copied: "コピーしました！", countdownStandby: "まもなく本番です...", countdownStart: "スタート！", countdownMessage: (sec) => `本番まであと ${sec} 秒`,
             type_talk: "トーク", type_music: "楽曲", type_cm: "CM", type_other: "その他",
@@ -191,6 +206,8 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultPresets: ['👍', 'OK!', '巻いて！', 'CMへ', 'あと30秒'],
             defaultPersonalityPresets: ['👍', 'OK', '了解です', 'もう一度お願いします', '少し待ってください'],
             updateHistoryContent: [
+                { version: "Ver.2.8.0", note: "番組設定テンプレートを共有ができるように修正。" },
+                { version: "Ver.2.7.0", note: "本番やり直し機能を追加、部屋IDを４桁の数字で入れるように修正。ipad手書き機能で書きづらいのを修正。" },
                 { version: "Ver.2.6.0", note: "「ディレクターからのメッセージ」「パーソナリティからの応答」「了解表示」「カウントダウン」のフォントサイズを変更できる機能を追加" },
                 { version: "Ver.2.5.0", note: "本番前カウントダウンを追加" },
                 { version: "Ver.2.4.2", note: "カスタム確認ダイアログを導入し、Electron環境でテンプレート上書き保存後に入力不可になる不具合を修正。番組設定が表示されない不具合を修正。" },
@@ -315,8 +332,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const クライアントとして参加ボタン = document.getElementById('join-as-client-btn');
     const director参加ボタン = document.getElementById('join-director-btn');
     const personality参加ボタン = document.getElementById('join-personality-btn');
-    const IP入力欄 = document.getElementById('ip-input');
+    const roomIDInput = document.getElementById('room-id-input');
     const サーバー情報 = document.getElementById('server-info');
+    const roomIDDisplay = document.getElementById('room-id-display');
     const サーバーQRコード画像 = document.getElementById('server-qr-code-image');
     const サーバーURLテキスト = document.getElementById('server-url-text');
     const openDirectorWindowBtn = document.getElementById('open-director-window-btn');
@@ -342,6 +360,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const 手書きキャンバス = document.getElementById('handwriting-canvas');
     const キャンバス消去ボタン = document.getElementById('clear-canvas-btn');
     const 番組終了ボタン = document.getElementById('end-program-btn');
+    const restartProgramBtn = document.getElementById('restart-program-btn');
     const プリセットボタンエリア = document.getElementById('preset-buttons-area');
     const プリセット設定ボタン = document.getElementById('open-preset-settings-btn');
     const 了解インジケーター = document.getElementById('ack-indicator');
@@ -372,6 +391,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const テンプレート読込ボタン = document.getElementById('load-template-btn');
     const テンプレート削除ボタン = document.getElementById('delete-template-btn');
     const テンプレート上書き保存ボタン = document.getElementById('overwrite-template-btn');
+    const exportTemplatesBtn = document.getElementById('export-templates-btn');
+    const importTemplatesBtn = document.getElementById('import-templates-btn');
+    const importFileInput = document.getElementById('import-file-input');
     const テーマ切替ボタン = document.getElementById('theme-toggle-btn');
     const テーマアイコン = document.querySelector('#theme-toggle-btn i');
     const 全画面表示ボタン = document.getElementById('fullscreen-btn');
@@ -412,7 +434,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (了解インジケーター) {
         了解インジケーター.style.padding = '1rem 2rem';
-        // 了解インジケーター.style.fontSize = '1.25rem'; // CSS変数で管理するため削除
         了解インジケーター.style.top = '2.5rem';
         了解インジケーター.style.right = '2.5rem';
     }
@@ -598,12 +619,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function connectToServer(ipAddress) {
         const t = translations[currentLang];
-        socket = new WebSocket('ws://' + ipAddress + ':8080');
+        socket = new WebSocket('ws://' + ipAddress + ':' + '8080');
         socket.onopen = () => {
             console.log('サーバーに接続しました。');
             if (自分の役割 === 'director') {
                 sendData('identify', { role: 'director' });
-                // 初回接続時は設定モーダルを表示するが、再接続時はstateUpdateを待つ
                 if (!currentProgramState) {
                     画面を表示する(ディレクター画面);
                     番組設定モーダルをリセットする();
@@ -628,6 +648,51 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('WebSocketエラー:', error);
             alert(t.alert_connectionFailed);
         };
+    }
+
+    function sendData(type, payload) {
+        if (socket && socket.readyState === WebSocket.OPEN) {
+            socket.send(JSON.stringify({ type, payload }));
+        }
+    }
+
+    async function joinWithRoomId(role, directIp = null) {
+        const t = translations[currentLang];
+        let ipAddress = directIp;
+
+        if (!ipAddress) {
+            const roomId = roomIDInput.value;
+            if (!roomId || !/^\d{4}$/.test(roomId)) {
+                alert(t.enterRoomId);
+                return;
+            }
+
+            try {
+                const response = await fetch('/validate-id', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: roomId })
+                });
+
+                if (!response.ok) { throw new Error('Invalid Room ID'); }
+
+                const data = await response.json();
+                if (data.success) {
+                    ipAddress = data.ip;
+                } else {
+                    alert(t.alert_invalidRoomId);
+                    return;
+                }
+            } catch (error) {
+                console.error('IDの検証中にエラー:', error);
+                alert(t.alert_invalidRoomId);
+                return;
+            }
+        }
+
+        自分の役割 = role;
+        loadShortcuts();
+        connectToServer(ipAddress);
     }
 
     function handleServerMessage(data) {
@@ -658,7 +723,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     playPauseBtn.innerHTML = `<i class="fas fa-play"></i> START`;
                     playPauseBtn.classList.remove('paused');
                 }
-                // ★★★ 修正箇所: 後から参加したディレクターも手書き機能を初期化する ★★★
                 if (!手書きパッド) {
                     プリセットボタンを描画する();
                     setTimeout(初期化手書きパッド, 100);
@@ -700,7 +764,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.type === 'presetMessage') {
             if (自分の役割 === 'personality') {
                 const { text } = data.payload;
-                const t = translations[currentLang];
                 const overlay = プリセットメッセージ表示;
 
                 if (!text) {
@@ -739,13 +802,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         if (data.type === 'programEnded') {
-            clientSideCountdownValue = 0;
             window.location.reload();
         }
 
         if (data.type === 'countdownTick') {
             const { text } = data.payload;
-            const t = translations[currentLang];
             const overlay = (自分の役割 === 'director') ? mainCountdownOverlay : プリセットメッセージ表示;
 
             if (!text) {
@@ -770,24 +831,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-    }
-
-    function sendData(type, payload) {
-        if (socket && socket.readyState === WebSocket.OPEN) {
-            socket.send(JSON.stringify({ type, payload }));
-        }
-    }
-
-    function 参加する(role) {
-        const t = translations[currentLang];
-        自分の役割 = role;
-        const ipAddress = IP入力欄.value.trim();
-        if (!ipAddress) {
-            alert(t.alert_enterIP);
-            return;
-        }
-        loadShortcuts();
-        connectToServer(ipAddress);
     }
 
     function throttle(func, limit) {
@@ -1230,27 +1273,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getTemplates() { return JSON.parse(localStorage.getItem('timeqCueTemplates') || '{}'); }
     function saveTemplates(templates) { localStorage.setItem('timeqCueTemplates', JSON.stringify(templates)); }
-
-    function saveFontSizes() {
-        const settings = {
-            overlay: overlayFontSizeInput.value,
-            indicator: indicatorFontSizeInput.value
-        };
-        localStorage.setItem('timeqFontSizes', JSON.stringify(settings));
-    }
-
-    function loadAndApplyFontSizes() {
-        const savedSettings = localStorage.getItem('timeqFontSizes');
-        const defaultSettings = { overlay: '2.25', indicator: '1.25' };
-        const settings = savedSettings ? JSON.parse(savedSettings) : defaultSettings;
-
-        overlayFontSizeInput.value = settings.overlay;
-        indicatorFontSizeInput.value = settings.indicator;
-
-        document.documentElement.style.setProperty('--overlay-font-size', settings.overlay + 'rem');
-        document.documentElement.style.setProperty('--indicator-font-size', settings.indicator + 'rem');
-    }
-
     function テンプレートリストを更新() {
         const templates = getTemplates();
         const t = translations[currentLang];
@@ -1269,18 +1291,6 @@ document.addEventListener('DOMContentLoaded', () => {
             recalculateDurations();
         }
     });
-
-    if (overlayFontSizeInput && indicatorFontSizeInput) {
-        overlayFontSizeInput.addEventListener('change', () => {
-            document.documentElement.style.setProperty('--overlay-font-size', overlayFontSizeInput.value + 'rem');
-            saveFontSizes();
-        });
-
-        indicatorFontSizeInput.addEventListener('change', () => {
-            document.documentElement.style.setProperty('--indicator-font-size', indicatorFontSizeInput.value + 'rem');
-            saveFontSizes();
-        });
-    }
 
     timeEntryModeToggle.addEventListener('change', () => {
         updateCueSheetLayout(timeEntryModeToggle.checked);
@@ -1311,6 +1321,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 サーバー起動ボタン.innerHTML = `<i class="fas fa-server"></i> <span data-i18n-key="startAsServer">${translations[currentLang].startAsServer}</span>`;
                 return;
             }
+            roomIDDisplay.textContent = result.roomId;
             サーバーURLテキスト.textContent = result.url;
             サーバーQRコード画像.src = result.qr;
             サーバー情報.classList.remove('hidden');
@@ -1342,8 +1353,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (buttonGroup) buttonGroup.classList.remove('hidden');
         }
     };
-    director参加ボタン.onclick = () => 参加する('director');
-    personality参加ボタン.onclick = () => 参加する('personality');
+    director参加ボタン.onclick = () => joinWithRoomId('director');
+    personality参加ボタン.onclick = () => joinWithRoomId('personality');
     番組開始ボタン.onclick = 番組を開始する;
     更新履歴ボタン.onclick = () => {
         const t = translations[currentLang];
@@ -1561,6 +1572,69 @@ document.addEventListener('DOMContentLoaded', () => {
         テンプレート削除ボタン.disabled = !isTemplateSelected;
     });
 
+    exportTemplatesBtn.onclick = () => {
+        const t = translations[currentLang];
+        const templates = localStorage.getItem('timeqCueTemplates');
+        if (!templates || templates === '{}') {
+            alert(t.alert_noTemplatesToExport);
+            return;
+        }
+
+        const blob = new Blob([templates], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        const date = new Date().toISOString().slice(0, 10);
+        a.download = `timeq_templates_${date}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast(t.toast_templatesExported);
+    };
+
+    importTemplatesBtn.onclick = () => {
+        importFileInput.click();
+    };
+
+    importFileInput.onchange = async (event) => {
+        const t = translations[currentLang];
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const confirmed = await showCustomConfirm(t.alert_confirmImport);
+        if (!confirmed) {
+            event.target.value = ''; // ファイル選択をリセット
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const content = e.target.result;
+                const importedTemplates = JSON.parse(content);
+
+                if (typeof importedTemplates !== 'object' || importedTemplates === null) {
+                    throw new Error('Invalid format');
+                }
+
+                const existingTemplates = getTemplates();
+                const mergedTemplates = { ...existingTemplates, ...importedTemplates };
+
+                saveTemplates(mergedTemplates);
+                テンプレートリストを更新();
+                showToast(t.toast_templatesImported);
+
+            } catch (error) {
+                console.error("Failed to import templates:", error);
+                alert(t.alert_invalidTemplateFile);
+            } finally {
+                event.target.value = ''; // 次回同じファイルを選択できるようにリセット
+            }
+        };
+        reader.readAsText(file);
+    };
+
     タイマー表示エリア.onclick = toggleTimerMode;
     if (タイマー表示エリア_パーソナリティ) {
         タイマー表示エリア_パーソナリティ.onclick = toggleTimerMode;
@@ -1572,6 +1646,15 @@ document.addEventListener('DOMContentLoaded', () => {
             sendData('endProgram');
         }
     };
+
+    restartProgramBtn.onclick = async () => {
+        const t = translations[currentLang];
+        const confirmed = await showCustomConfirm(t.alert_confirmRestartProgram);
+        if (confirmed) {
+            sendData('restartProgram');
+        }
+    };
+
     ログダウンロードボタン.onclick = () => {
         const t = translations[currentLang];
         if (programLog.length === 0) {
@@ -1683,7 +1766,6 @@ document.addEventListener('DOMContentLoaded', () => {
         setLanguage(localStorage.getItem('timeqLang') || 'ja');
         テンプレートリストを更新();
         loadDisplayScale();
-        loadAndApplyFontSizes();
         window.addEventListener('keydown', handleGlobalKeyDown);
 
         if (localStorage.getItem('theme') === 'dark') {
@@ -1699,19 +1781,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const ip = urlParams.get('ip');
 
         if (role && ip) {
-            IP入力欄.value = ip;
-            if (role === 'director') {
-                参加する('director');
-            } else if (role === 'personality') {
-                参加する('personality');
-            }
+            joinWithRoomId(role, ip); // Assumes joinWithRoomId is defined
+            return;
+        }
+
+        画面を表示する(ホーム画面);
+
+        if (isElectron) {
+            electronホーム.classList.remove('hidden');
+            browserホーム.classList.add('hidden');
         } else {
-            画面を表示する(ホーム画面);
-            if (isElectron) {
-                electronホーム.classList.remove('hidden');
-            } else {
-                browserホーム.classList.remove('hidden');
-            }
+            browserホーム.classList.remove('hidden');
+            electronホーム.classList.add('hidden');
         }
     }
 

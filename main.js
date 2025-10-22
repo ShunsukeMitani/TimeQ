@@ -104,14 +104,28 @@ if (!gotTheLock) {
       const ip = getLocalIpAddress();
       const httpPort = 3000;
       const wsPort = 8080;
-      const url = `http://${ip}:${httpPort}?directorIP=${ip}`;
+      const url = `http://${ip}:${httpPort}`;
+
+      const roomId = Math.floor(1000 + Math.random() * 9000).toString();
+
       const httpApp = express();
+
       httpApp.use(express.static(path.join(__dirname)));
+      httpApp.use(express.json());
+
+      httpApp.post('/validate-id', (req, res) => {
+        if (req.body && req.body.id === roomId) {
+          res.json({ success: true, ip: ip });
+        } else {
+          res.status(400).json({ success: false, message: 'Invalid Room ID' });
+        }
+      });
 
       await new Promise((resolve, reject) => {
         const server = httpApp.listen(httpPort, '0.0.0.0');
         server.on('listening', () => {
-          console.log(`Webサーバーが http://${ip}:${httpPort} で起動しました。`);
+          console.log(`Webサーバーが ${url} で起動しました。`);
+          console.log(`ルームID: ${roomId}`);
           resolve(server);
         });
         server.on('error', (err) => {
@@ -137,8 +151,6 @@ if (!gotTheLock) {
             return;
           }
 
-          // ★★★ 修正箇所1: カウントダウンメッセージを全員に転送 ★★★
-          // カウントダウンは役割に関わらず送信者以外全員に転送する
           if (data.type === 'countdownTick') {
             wss.clients.forEach(client => {
               if (client !== ws && client.readyState === client.OPEN) {
@@ -213,6 +225,18 @@ if (!gotTheLock) {
                 programState.timeDifference = recalculateTimeDifference();
               }
               break;
+            case 'restartProgram':
+              if (programState) {
+                programState.programStatus = 'ready';
+                programState.currentItemIndex = 0;
+                programState.totalElapsedTime = 0;
+                programState.lastStartTime = 0;
+                programState.currentItemStartTime = 0;
+                programState.lastPauseTime = 0;
+                programState.timeDifference = 0;
+                programState.cueSheet.forEach(item => item.actualDuration = null);
+              }
+              break;
             case 'endProgram':
               programState = null;
               wss.clients.forEach(client => { if (client.readyState === client.OPEN) client.send(JSON.stringify({ type: 'programEnded' })); });
@@ -236,7 +260,7 @@ if (!gotTheLock) {
       }
 
       const qrDataURL = await qrcode.toDataURL(url);
-      return { ip: ip, qr: qrDataURL, url: url };
+      return { ip: ip, qr: qrDataURL, url: url, roomId: roomId };
     } catch (error) {
       console.error('サーバーの起動に失敗しました:', error);
       return { error: error.message };

@@ -391,6 +391,7 @@ button:disabled {
     height: 100%;
     cursor: crosshair;
     display: block;
+    touch-action: none;
 }
 
 #canvas-controls {
@@ -512,6 +513,20 @@ button:disabled {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
+}
+
+.template-management {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    /* ボタンが多すぎるときに折り返す */
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+}
+
+.hidden-file-input {
+    display: none;
 }
 
 .time-entry-mode-switch {
@@ -766,10 +781,16 @@ input:checked+.slider:before {
     margin-top: auto;
     padding-top: 1rem;
     flex-shrink: 0;
+    display: flex;
+    gap: 0.5rem;
 }
 
-.right-panel-footer #end-program-btn {
-    width: 100%;
+.right-panel-footer button {
+    flex-grow: 1;
+}
+
+#restart-program-btn {
+    background-color: #3498db;
 }
 
 /* ヘッダー右側 */

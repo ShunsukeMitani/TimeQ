@@ -44,7 +44,7 @@
 
         <div id="home-screen">
             <h2 id="home-title" data-i18n-key="role_select">役割を選択してください</h2>
-            <div id="electron-home" class="hidden">
+            <div id="electron-home">
                 <div class="button-group">
                     <button id="start-server-btn"><i class="fas fa-server"></i> <span
                             data-i18n-key="startAsServer">サーバーとして起動</span></button>
@@ -55,6 +55,12 @@
             <div id="server-info" class="hidden">
                 <div id="connection-area">
                     <h2 data-i18n-key="waitingForClientsTitle">クライアントの接続を待っています</h2>
+                    <div class="room-id-area" style="margin-bottom: 1rem;">
+                        <h3 data-i18n-key="roomIdLabel" style="margin: 0;">ルームID</h3>
+                        <p id="room-id-display"
+                            style="font-size: 2.5rem; font-weight: bold; color: #2c3e50; margin: 0.5rem 0; letter-spacing: 0.1em;">
+                        </p>
+                    </div>
                     <p data-i18n-key="waitingForClientsDesc">他のPCやタブレットから、以下のQRコードまたはURLで接続してください。</p>
                     <div class="qr-code-container">
                         <img id="server-qr-code-image" src="" alt="QR Code">
@@ -77,8 +83,9 @@
             </div>
             <div id="browser-home" class="hidden">
                 <div class="join-room-container">
-                    <input type="text" id="ip-input" placeholder="サーバーPCのIPアドレスを入力"
-                        data-i18n-placeholder-key="enterServerIP">
+                    <input type="number" id="room-id-input" placeholder="4桁のルームIDを入力"
+                        data-i18n-placeholder-key="enterRoomId" pattern="\d{4}" maxlength="4"
+                        style="text-align: center; font-size: 1.5rem; letter-spacing: 0.2em;">
                     <button id="join-director-btn"><i class="fas fa-user-tie"></i> <span
                             data-i18n-key="joinAsDirector">ディレクターとして参加</span></button>
                     <button id="join-personality-btn"><i class="fas fa-user"></i> <span
@@ -141,6 +148,8 @@
                 </div>
                 <div id="preset-buttons-area"></div>
                 <div class="right-panel-footer">
+                    <button id="restart-program-btn"><i class="fas fa-redo"></i> <span
+                            data-i18n-key="restartProgram">やり直し</span></button>
                     <button id="end-program-btn" class="danger-btn"><i class="fas fa-stop-circle"></i> <span
                             data-i18n-key="endProgram">番組終了</span></button>
                 </div>
@@ -247,6 +256,11 @@
                             class="fas fa-save"></i><span data-i18n-key="save">保存</span></button>
                     <button id="delete-template-btn" class="icon-btn danger-btn" title="選択したテンプレートを削除します" disabled><i
                             class="fas fa-trash"></i></button>
+                    <button id="export-templates-btn" class="icon-btn" data-i18n-title-key="exportTemplatesTitle"><i
+                            class="fas fa-file-export"></i><span data-i18n-key="exportTemplates">エクスポート</span></button>
+                    <button id="import-templates-btn" class="icon-btn" data-i18n-title-key="importTemplatesTitle"><i
+                            class="fas fa-file-import"></i><span data-i18n-key="importTemplates">インポート</span></button>
+                    <input type="file" id="import-file-input" class="hidden-file-input" accept=".json,.txt">
                 </div>
                 <div class="cue-sheet-header">
                     <div class="col-title" data-i18n-key="cornerName">コーナー名</div>
@@ -326,7 +340,6 @@
     <div id="main-countdown-overlay" class="message-display-overlay hidden"></div>
     <script src="signature_pad.js"></script>
     <script src="script.js"></script>
-
 </body>
 
 </html>
