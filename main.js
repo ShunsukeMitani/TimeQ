@@ -8,8 +8,6 @@ const qrcode = require('qrcode');
 let win;
 let directorWin = null;
 let personalityWin = null;
-
-// ▼ 変更点①：サーバーのIPアドレスを保持する変数を追加
 let serverIp = null;
 
 const gotTheLock = app.requestSingleInstanceLock();
@@ -24,19 +22,18 @@ if (!gotTheLock) {
     }
   });
 
+  // ▼▼▼ macOSでも動作するように修正された関数 ▼▼▼
   function getLocalIpAddress() {
     const interfaces = os.networkInterfaces();
     for (const name of Object.keys(interfaces)) {
-      if (!name.match(/([Ww][Ii]-?[Ff][Ii])|([Ee]thernet)/)) {
-        continue;
-      }
       for (const iface of interfaces[name]) {
+        // IPv4であり、内部アドレス（127.0.0.1）でないものを探す
         if (iface.family === 'IPv4' && !iface.internal) {
           return iface.address;
         }
       }
     }
-    return '127.0.0.1';
+    return '127.0.0.1'; // 見つからなかった場合のフォールバック
   }
 
   const createWindow = () => {
@@ -63,7 +60,6 @@ if (!gotTheLock) {
         preload: path.join(__dirname, 'preload.js'),
       },
     });
-    // ▼ 変更点③：ハードコードされたIPの代わりに、保存したサーバーIPを使用
     directorWin.loadFile('index.html', {
       query: { role: 'director', ip: serverIp || '127.0.0.1' }
     });
@@ -85,7 +81,6 @@ if (!gotTheLock) {
         preload: path.join(__dirname, 'preload.js'),
       },
     });
-    // ▼ 変更点③：ハードコードされたIPの代わりに、保存したサーバーIPを使用
     personalityWin.loadFile('index.html', {
       query: { role: 'personality', ip: serverIp || '127.0.0.1' }
     });
@@ -107,7 +102,6 @@ if (!gotTheLock) {
   ipcMain.handle('start-server', async () => {
     try {
       const ip = getLocalIpAddress();
-      // ▼ 変更点②：取得したIPアドレスを変数に保存
       serverIp = ip;
       const httpPort = 3000;
       const wsPort = 8080;

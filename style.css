@@ -457,7 +457,7 @@ button:disabled {
 /* モーダル */
 .modal {
     position: fixed;
-    z-index: 100;
+    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
@@ -1054,7 +1054,7 @@ body.dark-theme #language-select {
     border-radius: 0.5rem;
     font-size: var(--overlay-font-size, 2.25rem);
     font-weight: bold;
-    z-index: 200;
+    z-index: 1100;
     text-align: center;
     box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.5);
     pointer-events: none;
