@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             segmentTimeElapsed: "Segment Time Elapsed",
             timeDifference: "Time Diff.",
             fullscreen: "Fullscreen",
-            fullscreenExit: "Exit Fullscreen", // この行を追加
+            fullscreenExit: "Exit Fullscreen",
             handwriting: "Handwriting Instructions",
             acknowledged: "OK!",
             clear: "Clear",
@@ -88,6 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ok: "OK",
             shortcutSettings: "Shortcut Key Settings",
             shortcutSettingsDesc: "Click the box for the item you want to set, then press the key or key combination (e.g., Ctrl + S).",
+            shortcutSettingsDescMac: "Click the box and press the key combination (e.g., ⌥ + S). Using the Option(⌥) key is recommended as the ⌘(Cmd) key can conflict with system functions.",
             saveSettings: "Save These Settings",
             // Dynamic Alerts & Text
             toast_templateSaved: (name) => `Template "${name}" saved.`,
@@ -134,11 +135,10 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultPresets: ['👍', 'OK!', 'Wrap it up!', 'Go to CM', '30s left'],
             defaultPersonalityPresets: ['👍', 'OK', 'Got it', 'Please repeat', 'Stand by'],
             updateHistoryContent: [
-                { version: "Ver.2.8.1", note: "Fixed the issue where handwriting input could not be used to create a server on Mac." },
-                { version: "Ver.2.8.0", note: "Fixed so that program setting templates can be shared" },
-                { version: "Ver.2.7.0", note: "Added a redo function for the actual performance, corrected the room ID to be entered as a four-digit number, and fixed the difficulty of writing with the iPad handwriting function." },
-                { version: "Ver.2.6.0", note: "Added the ability to change the font size for Message from the Director,Response from the Personality,Acknowledgement Display, and Countdown." },
-                { version: "Ver.2.5.0", note: "Added pre-show countdown" },
+                { version: "Ver.2.8.1", note: "Fixed handwriting input and an issue preventing server startup on Mac." },
+                { version: "Ver.2.8.0", note: "Enabled sharing of program setting templates." },
+                { version: "Ver.2.7.0", note: "Added a program restart feature, changed Room ID to a 4-digit number, and fixed handwriting usability on iPad." },
+                { version: "Ver.2.6.0", note: "Added a feature to change the font size for 'Director Messages,' 'Personality Responses,' 'Acknowledgements,' and 'Countdowns'." },
                 { version: "Ver.2.4.2", note: "Fixed a critical bug where the program settings modal would not appear. Implemented a custom confirmation dialog to prevent inputs from becoming disabled in the app version." },
                 { version: "Ver.2.4.1", note: "Fixed a bug that disabled inputs after loading or overwriting a template." },
                 { version: "Ver.2.4.0", note: "Fixed a bug that disabled inputs after loading or overwriting a template." },
@@ -192,6 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cornerName: "コーナー名", minutes: "分", seconds: "秒", endTimeMinutes: "終了(分)", endTimeSeconds: "終了(秒)", duration: "時間", totalTime: "合計時間:", type: "タイプ", addRow: "行を追加", startProgramWithSettings: "この内容で番組を開始", presetSettings: "プリセットメッセージ設定", presetSettingsDesc: "カンマ区切りでメッセージを入力してください。", personalityPresetSettings: "パーソナリティのプリセット設定", saveBtn: "保存する", cancel: "キャンセル", ok: "OK",
             shortcutSettings: "ショートカットキー設定",
             shortcutSettingsDesc: "設定したい項目のボックスをクリックしてから、割り当てたいキーまたはキーの組み合わせ（例: Ctrl + S）を押してください。",
+            shortcutSettingsDescMac: "設定したい項目のボックスをクリックし、割り当てたいキーの組み合わせ（例: ⌥ + S）を押してください。⌘キーはOSの予約機能と競合するため、Option(⌥)キーの使用を推奨します。",
             saveSettings: "この設定を保存",
             toast_templateSaved: (name) => `テンプレート「${name}」を保存しました。`,
             toast_templateOverwritten: (name) => `テンプレート「${name}」を上書き保存しました。`,
@@ -612,7 +613,6 @@ document.addEventListener('DOMContentLoaded', () => {
         applyDisplayScale(savedScale);
     }
 
-    // ▼ 修正点①: 未定義だった loadAndApplyFontSizes 関数をここに追加
     function loadAndApplyFontSizes() {
         const savedOverlaySize = localStorage.getItem('timeqOverlayFontSize') || '2.25';
         const savedIndicatorSize = localStorage.getItem('timeqIndicatorFontSize') || '1.25';
@@ -1170,9 +1170,8 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (part === 'Meta') {
                 formatted = '⌘ / Win';
             }
-            return formatted; // 変換した各部分だけを返すように修正
+            return formatted;
         });
-        // すべての変換が終わった後に、全体を結合する
         return formattedParts.join(' + ');
     }
 
@@ -1199,6 +1198,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function openShortcutSettingsModal() {
         const t = translations[currentLang];
         ショートカットリストコンテナ.innerHTML = '';
+
+        const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+        const descEl = document.querySelector('#shortcut-settings-modal p');
+        if (isMac && t.shortcutSettingsDescMac) {
+            descEl.textContent = t.shortcutSettingsDescMac;
+        } else {
+            descEl.textContent = t.shortcutSettingsDesc;
+        }
 
         if (自分の役割 === 'director') {
             createShortcutRow('togglePlayPause', t.shortcut_timer);
@@ -1238,7 +1245,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         targetElement.classList.add('recording');
         targetElement.textContent = '...';
-        const keydownHandler = (e) => {
+        const keyupHandler = (e) => {
             e.preventDefault();
             e.stopPropagation();
             const shortcutString = eventToShortcutString(e);
@@ -1246,10 +1253,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 targetElement.textContent = formatShortcutString(shortcutString);
                 targetElement.dataset.key = shortcutString;
                 targetElement.classList.remove('recording');
-                window.removeEventListener('keydown', keydownHandler, { capture: true });
+                window.removeEventListener('keyup', keyupHandler, { capture: true });
             }
         };
-        window.addEventListener('keydown', keydownHandler, { capture: true });
+        window.addEventListener('keyup', keyupHandler, { capture: true });
     }
 
     function handleGlobalKeyDown(e) {
@@ -1378,7 +1385,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // ▼ 修正点②: 「参加する」を「joinWithRoomId」に修正
     director参加ボタン.onclick = () => joinWithRoomId('director');
     personality参加ボタン.onclick = () => joinWithRoomId('personality');
 
@@ -1783,28 +1789,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const span = 全画面表示ボタン.querySelector('span');
             const t = translations[currentLang];
 
-            // 疑似フルスクリーンクラスをトグル（付け外し）する
             mainContainer.classList.toggle('pseudo-fullscreen');
 
-            // 現在フルスクリーン状態かどうかを判断
             if (mainContainer.classList.contains('pseudo-fullscreen')) {
-                // フルスクリーンになった時の処理
                 icon.classList.remove('fa-expand');
                 icon.classList.add('fa-compress');
-                span.textContent = t.fullscreenExit || "元のサイズに戻す"; // 翻訳キーがない場合に備える
+                span.textContent = t.fullscreenExit || "元のサイズに戻す";
             } else {
-                // 通常表示に戻った時の処理
                 icon.classList.remove('fa-compress');
                 icon.classList.add('fa-expand');
                 span.textContent = t.fullscreen;
             }
 
-            // レイアウト変更後にキャンバスのサイズを再計算
             setTimeout(handleCanvasResize, 100);
         };
     }
 
-    // ▼ 修正点③: フォントサイズの選択肢が変更されたときに設定を保存・適用するリスナーを追加
     overlayFontSizeInput.addEventListener('change', (e) => {
         const newSize = e.target.value;
         localStorage.setItem('timeqOverlayFontSize', newSize);
