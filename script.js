@@ -133,10 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultPresets: ['👍', 'OK!', 'Wrap it up!', 'Go to CM', '30s left'],
             defaultPersonalityPresets: ['👍', 'OK', 'Got it', 'Please repeat', 'Stand by'],
             updateHistoryContent: [
-                { version: "Ver.2.8.0", note: "Fixed so that program setting templates can be shared" },
-                { version: "Ver.2.7.0", note: "Added a redo function for the actual performance, corrected the room ID to be entered as a four-digit number, and fixed the difficulty of writing with the iPad handwriting function." },
-                { version: "Ver.2.6.0", note: "Added the ability to change the font size for Message from the Director,Response from the Personality,Acknowledgement Display, and Countdown." },
-                { version: "Ver.2.5.0", note: "Added pre-show countdown" },
                 { version: "Ver.2.4.2", note: "Fixed a critical bug where the program settings modal would not appear. Implemented a custom confirmation dialog to prevent inputs from becoming disabled in the app version." },
                 { version: "Ver.2.4.1", note: "Fixed a bug that disabled inputs after loading or overwriting a template." },
                 { version: "Ver.2.4.0", note: "Fixed a bug that disabled inputs after loading or overwriting a template." },
@@ -206,9 +202,6 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultPresets: ['👍', 'OK!', '巻いて！', 'CMへ', 'あと30秒'],
             defaultPersonalityPresets: ['👍', 'OK', '了解です', 'もう一度お願いします', '少し待ってください'],
             updateHistoryContent: [
-                { version: "Ver.2.8.0", note: "番組設定テンプレートを共有ができるように修正。" },
-                { version: "Ver.2.7.0", note: "本番やり直し機能を追加、部屋IDを４桁の数字で入れるように修正。ipad手書き機能で書きづらいのを修正。" },
-                { version: "Ver.2.6.0", note: "「ディレクターからのメッセージ」「パーソナリティからの応答」「了解表示」「カウントダウン」のフォントサイズを変更できる機能を追加" },
                 { version: "Ver.2.5.0", note: "本番前カウントダウンを追加" },
                 { version: "Ver.2.4.2", note: "カスタム確認ダイアログを導入し、Electron環境でテンプレート上書き保存後に入力不可になる不具合を修正。番組設定が表示されない不具合を修正。" },
                 { version: "Ver.2.4.1", note: "テンプレートの上書き保存・読込後に進行表が入力できなくなる不具合を修正。" },
@@ -568,6 +561,14 @@ document.addEventListener('DOMContentLoaded', () => {
         lastCanvasWidth = 手書きキャンバス.offsetWidth;
         lastCanvasHeight = 手書きキャンバス.offsetHeight;
         手書きパッド.addEventListener("afterUpdateStroke", 手書き更新処理);
+
+        // ブラウザのスクロールやズームなどのデフォルトジェスチャーを無効化
+        const preventGesture = (event) => {
+            event.preventDefault();
+        };
+        手書きキャンバス.addEventListener('touchstart', preventGesture, { passive: false });
+        手書きキャンバス.addEventListener('touchmove', preventGesture, { passive: false });
+        手書きキャンバス.addEventListener('touchend', preventGesture, { passive: false });
     }
 
     function handleCanvasResize() {
@@ -599,6 +600,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const savedScale = localStorage.getItem('timeqDisplayScale') || 1;
         表示サイズ選択.value = savedScale;
         applyDisplayScale(savedScale);
+    }
+
+    // ▼ 修正点①: 未定義だった loadAndApplyFontSizes 関数をここに追加
+    function loadAndApplyFontSizes() {
+        const savedOverlaySize = localStorage.getItem('timeqOverlayFontSize') || '2.25';
+        const savedIndicatorSize = localStorage.getItem('timeqIndicatorFontSize') || '1.25';
+
+        document.documentElement.style.setProperty('--overlay-font-size', `${savedOverlaySize}rem`);
+        document.documentElement.style.setProperty('--indicator-font-size', `${savedIndicatorSize}rem`);
+
+        overlayFontSizeInput.value = savedOverlaySize;
+        indicatorFontSizeInput.value = savedIndicatorSize;
     }
 
     const 手書き更新処理 = throttle(() => {
@@ -1353,8 +1366,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (buttonGroup) buttonGroup.classList.remove('hidden');
         }
     };
+
+    // ▼ 修正点②: 「参加する」を「joinWithRoomId」に修正
     director参加ボタン.onclick = () => joinWithRoomId('director');
     personality参加ボタン.onclick = () => joinWithRoomId('personality');
+
     番組開始ボタン.onclick = 番組を開始する;
     更新履歴ボタン.onclick = () => {
         const t = translations[currentLang];
@@ -1761,11 +1777,26 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
+    // ▼ 修正点③: フォントサイズの選択肢が変更されたときに設定を保存・適用するリスナーを追加
+    overlayFontSizeInput.addEventListener('change', (e) => {
+        const newSize = e.target.value;
+        localStorage.setItem('timeqOverlayFontSize', newSize);
+        document.documentElement.style.setProperty('--overlay-font-size', `${newSize}rem`);
+    });
+
+    indicatorFontSizeInput.addEventListener('change', (e) => {
+        const newSize = e.target.value;
+        localStorage.setItem('timeqIndicatorFontSize', newSize);
+        document.documentElement.style.setProperty('--indicator-font-size', `${newSize}rem`);
+    });
+
     // --- 初期化処理 ---
     function 初期化() {
+        // 基本的な設定を読み込む
         setLanguage(localStorage.getItem('timeqLang') || 'ja');
         テンプレートリストを更新();
         loadDisplayScale();
+        loadAndApplyFontSizes();
         window.addEventListener('keydown', handleGlobalKeyDown);
 
         if (localStorage.getItem('theme') === 'dark') {
@@ -1776,21 +1807,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updateCueSheetLayout(timeEntryModeToggle.checked);
 
+        // --- 画面表示ロジック ---
         const urlParams = new URLSearchParams(window.location.search);
         const role = urlParams.get('role');
         const ip = urlParams.get('ip');
 
+        // URLにroleとipがあれば、自動で参加処理（Electronの別ウィンドウ用）
         if (role && ip) {
-            joinWithRoomId(role, ip); // Assumes joinWithRoomId is defined
-            return;
+            joinWithRoomId(role, ip);
+            return; // ここで処理を終了
         }
 
+        // 上記以外の場合は、必ずホーム画面を表示する
         画面を表示する(ホーム画面);
 
+        // Electronかブラウザかで表示を切り替え
         if (isElectron) {
+            // Electronアプリとして起動した場合、electron用のボタンを表示
             electronホーム.classList.remove('hidden');
             browserホーム.classList.add('hidden');
         } else {
+            // ブラウザで開かれた場合、ブラウザ用の入力欄を表示
             browserホーム.classList.remove('hidden');
             electronホーム.classList.add('hidden');
         }

@@ -9,6 +9,9 @@ let win;
 let directorWin = null;
 let personalityWin = null;
 
+// ▼ 変更点①：サーバーのIPアドレスを保持する変数を追加
+let serverIp = null;
+
 const gotTheLock = app.requestSingleInstanceLock();
 
 if (!gotTheLock) {
@@ -60,8 +63,9 @@ if (!gotTheLock) {
         preload: path.join(__dirname, 'preload.js'),
       },
     });
+    // ▼ 変更点③：ハードコードされたIPの代わりに、保存したサーバーIPを使用
     directorWin.loadFile('index.html', {
-      query: { role: 'director', ip: '127.0.0.1' }
+      query: { role: 'director', ip: serverIp || '127.0.0.1' }
     });
     directorWin.removeMenu();
     directorWin.on('closed', () => {
@@ -81,8 +85,9 @@ if (!gotTheLock) {
         preload: path.join(__dirname, 'preload.js'),
       },
     });
+    // ▼ 変更点③：ハードコードされたIPの代わりに、保存したサーバーIPを使用
     personalityWin.loadFile('index.html', {
-      query: { role: 'personality', ip: '127.0.0.1' }
+      query: { role: 'personality', ip: serverIp || '127.0.0.1' }
     });
     personalityWin.removeMenu();
     personalityWin.on('closed', () => {
@@ -102,6 +107,8 @@ if (!gotTheLock) {
   ipcMain.handle('start-server', async () => {
     try {
       const ip = getLocalIpAddress();
+      // ▼ 変更点②：取得したIPアドレスを変数に保存
+      serverIp = ip;
       const httpPort = 3000;
       const wsPort = 8080;
       const url = `http://${ip}:${httpPort}`;
@@ -134,7 +141,7 @@ if (!gotTheLock) {
         });
       });
 
-      const wss = new WebSocketServer({ port: wsPort });
+      const wss = new WebSocketServer({ port: wsPort, host: '0.0.0.0' });
       let programState = null;
 
       wss.on('connection', (ws) => {

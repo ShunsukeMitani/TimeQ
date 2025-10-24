@@ -5,6 +5,7 @@ body {
     margin: 0;
     overflow: hidden;
     background-color: #f0f4f8;
+    overscroll-behavior-y: contain;
 }
 
 body {
