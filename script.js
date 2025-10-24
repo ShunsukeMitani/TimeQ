@@ -1170,8 +1170,9 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (part === 'Meta') {
                 formatted = '⌘ / Win';
             }
-            return formattedParts.join(' + ');
+            return formatted; // 変換した各部分だけを返すように修正
         });
+        // すべての変換が終わった後に、全体を結合する
         return formattedParts.join(' + ');
     }
 
