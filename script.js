@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             segmentTimeElapsed: "Segment Time Elapsed",
             timeDifference: "Time Diff.",
             fullscreen: "Fullscreen",
+            fullscreenExit: "Exit Fullscreen", // この行を追加
             handwriting: "Handwriting Instructions",
             acknowledged: "OK!",
             clear: "Clear",
@@ -133,12 +134,11 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultPresets: ['👍', 'OK!', 'Wrap it up!', 'Go to CM', '30s left'],
             defaultPersonalityPresets: ['👍', 'OK', 'Got it', 'Please repeat', 'Stand by'],
             updateHistoryContent: [
-                { version: "Ver.2.8.1", note: "Fixed the issue where handwriting input could not be used to create a server on Mac." }
- { version: "Ver.2.8.0", note: "Fixed so that program setting templates can be shared" },
+                { version: "Ver.2.8.1", note: "Fixed the issue where handwriting input could not be used to create a server on Mac." },
+                { version: "Ver.2.8.0", note: "Fixed so that program setting templates can be shared" },
                 { version: "Ver.2.7.0", note: "Added a redo function for the actual performance, corrected the room ID to be entered as a four-digit number, and fixed the difficulty of writing with the iPad handwriting function." },
                 { version: "Ver.2.6.0", note: "Added the ability to change the font size for Message from the Director,Response from the Personality,Acknowledgement Display, and Countdown." },
                 { version: "Ver.2.5.0", note: "Added pre-show countdown" },
-
                 { version: "Ver.2.4.2", note: "Fixed a critical bug where the program settings modal would not appear. Implemented a custom confirmation dialog to prevent inputs from becoming disabled in the app version." },
                 { version: "Ver.2.4.1", note: "Fixed a bug that disabled inputs after loading or overwriting a template." },
                 { version: "Ver.2.4.0", note: "Fixed a bug that disabled inputs after loading or overwriting a template." },
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         ja: {
-            changeDisplaySize: "表示サイズの変更", display100: "表示: 100%", display90: "表示: 90%", display85: "表示: 85%", display75: "表示: 75%", display50: "表示: 50%", display30: "表示: 30%", shortcuts: "ショートカット", updateHistory: "更新履歴", startAsServer: "サーバーとして起動", joinAsClient: "クライアントとして参加", returnToSettings: "番組設定に戻る", waitingForClientsTitle: "クライアントの接続を待っています", waitingForClientsDesc: "他のPCやタブレットから、以下のQRコードまたはURLで接続してください。", openDirectorWindow: "ディレクター画面を開く", openPersonalityWindow: "パーソナリティ画面を開く", enterServerIP: "サーバーPCのIPアドレスを入力", enterRoomId: "4桁のルームIDを入力", roomIdLabel: "ルームID", joinAsDirector: "ディレクターとして参加", joinAsPersonality: "パーソナリティとして参加", cueSheet: "進行表", prev: "前へ", next: "次へ", saveLog: "ログ保存", programTimeRemaining: "番組残り時間", programTimeElapsed: "番組経過時間", segmentTimeRemaining: "コーナー残り時間", segmentTimeElapsed: "コーナー経過時間", timeDifference: "押し/巻き", fullscreen: "全画面表示", handwriting: "手書き指示", acknowledged: "了解！", clear: "消去", presetMessages: "プリセットメッセージ", settings: "設定", endProgram: "番組終了", restartProgram: "やり直し", instructions: "指示", waitingForInstructions: "指示を待っています...", acknowledge: "了解", programSettings: "番組設定", programTitle: "番組タイトル", programDuration: "番組全体の時間（分）", countdownDuration: "本番開始カウントダウン（秒）", fontSizeSettings: "表示フォントサイズ設定", overlayFontSizeLabel: "指示/カウントダウン", indicatorFontSizeLabel: "了解/応答", fontSizeSmall: "小", fontSizeMedium: "中", fontSizeLarge: "大", fontSizeExtraLarge: "特大", createCueSheet: "進行表の作成", timeEntryModeIndividual: "個別", timeEntryModeCumulative: "加算", selectTemplate: "テンプレートを選択", load: "読込", save: "保存", overwrite: "上書き保存", exportTemplates: "エクスポート", importTemplates: "インポート", exportTemplatesTitle: "全テンプレートをファイルに書き出します", importTemplatesTitle: "ファイルからテンプレートを読み込みます",
+            changeDisplaySize: "表示サイズの変更", display100: "表示: 100%", display90: "表示: 90%", display85: "表示: 85%", display75: "表示: 75%", display50: "表示: 50%", display30: "表示: 30%", shortcuts: "ショートカット", updateHistory: "更新履歴", startAsServer: "サーバーとして起動", joinAsClient: "クライアントとして参加", returnToSettings: "番組設定に戻る", waitingForClientsTitle: "クライアントの接続を待っています", waitingForClientsDesc: "他のPCやタブレットから、以下のQRコードまたはURLで接続してください。", openDirectorWindow: "ディレクター画面を開く", openPersonalityWindow: "パーソナリティ画面を開く", enterServerIP: "サーバーPCのIPアドレスを入力", enterRoomId: "4桁のルームIDを入力", roomIdLabel: "ルームID", joinAsDirector: "ディレクターとして参加", joinAsPersonality: "パーソナリティとして参加", cueSheet: "進行表", prev: "前へ", next: "次へ", saveLog: "ログ保存", programTimeRemaining: "番組残り時間", programTimeElapsed: "番組経過時間", segmentTimeRemaining: "コーナー残り時間", segmentTimeElapsed: "コーナー経過時間", timeDifference: "押し/巻き", fullscreen: "全画面表示", fullscreenExit: "元のサイズに戻す", handwriting: "手書き指示", acknowledged: "了解！", clear: "消去", presetMessages: "プリセットメッセージ", settings: "設定", endProgram: "番組終了", restartProgram: "やり直し", instructions: "指示", waitingForInstructions: "指示を待っています...", acknowledge: "了解", programSettings: "番組設定", programTitle: "番組タイトル", programDuration: "番組全体の時間（分）", countdownDuration: "本番開始カウントダウン（秒）", fontSizeSettings: "表示フォントサイズ設定", overlayFontSizeLabel: "指示/カウントダウン", indicatorFontSizeLabel: "了解/応答", fontSizeSmall: "小", fontSizeMedium: "中", fontSizeLarge: "大", fontSizeExtraLarge: "特大", createCueSheet: "進行表の作成", timeEntryModeIndividual: "個別", timeEntryModeCumulative: "加算", selectTemplate: "テンプレートを選択", load: "読込", save: "保存", overwrite: "上書き保存", exportTemplates: "エクスポート", importTemplates: "インポート", exportTemplatesTitle: "全テンプレートをファイルに書き出します", importTemplatesTitle: "ファイルからテンプレートを読み込みます",
             cornerName: "コーナー名", minutes: "分", seconds: "秒", endTimeMinutes: "終了(分)", endTimeSeconds: "終了(秒)", duration: "時間", totalTime: "合計時間:", type: "タイプ", addRow: "行を追加", startProgramWithSettings: "この内容で番組を開始", presetSettings: "プリセットメッセージ設定", presetSettingsDesc: "カンマ区切りでメッセージを入力してください。", personalityPresetSettings: "パーソナリティのプリセット設定", saveBtn: "保存する", cancel: "キャンセル", ok: "OK",
             shortcutSettings: "ショートカットキー設定",
             shortcutSettingsDesc: "設定したい項目のボックスをクリックしてから、割り当てたいキーまたはキーの組み合わせ（例: Ctrl + S）を押してください。",
@@ -1777,13 +1777,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (全画面表示ボタン) {
         全画面表示ボタン.onclick = () => {
-            if (document.fullscreenElement) {
-                document.exitFullscreen();
+            const mainContainer = document.querySelector('.container');
+            const icon = 全画面表示ボタン.querySelector('i');
+            const span = 全画面表示ボタン.querySelector('span');
+            const t = translations[currentLang];
+
+            // 疑似フルスクリーンクラスをトグル（付け外し）する
+            mainContainer.classList.toggle('pseudo-fullscreen');
+
+            // 現在フルスクリーン状態かどうかを判断
+            if (mainContainer.classList.contains('pseudo-fullscreen')) {
+                // フルスクリーンになった時の処理
+                icon.classList.remove('fa-expand');
+                icon.classList.add('fa-compress');
+                span.textContent = t.fullscreenExit || "元のサイズに戻す"; // 翻訳キーがない場合に備える
             } else {
-                document.documentElement.requestFullscreen().catch(err => {
-                    alert(`Fullscreen failed: ${err.message}`);
-                });
+                // 通常表示に戻った時の処理
+                icon.classList.remove('fa-compress');
+                icon.classList.add('fa-expand');
+                span.textContent = t.fullscreen;
             }
+
+            // レイアウト変更後にキャンバスのサイズを再計算
+            setTimeout(handleCanvasResize, 100);
         };
     }
 
