@@ -359,28 +359,42 @@ button:disabled {
     color: #555;
 }
 
-.cue-end-time {
+.cue-start-time,
+.cue-range-time {
     font-family: monospace;
-    color: #888;
+    color: #333;
+    /* ▼▼▼ 修正 (#888 から #333 に変更) ▼▼▼ */
     font-weight: bold;
 }
 
-/* デフォルト（個別時間表示）モード */
-.cue-sheet-area .cue-end-time {
-    display: none;
-}
-
+/* デフォルト（個別時間）モード */
 .cue-sheet-area .cue-duration {
     display: block;
 }
 
-/* 加算（終了時刻表示）モード */
-.cue-sheet-area.cumulative-mode .cue-end-time {
+.cue-sheet-area .cue-start-time,
+.cue-sheet-area .cue-range-time {
+    display: none;
+}
+
+/* 開始時刻モード */
+.cue-sheet-area.cumulative-mode .cue-duration,
+.cue-sheet-area.cumulative-mode .cue-range-time {
+    display: none;
+}
+
+.cue-sheet-area.cumulative-mode .cue-start-time {
     display: block;
 }
 
-.cue-sheet-area.cumulative-mode .cue-duration {
+/* 範囲表示モード */
+.cue-sheet-area.range-mode .cue-duration,
+.cue-sheet-area.range-mode .cue-start-time {
     display: none;
+}
+
+.cue-sheet-area.range-mode .cue-range-time {
+    display: block;
 }
 
 
@@ -617,7 +631,6 @@ button:disabled {
     font-weight: bold;
 }
 
-/* ▼▼▼ 番組時間入力欄のスタイルを追加 ▼▼▼ */
 .duration-input-group {
     display: flex;
     gap: 0.5rem;
@@ -637,8 +650,6 @@ button:disabled {
     flex-shrink: 0;
     margin-right: 1rem;
 }
-
-/* ▲▲▲ 追加ここまで ▲▲▲ */
 
 
 #start-program-btn,
@@ -1233,8 +1244,10 @@ body.dark-theme .col-duration span {
     color: #e0e0e0;
 }
 
-body.dark-theme .cue-end-time {
-    color: #aaa;
+body.dark-theme .cue-start-time,
+body.dark-theme .cue-range-time {
+    color: #e0e0e0;
+    /* ▼▼▼ 修正 (#aaa から #e0e0e0 に変更) ▼▼▼ */
 }
 
 
