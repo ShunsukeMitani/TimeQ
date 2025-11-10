@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             joinAsPersonality: "Join as Personality",
             // Director & Personality Screens
             cueSheet: "Cue Sheet",
-            toggleCueSheetMode: "Toggle View (Duration/End Time)",
+            toggleCueSheetMode: "Toggle View (Duration/Start Time)",
             prev: "Prev",
             next: "Next",
             saveLog: "Save Log",
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Modals
             programSettings: "Program Settings",
             programTitle: "Program Title",
-            programDuration: "Total Program Duration (minutes)",
+            programDuration: "Total Program Duration",
             countdownDuration: "Pre-Broadcast Countdown (seconds)",
             fontSizeSettings: "Display Font Size Settings",
             overlayFontSizeLabel: "Instructions/Countdown",
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Shortcut Items
             shortcut_timer: "Timer Start / Stop",
             shortcut_preset: (name) => `Preset: ${name}`,
-            shortcut_sendInstruction: "Send Keyboard Instruction", // ▼▼▼ この行を追加 ▼▼▼
+            shortcut_sendInstruction: "Send Keyboard Instruction",
             shortcut_personality_preset: (name) => `Response: ${name}`,
             // Default Data
             defaultProgramTitle: "My Radio Program",
@@ -195,11 +195,12 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         ja: {
-            changeDisplaySize: "表示サイズの変更", display100: "表示: 100%", display90: "表示: 90%", display85: "表示: 85%", display75: "表示: 75%", display50: "表示: 50%", display30: "表示: 30%", shortcuts: "ショートカット", updateHistory: "更新履歴", startAsServer: "サーバーとして起動", joinAsClient: "クライアントとして参加", returnToSettings: "番組設定に戻る", waitingForClientsTitle: "クライアントの接続を待っています", waitingForClientsDesc: "他のPCやタブレットから、以下のQRコードまたはURLで接続してください。", openDirectorWindow: "ディレクター画面を開く", openPersonalityWindow: "パーソナリティ画面を開く", enterServerIP: "サーバーPCのIPアドレスを入力", enterRoomId: "4桁のルームIDを入力", roomIdLabel: "ルームID", joinAsDirector: "ディレクターとして参加", joinAsPersonality: "パーソナリティとして参加", cueSheet: "進行表", toggleCueSheetMode: "表示切替 (時間/終了時刻)",
+            changeDisplaySize: "表示サイズの変更", display100: "表示: 100%", display90: "表示: 90%", display85: "表示: 85%", display75: "表示: 75%", display50: "表示: 50%", display30: "表示: 30%", shortcuts: "ショートカット", updateHistory: "更新履歴", startAsServer: "サーバーとして起動", joinAsClient: "クライアントとして参加", returnToSettings: "番組設定に戻る", waitingForClientsTitle: "クライアントの接続を待っています", waitingForClientsDesc: "他のPCやタブレットから、以下のQRコードまたはURLで接続してください。", openDirectorWindow: "ディレクター画面を開く", openPersonalityWindow: "パーソナリティ画面を開く", enterServerIP: "サーバーPCのIPアドレスを入力", enterRoomId: "4桁のルームIDを入力", roomIdLabel: "ルームID", joinAsDirector: "ディレクターとして参加", joinAsPersonality: "パーソナリティとして参加", cueSheet: "進行表", toggleCueSheetMode: "表示切替 (時間/開始時刻)",
             prev: "前へ", next: "次へ", saveLog: "ログ保存", programTimeRemaining: "番組残り時間", programTimeElapsed: "番組経過時間", segmentTimeRemaining: "コーナー残り時間", segmentTimeElapsed: "コーナー経過時間", timeDifference: "押し/巻き", fullscreen: "全画面表示", fullscreenExit: "元のサイズに戻す", handwriting: "手書き指示", keyboardInstructions: "キーボード指示",
             enterInstruction: "指示を入力して送信",
             send: "送信",
-            acknowledged: "了解！", clear: "消去", presetMessages: "プリセットメッセージ", settings: "設定", endProgram: "番組終了", restartProgram: "やり直し", instructions: "指示", waitingForInstructions: "指示を待っています...", acknowledge: "了解", programSettings: "番組設定", programTitle: "番組タイトル", programDuration: "番組全体の時間（分）", countdownDuration: "本番開始カウントダウン（秒）", fontSizeSettings: "表示フォントサイズ設定", overlayFontSizeLabel: "指示/カウントダウン", indicatorFontSizeLabel: "了解/応答", fontSizeSmall: "小", fontSizeMedium: "中", fontSizeLarge: "大", fontSizeExtraLarge: "特大", createCueSheet: "進行表の作成", timeEntryModeIndividual: "個別", timeEntryModeCumulative: "加算", selectTemplate: "テンプレートを選択", load: "読込", save: "保存", overwrite: "上書き保存", exportTemplates: "エクスポート", importTemplates: "インポート", exportTemplatesTitle: "全テンプレートをファイルに書き出します", importTemplatesTitle: "ファイルからテンプレートを読み込みます",
+            acknowledged: "了解！", clear: "消去", presetMessages: "プリセットメッセージ", settings: "設定", endProgram: "番組終了", restartProgram: "やり直し", instructions: "指示", waitingForInstructions: "指示を待っています...", acknowledge: "了解", programSettings: "番組設定", programTitle: "番組タイトル", programDuration: "番組全体の時間",
+            countdownDuration: "本番開始カウントダウン（秒）", fontSizeSettings: "表示フォントサイズ設定", overlayFontSizeLabel: "指示/カウントダウン", indicatorFontSizeLabel: "了解/応答", fontSizeSmall: "小", fontSizeMedium: "中", fontSizeLarge: "大", fontSizeExtraLarge: "特大", createCueSheet: "進行表の作成", timeEntryModeIndividual: "個別", timeEntryModeCumulative: "加算", selectTemplate: "テンプレートを選択", load: "読込", save: "保存", overwrite: "上書き保存", exportTemplates: "エクスポート", importTemplates: "インポート", exportTemplatesTitle: "全テンプレートをファイルに書き出します", importTemplatesTitle: "ファイルからテンプレートを読み込みます",
             cornerName: "コーナー名", minutes: "分", seconds: "秒", endTimeMinutes: "終了(分)", endTimeSeconds: "終了(秒)", duration: "時間", totalTime: "合計時間:", type: "タイプ", addRow: "行を追加", startProgramWithSettings: "この内容で番組を開始", presetSettings: "プリセットメッセージ設定", presetSettingsDesc: "カンマ区切りでメッセージを入力してください。", personalityPresetSettings: "パーソナリティのプリセット設定", saveBtn: "保存する", cancel: "キャンセル", ok: "OK",
             shortcutSettings: "ショートカットキー設定",
             shortcutSettingsDesc: "設定したい項目のボックスをクリックしてから、割り当てたいキーまたはキーの組み合わせ（例: Ctrl + S）を押してください。",
@@ -211,7 +212,10 @@ document.addEventListener('DOMContentLoaded', () => {
             alert_confirmOverwriteTemplate: (name) => `テンプレート「${name}」を現在の内容で上書きしますか？`,
             prompt_enterTemplateName: "テンプレート名を入力してください", role_select: "役割を選択してください", role_enterIP: "サーバーPCのIPアドレスを入力してください", serverStarting: "サーバーを起動中...", copyURL: "URLをコピー", copied: "コピーしました！", countdownStandby: "まもなく本番です...", countdownStart: "スタート！", countdownMessage: (sec) => `本番まであと ${sec} 秒`,
             type_talk: "トーク", type_music: "楽曲", type_cm: "CM", type_other: "その他",
-            shortcut_timer: "タイマー開始 / 停止", shortcut_preset: (name) => `プリセット: ${name}`, shortcut_sendInstruction: "キーボード指示を送信", shortcut_personality_preset: (name) => `応答: ${name}`,
+            shortcut_timer: "タイマー開始 / 停止",
+            shortcut_preset: (name) => `プリセット: ${name}`,
+            shortcut_sendInstruction: "キーボード指示を送信",
+            shortcut_personality_preset: (name) => `応答: ${name}`,
             defaultProgramTitle: "マイラジオプログラム",
             defaultCueOpening: "オープニング",
             defaultCueMusic1: "楽曲1",
@@ -220,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultPresets: ['👍', 'OK!', '巻いて！', 'CMへ', 'あと30秒'],
             defaultPersonalityPresets: ['👍', 'OK', '了解です', 'もう一度お願いします', '少し待ってください'],
             updateHistoryContent: [
-                { version: "Ver.2.9.0", note: "ディレクターの指示入力にキーボード入力モードを追加し、手書きと切り替えられるように変更。また、進行表の表示を各コーナーの「時間」と「終了時刻」で切り替えられる機能を追加。" },
+                { version: "Ver.2.9.0", note: "ディレクターの指示入力にキーボード入力モードを追加し、手書きと切り替えられるように変更。また、進行表の表示を各コーナーの「時間」と「開始時刻」で切り替えられる機能を追加。" },
                 { version: "Ver.2.8.1", note: "手書き入力、macでサーバーを立てられない問題を修正" },
                 { version: "Ver.2.8.0", note: "番組設定テンプレートを共有ができるように修正。" },
                 { version: "Ver.2.7.0", note: "本番やり直し機能を追加、部屋IDを４桁の数字で入れるように修正。ipad手書き機能で書きづらいのを修正。" },
@@ -393,6 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const 了解ボタン = document.getElementById('ack-btn');
     const 番組タイトル入力欄 = document.getElementById('program-title');
     const 番組時間入力欄 = document.getElementById('program-duration');
+    const programDurationSecInput = document.getElementById('program-duration-sec'); // ▼▼▼ 秒入力欄を取得 ▼▼▼
     const countdownDurationInput = document.getElementById('countdown-duration');
     const mainCountdownOverlay = document.getElementById('main-countdown-overlay');
     const 番組開始ボタン = document.getElementById('start-program-btn');
@@ -420,8 +425,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalTimeValue = document.getElementById('total-time-value');
     const overlayFontSizeInput = document.getElementById('overlay-font-size');
     const indicatorFontSizeInput = document.getElementById('indicator-font-size');
-
-    // ▼▼▼ 新機能のDOM要素を追加 ▼▼▼
     const toggleHandwritingBtn = document.getElementById('toggle-handwriting-btn');
     const toggleKeyboardBtn = document.getElementById('toggle-keyboard-btn');
     const handwritingPanel = document.getElementById('handwriting-panel');
@@ -430,7 +433,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendInstructionBtn = document.getElementById('send-instruction-btn');
     const cueSheetModeToggleBtn = document.getElementById('cue-sheet-mode-toggle-btn');
     const cueSheetModeToggleBtnPersonality = document.getElementById('cue-sheet-mode-toggle-btn-personality');
-    // ▲▲▲ 追加ここまで ▲▲▲
 
     let socket;
     let 自分の役割 = null;
@@ -904,19 +906,25 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!進行表データ) return;
         const 描画先 = (自分の役割 === 'director') ? ディレクター進行表 : パーソナリティ進行表;
         描画先.innerHTML = '';
-        let cumulativeEndTime = 0; // 終了時刻を計算するためのタイマー
+        let cumulativeStartTime = 0; // 累計時間（＝開始時間）を計算するためのタイマー
 
         進行表データ.forEach((item, index) => {
-            cumulativeEndTime += item.duration; // 現在のアイテムのデュレーションを加算
-
             const div = document.createElement('div');
             div.className = `cue-item type-${item.type || 'talk'}`;
             if (index === 現在のインデックス) div.classList.add('current');
 
-            // 両方の時間（個別と累計）をHTMLに追加
+            // ▼▼▼ `formatTime` の呼び出し方を変更 ▼▼▼
+            // 個別時間は常に `±MM:SS`
+            const durationText = formatTime(item.duration, false).substring(1);
+            // 累計時間（開始時刻）は60分以上なら `HH:MM:SS`、未満なら `MM:SS`
+            const startTimeText = formatTime(cumulativeStartTime, cumulativeStartTime >= 3600);
+
             div.innerHTML = `<span class="cue-title">${item.title}</span>` +
-                `<span class="cue-duration">${formatTime(item.duration).substring(1)}</span>` +
-                `<span class="cue-end-time">${formatTime(cumulativeEndTime, true)}</span>`; // showHours=trueで H:MM:SS 形式
+                `<span class="cue-duration">${durationText}</span>` +
+                `<span class="cue-end-time">${startTimeText}</span>`;
+
+            cumulativeStartTime += item.duration; // 次のアイテムのために時間を加算
+            // ▲▲▲ 修正ここまで ▲▲▲
 
             描画先.appendChild(div);
         });
@@ -943,16 +951,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const segmentLabel = (自分の役割 === 'director') ? セグメントタイマーラベル : セグメントタイマーラベル_パーソナリティ;
         programLabel.textContent = (timerMode === 'countup') ? t.programTimeElapsed : t.programTimeRemaining;
         const programDisplaySeconds = (timerMode === 'countup') ? totalElapsedSeconds : state.totalDuration - totalElapsedSeconds;
-        programClock.textContent = formatTime(programDisplaySeconds, true).substring(1);
+        programClock.textContent = formatTime(programDisplaySeconds, true); // 番組時間は常にHH:MM:SS
         segmentLabel.textContent = (timerMode === 'countup') ? t.segmentTimeElapsed : t.segmentTimeRemaining;
         const segmentDisplaySeconds = (timerMode === 'countup') ? segmentElapsedSeconds : segmentRemainingSeconds;
-        segmentClock.textContent = formatTime(segmentDisplaySeconds).substring(1);
+        segmentClock.textContent = formatTime(segmentDisplaySeconds, false); // コーナー時間は±MM:SS
         segmentClock.style.color = segmentRemainingSeconds < 0 ? '#e74c3c' : '#1abc9c';
     }
 
     function 押し巻き時間を描画する(timeDifference) {
         const targetElement = (自分の役割 === 'director') ? 時間差表示 : 時間差表示_パーソナリティ;
-        targetElement.textContent = formatTime(timeDifference);
+        targetElement.textContent = formatTime(timeDifference, false); // 押し巻きは±MM:SS
         targetElement.classList.remove('over', 'under');
         if (timeDifference > 5) {
             targetElement.classList.add('over');
@@ -961,20 +969,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // ▼▼▼ `formatTime` 関数を修正 ▼▼▼
     function formatTime(totalSeconds, showHours = false) {
         if (isNaN(totalSeconds)) totalSeconds = 0;
         const sign = totalSeconds < 0 ? "-" : "+";
         const absSeconds = Math.abs(totalSeconds);
+
         const hours = Math.floor(absSeconds / 3600);
         const minutes = Math.floor((absSeconds % 3600) / 60);
         const seconds = Math.floor(absSeconds % 60);
+
         if (showHours) {
-            // HH:MM:SS 形式を返す (符号なし)
+            // HH:MM:SS 形式 (符号なし)
             return [hours, minutes, seconds].map(v => v.toString().padStart(2, '0')).join(':');
+        } else {
+            // 60分を超えてもMM:SSの形式にする (例: 70:15)
+            const totalMinutes = Math.floor(absSeconds / 60);
+            const remainingSeconds = Math.floor(absSeconds % 60);
+            return sign + [totalMinutes, remainingSeconds].map(v => v.toString().padStart(2, '0')).join(':');
         }
-        // ±MM:SS 形式を返す
-        return sign + [minutes, seconds].map(v => v.toString().padStart(2, '0')).join(':');
     }
+    // ▲▲▲ 修正ここまで ▲▲▲
 
     function formatLogTime(totalMilliseconds) {
         if (isNaN(totalMilliseconds)) totalMilliseconds = 0;
@@ -985,6 +1000,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return [hours, minutes, seconds].map(v => v.toString().padStart(2, '0')).join(':');
     }
 
+    // ▼▼▼ `番組を開始する` 関数を修正 (秒入力に対応) ▼▼▼
     function 番組を開始する() {
         const t = translations[currentLang];
         recalculateDurations();
@@ -1005,9 +1021,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const countdown = parseInt(countdownDurationInput.value, 10) || 0;
         clientSideCountdownValue = countdown;
 
+        // 分と秒から合計秒数を計算
+        const durationMinutes = parseInt(番組時間入力欄.value, 10) || 0;
+        const durationSeconds = parseInt(programDurationSecInput.value, 10) || 0;
+        const totalDurationInSeconds = (durationMinutes * 60) + durationSeconds;
+
         const 番組データ = {
             title: 番組タイトル入力欄.value,
-            totalDuration: parseInt(番組時間入力欄.value, 10) * 60,
+            totalDuration: totalDurationInSeconds, // 合計秒数を渡す
             cueSheet: 進行表データ,
             countdown: countdown
         };
@@ -1020,6 +1041,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(初期化手書きパッド, 100);
         }
     }
+    // ▲▲▲ 修正ここまで ▲▲▲
 
     function プリセットメッセージを読み込む() {
         const 保存されたメッセージ = localStorage.getItem(`timeqPresetMessages_${currentLang}`);
@@ -1165,10 +1187,12 @@ document.addEventListener('DOMContentLoaded', () => {
         recalculateDurations();
     }
 
+    // ▼▼▼ `番組設定モーダルをリセットする` 関数を修正 (秒入力に対応) ▼▼▼
     function 番組設定モーダルをリセットする() {
         const t = translations[currentLang];
         番組タイトル入力欄.value = t.defaultProgramTitle;
         番組時間入力欄.value = '30';
+        programDurationSecInput.value = '0'; // 秒をリセット
         countdownDurationInput.value = '10';
         進行表行コンテナ.innerHTML = '';
 
@@ -1185,6 +1209,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         recalculateDurations();
     }
+    // ▲▲▲ 修正ここまで ▲▲▲
 
     function eventToShortcutString(e) {
         const code = e.code;
@@ -1237,7 +1262,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ショートカット設定モーダル.classList.add('hidden');
     }
 
-    // ▼▼▼ `openShortcutSettingsModal` 関数を修正 ▼▼▼
     function openShortcutSettingsModal() {
         const t = translations[currentLang];
         ショートカットリストコンテナ.innerHTML = '';
@@ -1252,7 +1276,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (自分の役割 === 'director') {
             createShortcutRow('togglePlayPause', t.shortcut_timer);
-            createShortcutRow('sendInstruction', t.shortcut_sendInstruction); // この行を追加
+            createShortcutRow('sendInstruction', t.shortcut_sendInstruction);
             プリセットメッセージリスト.forEach((msg, index) => {
                 createShortcutRow(`preset_${index}`, t.shortcut_preset(msg));
             });
@@ -1264,7 +1288,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         ショートカット設定モーダル.classList.remove('hidden');
     }
-    // ▲▲▲ 修正ここまで ▲▲▲
+
     function createShortcutRow(action, label) {
         const row = document.createElement('div');
         row.className = 'shortcut-row';
@@ -1303,14 +1327,10 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('keyup', keyupHandler, { capture: true });
     }
 
-    // ▼▼▼ `handleGlobalKeyDown` 関数を修正 ▼▼▼
     function handleGlobalKeyDown(e) {
         const isTyping = ['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName);
         const isModalOpen = !!document.querySelector('.modal:not(.hidden)');
 
-        // --- ショートカットの処理ロジック ---
-
-        // 1. モーダルが開いているか、無関係な場所で入力中の場合は、すべてのショートカットを無効化
         if (isModalOpen || (isTyping && document.activeElement.id !== 'keyboard-instruction-input')) {
             return;
         }
@@ -1319,32 +1339,27 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!currentShortcut) return;
         const action = Object.keys(shortcuts).find(act => shortcuts[act] === currentShortcut);
 
-        // 2. キーボード指示入力欄がアクティブな場合
         if (document.activeElement.id === 'keyboard-instruction-input') {
-            // (ハードコード) Shift+Enter で送信
             if (e.key === 'Enter' && e.shiftKey) {
                 e.preventDefault();
                 sendInstructionBtn.click();
                 return;
             }
-            // (カスタム) 送信ショートカットが押されたら送信
             if (action === 'sendInstruction') {
                 e.preventDefault();
                 sendInstructionBtn.click();
                 return;
             }
-            // それ以外のキーは通常の文字入力として許可
             return;
         }
 
-        // 3. どの入力欄もアクティブでない場合 (グローバルショートカット)
         if (action) {
             e.preventDefault();
             if (自分の役割 === 'director') {
                 if (action === 'togglePlayPause') {
                     playPauseBtn.click();
                 } else if (action === 'sendInstruction') {
-                    sendInstructionBtn.click(); // テキストエリアがアクティブでなくても送信
+                    sendInstructionBtn.click();
                 } else if (action.startsWith('preset_')) {
                     const index = parseInt(action.split('_')[1], 10);
                     const presetButtons = プリセットボタンエリア.querySelectorAll('.preset-btn');
@@ -1365,7 +1380,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-    // ▲▲▲ 修正ここまで ▲▲▲
+
     function toggleTimerMode() {
         timerMode = (timerMode === 'countdown') ? 'countup' : 'countdown';
         if (currentProgramState) {
@@ -1560,7 +1575,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     了解ボタン.onclick = () => { sendData('acknowledgement'); };
 
-    // ▼▼▼ 新機能のイベントリスナーを追加 ▼▼▼
     if (sendInstructionBtn) {
         sendInstructionBtn.onclick = () => {
             const text = keyboardInstructionInput.value;
@@ -1613,8 +1627,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cueSheetModeToggleBtnPersonality) {
         cueSheetModeToggleBtnPersonality.onclick = () => toggleCueSheetMode('personality');
     }
-    // ▲▲▲ 追加ここまで ▲▲▲
 
+    // ▼▼▼ `テンプレート保存ボタン.onclick` を修正 (秒入力に対応) ▼▼▼
     テンプレート保存ボタン.onclick = async () => {
         const t = translations[currentLang];
         const name = await getTemplateNameFromModal();
@@ -1625,7 +1639,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const rows = document.querySelectorAll('#cue-sheet-rows-container .cue-sheet-row');
         const templateData = {
             programTitle: 番組タイトル入力欄.value,
-            programDuration: 番組時間入力欄.value,
+            programDuration: 番組時間入力欄.value, // 分
+            programDurationSec: programDurationSecInput.value, // 秒
             cueSheet: Array.from(rows).map(row => {
                 const durationSec = parseInt(row.dataset.duration, 10) || 0;
                 return {
@@ -1641,7 +1656,9 @@ document.addEventListener('DOMContentLoaded', () => {
         テンプレートリストを更新();
         showToast(t.toast_templateSaved(name));
     };
+    // ▲▲▲ 修正ここまで ▲▲▲
 
+    // ▼▼▼ `テンプレート読込ボタン.onclick` を修正 (秒入力に対応) ▼▼▼
     テンプレート読込ボタン.onclick = () => {
         const name = テンプレート選択.value;
         if (!name) return;
@@ -1652,12 +1669,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let cueSheetItems;
             if (Array.isArray(templateData)) {
+                // 古いテンプレート形式（秒なし）
                 番組タイトル入力欄.value = translations[currentLang].defaultProgramTitle;
                 番組時間入力欄.value = '30';
+                programDurationSecInput.value = '0';
                 cueSheetItems = templateData;
             } else {
+                // 新しいテンプレート形式
                 番組タイトル入力欄.value = templateData.programTitle || '';
                 番組時間入力欄.value = templateData.programDuration || '30';
+                programDurationSecInput.value = templateData.programDurationSec || '0';
                 cueSheetItems = templateData.cueSheet || [];
             }
 
@@ -1677,7 +1698,9 @@ document.addEventListener('DOMContentLoaded', () => {
             テンプレート上書き保存ボタン.disabled = false;
         }
     };
+    // ▲▲▲ 修正ここまで ▲▲▲
 
+    // ▼▼▼ `テンプレート上書き保存ボタン.onclick` を修正 (秒入力に対応) ▼▼▼
     テンプレート上書き保存ボタン.onclick = async () => {
         const name = テンプレート選択.value;
         if (!name) return;
@@ -1691,7 +1714,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const rows = document.querySelectorAll('#cue-sheet-rows-container .cue-sheet-row');
             const templateData = {
                 programTitle: 番組タイトル入力欄.value,
-                programDuration: 番組時間入力欄.value,
+                programDuration: 番組時間入力欄.value, // 分
+                programDurationSec: programDurationSecInput.value, // 秒
                 cueSheet: Array.from(rows).map(row => {
                     const durationSec = parseInt(row.dataset.duration, 10) || 0;
                     return {
@@ -1707,6 +1731,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showToast(t.toast_templateOverwritten(name));
         }
     };
+    // ▲▲▲ 修正ここまで ▲▲▲
 
     テンプレート削除ボタン.onclick = async () => {
         const name = テンプレート選択.value;

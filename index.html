@@ -99,7 +99,7 @@
                 <div class="sub-heading-with-button" style="margin-top:0; border-top:0; padding-top:0;">
                     <h2><i class="fas fa-list-ol"></i><span data-i18n-key="cueSheet">進行表</span></h2>
                     <button id="cue-sheet-mode-toggle-btn" class="icon-btn" data-i18n-title-key="toggleCueSheetMode"
-                        title="表示切替 (時間/終了時刻)">
+                        title="表示切替 (時間/開始時刻)">
                         <i class="fas fa-clock"></i>
                     </button>
                 </div>
@@ -169,6 +169,8 @@
                         </button>
                     </div>
                 </div>
+
+
                 <div class="sub-heading-with-button"
                     style="margin-top: 1.25rem; border-top: 1px solid #eee; padding-top: 1.25rem;">
                     <h2><i class="fas fa-bolt"></i><span data-i18n-key="presetMessages">プリセットメッセージ</span></h2>
@@ -206,7 +208,7 @@
                 <div class="sub-heading-with-button" style="margin-top:0; border-top:0; padding-top:0;">
                     <h2><i class="fas fa-list-ol"></i><span data-i18n-key="cueSheet">進行表</span></h2>
                     <button id="cue-sheet-mode-toggle-btn-personality" class="icon-btn"
-                        data-i18n-title-key="toggleCueSheetMode" title="表示切替 (時間/終了時刻)">
+                        data-i18n-title-key="toggleCueSheetMode" title="表示切替 (時間/開始時刻)">
                         <i class="fas fa-clock"></i>
                     </button>
                 </div>
@@ -238,8 +240,14 @@
             <h2 data-i18n-key="programSettings">番組設定</h2>
             <label for="program-title" data-i18n-key="programTitle">番組タイトル</label>
             <input type="text" id="program-title" value="My Radio Program">
-            <label for="program-duration" data-i18n-key="programDuration">番組全体の時間（分）</label>
-            <input type="number" id="program-duration" value="30" min="1">
+
+            <label data-i18n-key="programDuration">番組全体の時間</label>
+            <div class="duration-input-group">
+                <input type="number" id="program-duration" value="30" min="0">
+                <span data-i18n-key="minutes" class="input-label">分</span>
+                <input type="number" id="program-duration-sec" value="0" min="0" max="59">
+                <span data-i18n-key="seconds" class="input-label">秒</span>
+            </div>
             <label for="countdown-duration" data-i18n-key="countdownDuration">本番開始カウントダウン（秒）</label>
             <input type="number" id="countdown-duration" value="10" min="0">
 
