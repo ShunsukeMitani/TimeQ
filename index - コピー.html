@@ -96,13 +96,7 @@
 
         <div id="director-screen" class="main-layout hidden">
             <div class="left-panel">
-                <div class="sub-heading-with-button" style="margin-top:0; border-top:0; padding-top:0;">
-                    <h2><i class="fas fa-list-ol"></i><span data-i18n-key="cueSheet">進行表</span></h2>
-                    <button id="cue-sheet-mode-toggle-btn" class="icon-btn" data-i18n-title-key="toggleCueSheetMode"
-                        title="表示切替 (時間/終了時刻)">
-                        <i class="fas fa-clock"></i>
-                    </button>
-                </div>
+                <h2><i class="fas fa-list-ol"></i><span data-i18n-key="cueSheet">進行表</span></h2>
                 <div id="director-cue-sheet" class="cue-sheet-area"></div>
                 <div class="cue-sheet-controls">
                     <button id="prev-item-btn"><i class="fas fa-backward"></i> <span
@@ -136,41 +130,18 @@
                     <button id="fullscreen-btn" class="icon-btn" style="width: 100%; margin-top: 5px;"><i
                             class="fas fa-expand"></i> <span data-i18n-key="fullscreen">全画面表示</span></button>
                 </div>
-
-                <div class="instruction-mode-toggle">
-                    <button id="toggle-handwriting-btn" class="instruction-toggle-btn active"
-                        data-i18n-key="handwriting">
-                        <i class="fas fa-pencil-alt"></i> <span data-i18n-key="handwriting">手書き指示</span>
-                    </button>
-                    <button id="toggle-keyboard-btn" class="instruction-toggle-btn"
-                        data-i18n-key="keyboardInstructions">
-                        <i class="fas fa-keyboard"></i> <span data-i18n-key="keyboardInstructions">キーボード指示</span>
-                    </button>
+                <div class="sub-heading-with-button">
+                    <h2><i class="fas fa-pencil-alt"></i><span data-i18n-key="handwriting">手書き指示</span></h2>
                     <div id="ack-indicator" data-i18n-key="acknowledged">了解！</div>
                 </div>
-
-                <div id="handwriting-panel">
-                    <div id="handwriting-wrapper">
-                        <canvas id="handwriting-canvas"></canvas>
-                    </div>
-                    <div id="canvas-controls">
-                        <button id="clear-canvas-btn" class="icon-btn danger-btn"><i class="fas fa-trash"></i> <span
-                                data-i18n-key="clear">消去</span></button>
-                    </div>
+                <div id="handwriting-wrapper">
+                    <canvas id="handwriting-canvas"></canvas>
                 </div>
-
-                <div id="keyboard-panel" class="hidden">
-                    <div id="keyboard-instruction-area">
-                        <textarea id="keyboard-instruction-input" rows="3" placeholder="指示を入力して送信"
-                            data-i18n-placeholder-key="enterInstruction"></textarea>
-                        <button id="send-instruction-btn" class="icon-btn send-icon-btn" data-i18n-title-key="send"
-                            title="送信">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </div>
+                <div id="canvas-controls">
+                    <button id="clear-canvas-btn" class="icon-btn danger-btn"><i class="fas fa-trash"></i> <span
+                            data-i18n-key="clear">消去</span></button>
                 </div>
-                <div class="sub-heading-with-button"
-                    style="margin-top: 1.25rem; border-top: 1px solid #eee; padding-top: 1.25rem;">
+                <div class="sub-heading-with-button">
                     <h2><i class="fas fa-bolt"></i><span data-i18n-key="presetMessages">プリセットメッセージ</span></h2>
                     <button id="open-preset-settings-btn" class="icon-btn"><i class="fas fa-cog"></i> <span
                             data-i18n-key="settings">設定</span></button>
@@ -203,19 +174,13 @@
                         <div id="time-diff-personality" class="time-diff-clock">+00:00</div>
                     </div>
                 </div>
-                <div class="sub-heading-with-button" style="margin-top:0; border-top:0; padding-top:0;">
-                    <h2><i class="fas fa-list-ol"></i><span data-i18n-key="cueSheet">進行表</span></h2>
-                    <button id="cue-sheet-mode-toggle-btn-personality" class="icon-btn"
-                        data-i18n-title-key="toggleCueSheetMode" title="表示切替 (時間/終了時刻)">
-                        <i class="fas fa-clock"></i>
-                    </button>
-                </div>
+                <h2><i class="fas fa-list-ol"></i><span data-i18n-key="cueSheet">進行表</span></h2>
                 <div id="personality-cue-sheet" class="cue-sheet-area"></div>
             </div>
             <div class="right-panel">
                 <h2><i class="fas fa-info-circle"></i><span data-i18n-key="instructions">指示</span></h2>
                 <div id="instruction-display-area">
-                    <span data-i18n-key="waitingForInstructions">指示を待っています...</span>
+                    <p data-i18n-key="waitingForInstructions">指示を待っています...</p>
                 </div>
                 <div class="ack-button-area">
                     <button id="ack-btn"><i class="fas fa-check"></i> <span

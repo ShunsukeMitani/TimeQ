@@ -22,6 +22,7 @@ if (!gotTheLock) {
     }
   });
 
+  // ▼▼▼ macOSでも動作するように修正された関数 ▼▼▼
   function getLocalIpAddress() {
     const interfaces = os.networkInterfaces();
     for (const name of Object.keys(interfaces)) {
@@ -160,8 +161,7 @@ if (!gotTheLock) {
             return;
           }
 
-          // ▼▼▼ キーボード指示('keyboardInstruction')をブロードキャストする処理を追加 ▼▼▼
-          if (ws.role === 'director' && (data.type === 'handwritingUpdate' || data.type === 'presetMessage' || data.type === 'keyboardInstruction')) {
+          if (ws.role === 'director' && (data.type === 'handwritingUpdate' || data.type === 'presetMessage')) {
             wss.clients.forEach(client => {
               if (client.role === 'personality' && client.readyState === ws.OPEN) {
                 client.send(message.toString());
@@ -169,7 +169,6 @@ if (!gotTheLock) {
             });
             return;
           }
-          // ▲▲▲ 修正ここまで ▲▲▲
 
           if (ws.role === 'personality' && (data.type === 'acknowledgement' || data.type === 'personalityMessage')) {
             wss.clients.forEach(client => {
