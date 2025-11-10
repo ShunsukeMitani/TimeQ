@@ -24,15 +24,53 @@ if (!gotTheLock) {
 
   function getLocalIpAddress() {
     const interfaces = os.networkInterfaces();
+    let candidates = [];
+    const excludedIp = '192.168.137.1'; // 共有接続用のIPを除外
+
+    // 1. すべての候補を収集
     for (const name of Object.keys(interfaces)) {
       for (const iface of interfaces[name]) {
         // IPv4であり、内部アドレス（127.0.0.1）でないものを探す
         if (iface.family === 'IPv4' && !iface.internal) {
-          return iface.address;
+          candidates.push(iface.address);
         }
       }
     }
-    return '127.0.0.1'; // 見つからなかった場合のフォールバック
+
+    if (candidates.length === 0) {
+      return '127.0.0.1'; // 見つからなかった場合
+    }
+
+    // 優先順位 1: 192.168.x.x (ただし 192.168.137.1 は除く)
+    const wifiIp = candidates.find(ip =>
+      ip.startsWith('192.168.') &&
+      ip !== excludedIp
+    );
+    if (wifiIp) {
+      return wifiIp;
+    }
+
+    // 優先順位 2: 172.16.x.x - 172.31.x.x または 10.x.x.x
+    const privateIp = candidates.find(ip =>
+      ip.startsWith('10.') ||
+      (ip.startsWith('172.') && (parseInt(ip.split('.')[1], 10) >= 16 && parseInt(ip.split('.')[1], 10) <= 31))
+    );
+    if (privateIp) {
+      return privateIp;
+    }
+
+    // 優先順位 3: 除外IP 以外のIP
+    const otherIp = candidates.find(ip => ip !== excludedIp);
+    if (otherIp) {
+      return otherIp;
+    }
+
+    // 優先順位 4: 最終手段 (除外IPしかなかった場合)
+    if (candidates.length > 0) {
+      return candidates[0];
+    }
+
+    return '127.0.0.1'; // フォールバック
   }
 
   const createWindow = () => {
