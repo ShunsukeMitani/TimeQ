@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             joinAsPersonality: "Join as Personality",
             // Director & Personality Screens
             cueSheet: "Cue Sheet",
-            toggleCueSheetMode: "Toggle View (Duration/Start/Range)", // 修正
+            toggleCueSheetMode: "Toggle View (Duration/Start/Range)",
             prev: "Prev",
             next: "Next",
             saveLog: "Save Log",
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Modals
             programSettings: "Program Settings",
             programTitle: "Program Title",
-            programDuration: "Total Program Duration", // 修正
+            programDuration: "Total Program Duration",
             countdownDuration: "Pre-Broadcast Countdown (seconds)",
             fontSizeSettings: "Display Font Size Settings",
             overlayFontSizeLabel: "Instructions/Countdown",
@@ -140,7 +140,8 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultPresets: ['👍', 'OK!', 'Wrap it up!', 'Go to CM', '30s left'],
             defaultPersonalityPresets: ['👍', 'OK', 'Got it', 'Please repeat', 'Stand by'],
             updateHistoryContent: [
-                { version: "Ver.2.9.1", note: "Added a third cue sheet display mode (Start-End Range). Program duration can now be set in seconds. Fixed time formatting to show MM:SS under 1 hour and HH:MM:SS over 1 hour." }, // ▼ 新しい履歴 ▼
+                { version: "Ver.2.9.2", note: "Fixed font size when typing with keyboard" },
+                { version: "Ver.2.9.1", note: "Added a third cue sheet display mode (Start-End Range). Program duration can now be set in seconds. Fixed time formatting to show MM:SS under 1 hour and HH:MM:SS over 1 hour." },
                 { version: "Ver.2.9.0", note: "Added a keyboard input mode for director instructions, with a toggle to switch between handwriting and keyboard. Also added a feature to toggle the cue sheet display between segment 'Duration' and 'Start Time'." },
                 { version: "Ver.2.8.1", note: "Fixed handwriting input and an issue preventing server startup on Mac." },
                 { version: "Ver.2.8.0", note: "Enabled sharing of program setting templates." },
@@ -196,11 +197,11 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         ja: {
-            changeDisplaySize: "表示サイズの変更", display100: "表示: 100%", display90: "表示: 90%", display85: "表示: 85%", display75: "表示: 75%", display50: "表示: 50%", display30: "表示: 30%", shortcuts: "ショートカット", updateHistory: "更新履歴", startAsServer: "サーバーとして起動", joinAsClient: "クライアントとして参加", returnToSettings: "番組設定に戻る", waitingForClientsTitle: "クライアントの接続を待っています", waitingForClientsDesc: "他のPCやタブレットから、以下のQRコードまたはURLで接続してください。", openDirectorWindow: "ディレクター画面を開く", openPersonalityWindow: "パーソナリティ画面を開く", enterServerIP: "サーバーPCのIPアドレスを入力", enterRoomId: "4桁のルームIDを入力", roomIdLabel: "ルームID", joinAsDirector: "ディレクターとして参加", joinAsPersonality: "パーソナリティとして参加", cueSheet: "進行表", toggleCueSheetMode: "表示切替 (時間/開始/範囲)", // 修正
+            changeDisplaySize: "表示サイズの変更", display100: "表示: 100%", display90: "表示: 90%", display85: "表示: 85%", display75: "表示: 75%", display50: "表示: 50%", display30: "表示: 30%", shortcuts: "ショートカット", updateHistory: "更新履歴", startAsServer: "サーバーとして起動", joinAsClient: "クライアントとして参加", returnToSettings: "番組設定に戻る", waitingForClientsTitle: "クライアントの接続を待っています", waitingForClientsDesc: "他のPCやタブレットから、以下のQRコードまたはURLで接続してください。", openDirectorWindow: "ディレクター画面を開く", openPersonalityWindow: "パーソナリティ画面を開く", enterServerIP: "サーバーPCのIPアドレスを入力", enterRoomId: "4桁のルームIDを入力", roomIdLabel: "ルームID", joinAsDirector: "ディレクターとして参加", joinAsPersonality: "パーソナリティとして参加", cueSheet: "進行表", toggleCueSheetMode: "表示切替 (時間/開始/範囲)",
             prev: "前へ", next: "次へ", saveLog: "ログ保存", programTimeRemaining: "番組残り時間", programTimeElapsed: "番組経過時間", segmentTimeRemaining: "コーナー残り時間", segmentTimeElapsed: "コーナー経過時間", timeDifference: "押し/巻き", fullscreen: "全画面表示", fullscreenExit: "元のサイズに戻す", handwriting: "手書き指示", keyboardInstructions: "キーボード指示",
             enterInstruction: "指示を入力して送信",
             send: "送信",
-            acknowledged: "了解！", clear: "消去", presetMessages: "プリセットメッセージ", settings: "設定", endProgram: "番組終了", restartProgram: "やり直し", instructions: "指示", waitingForInstructions: "指示を待っています...", acknowledge: "了解", programSettings: "番組設定", programTitle: "番組タイトル", programDuration: "番組全体の時間", // 修正
+            acknowledged: "了解！", clear: "消去", presetMessages: "プリセットメッセージ", settings: "設定", endProgram: "番組終了", restartProgram: "やり直し", instructions: "指示", waitingForInstructions: "指示を待っています...", acknowledge: "了解", programSettings: "番組設定", programTitle: "番組タイトル", programDuration: "番組全体の時間",
             countdownDuration: "本番開始カウントダウン（秒）", fontSizeSettings: "表示フォントサイズ設定", overlayFontSizeLabel: "指示/カウントダウン", indicatorFontSizeLabel: "了解/応答", fontSizeSmall: "小", fontSizeMedium: "中", fontSizeLarge: "大", fontSizeExtraLarge: "特大", createCueSheet: "進行表の作成", timeEntryModeIndividual: "個別", timeEntryModeCumulative: "加算", selectTemplate: "テンプレートを選択", load: "読込", save: "保存", overwrite: "上書き保存", exportTemplates: "エクスポート", importTemplates: "インポート", exportTemplatesTitle: "全テンプレートをファイルに書き出します", importTemplatesTitle: "ファイルからテンプレートを読み込みます",
             cornerName: "コーナー名", minutes: "分", seconds: "秒", endTimeMinutes: "終了(分)", endTimeSeconds: "終了(秒)", duration: "時間", totalTime: "合計時間:", type: "タイプ", addRow: "行を追加", startProgramWithSettings: "この内容で番組を開始", presetSettings: "プリセットメッセージ設定", presetSettingsDesc: "カンマ区切りでメッセージを入力してください。", personalityPresetSettings: "パーソナリティのプリセット設定", saveBtn: "保存する", cancel: "キャンセル", ok: "OK",
             shortcutSettings: "ショートカットキー設定",
@@ -225,7 +226,8 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultPresets: ['👍', 'OK!', '巻いて！', 'CMへ', 'あと30秒'],
             defaultPersonalityPresets: ['👍', 'OK', '了解です', 'もう一度お願いします', '少し待ってください'],
             updateHistoryContent: [
-                { version: "Ver.2.9.1", note: "進行表の3つ目の表示モード（開始-終了）を追加。番組時間を秒単位で設定可能に。時間表示を1時間未満はMM:SS、1時間以上はHH:MM:SSに統一。" }, // ▼ 新しい履歴 ▼
+                { version: "Ver.2.9.2", note: "キーボード入力のフォントサイズを修正。" },
+                { version: "Ver.2.9.1", note: "進行表の3つ目の表示モード（開始-終了）を追加。番組時間を秒単位で設定可能に。時間表示を1時間未満はMM:SS、1時間以上はHH:MM:SSに統一。" },
                 { version: "Ver.2.9.0", note: "ディレクターの指示入力にキーボード入力モードを追加し、手書きと切り替えられるように変更。また、進行表の表示を各コーナーの「時間」と「開始時刻」で切り替えられる機能を追加。" },
                 { version: "Ver.2.8.1", note: "手書き入力、macでサーバーを立てられない問題を修正" },
                 { version: "Ver.2.8.0", note: "番組設定テンプレートを共有ができるように修正。" },
@@ -814,9 +816,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.type === 'keyboardInstruction') {
             if (自分の役割 === 'personality') {
                 const { text } = data.payload;
-                // XSS防止のためにテキストをエスケープする
+
+                // ▼▼▼ テキストの長さに応じてフォントサイズを動的に変更 ▼▼▼
+                let fontSize = 4.5; // 最大フォントサイズ (rem)
+                if (text.length > 10) {
+                    fontSize = 3.0;
+                } else if (text.length > 5) {
+                    fontSize = 4.0;
+                }
+
+                // XSS防止のためにテキストをエスケープ
                 const escapedText = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                指示表示エリア.innerHTML = `<span class="keyboard-instruction">${escapedText.replace(/\n/g, '<br>')}</span>`;
+
+                // スタイルを適用したspanを挿入
+                指示表示エリア.innerHTML = `<span class="keyboard-instruction" style="font-size: ${fontSize}rem;">${escapedText.replace(/\n/g, '<br>')}</span>`;
+                // ▲▲▲ 変更ここまで ▲▲▲
             }
         }
         if (data.type === 'presetMessage') {
@@ -904,7 +918,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ▼▼▼ `進行表を描画する` 関数を修正 ▼▼▼
     function 進行表を描画する(進行表データ, 現在のインデックス) {
         if (!進行表データ) return;
         const 描画先 = (自分の役割 === 'director') ? ディレクター進行表 : パーソナリティ進行表;
@@ -916,7 +929,8 @@ document.addEventListener('DOMContentLoaded', () => {
             div.className = `cue-item type-${item.type || 'talk'}`;
             if (index === 現在のインデックス) div.classList.add('current');
 
-            const durationText = formatTime(item.duration, { showHours: false });
+            // 60分(3600秒)未満は MM:SS 、 60分以上は HH:MM:SS
+            const durationText = formatTime(item.duration, { showHours: 'auto' });
             const startTimeText = formatTime(cumulativeStartTime, { showHours: 'auto' });
             const endTime = cumulativeStartTime + item.duration;
             const endTimeText = formatTime(endTime, { showHours: 'auto' });
@@ -934,9 +948,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const 現在の項目 = 描画先.querySelector('.current');
         if (現在の項目) 現在の項目.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-    // ▲▲▲ 修正ここまで ▲▲▲
 
-    // ▼▼▼ `updateAllTimers` 関数を修正 ▼▼▼
     function updateAllTimers(state) {
         const t = translations[currentLang];
         let totalElapsedSeconds = state.totalElapsedTime / 1000;
@@ -965,9 +977,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         segmentClock.style.color = segmentRemainingSeconds < 0 ? '#e74c3c' : '#1abc9c';
     }
-    // ▲▲▲ 修正ここまで ▲▲▲
 
-    // ▼▼▼ `押し巻き時間を描画する` 関数を修正 ▼▼▼
     function 押し巻き時間を描画する(timeDifference) {
         const targetElement = (自分の役割 === 'director') ? 時間差表示 : 時間差表示_パーソナリティ;
         targetElement.textContent = formatTime(timeDifference, { useSign: true, totalMinutes: true }); // 常に ±MM:SS
@@ -978,9 +988,7 @@ document.addEventListener('DOMContentLoaded', () => {
             targetElement.classList.add('under');
         }
     }
-    // ▲▲▲ 修正ここまで ▲▲▲
 
-    // ▼▼▼ `formatTime` 関数を全面的に修正 ▼▼▼
     /**
      * 時間をフォーマットする
      * @param {number} totalSeconds - 合計秒数
@@ -1033,7 +1041,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         return timeString;
     }
-    // ▲▲▲ 修正ここまで ▲▲▲
 
 
     function formatLogTime(totalMilliseconds) {
@@ -1646,28 +1653,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ▼▼▼ `toggleCueSheetMode` 関数を3モード対応に修正 ▼▼▼
+    let cueSheetMode = 0; // 0: 個別, 1: 開始時刻, 2: 範囲
     function toggleCueSheetMode(role) {
+        cueSheetMode = (cueSheetMode + 1) % 3; // 0 -> 1 -> 2 -> 0
+
         const cueSheetArea = (role === 'director') ? ディレクター進行表 : パーソナリティ進行表;
         const btn = (role === 'director') ? cueSheetModeToggleBtn : cueSheetModeToggleBtnPersonality;
         if (!cueSheetArea || !btn) return;
         const icon = btn.querySelector('i');
 
-        if (cueSheetArea.classList.contains('cumulative-mode')) {
-            // 状態1 (開始時刻) -> 状態2 (範囲)
-            cueSheetArea.classList.remove('cumulative-mode');
-            cueSheetArea.classList.add('range-mode');
-            icon.classList.remove('fa-hourglass-end');
-            icon.classList.add('fa-arrows-alt-h'); // 範囲アイコン
-        } else if (cueSheetArea.classList.contains('range-mode')) {
-            // 状態2 (範囲) -> 状態0 (個別)
-            cueSheetArea.classList.remove('range-mode');
-            icon.classList.remove('fa-arrows-alt-h');
-            icon.classList.add('fa-clock'); // 個別時間アイコン
-        } else {
-            // 状態0 (個別) -> 状態1 (開始時刻)
+        cueSheetArea.classList.remove('cumulative-mode', 'range-mode');
+
+        if (cueSheetMode === 1) { // 開始時刻モード
             cueSheetArea.classList.add('cumulative-mode');
-            icon.classList.remove('fa-clock');
+            icon.classList.remove('fa-clock', 'fa-arrows-alt-h');
             icon.classList.add('fa-hourglass-end'); // 開始時刻アイコン
+        } else if (cueSheetMode === 2) { // 範囲表示モード
+            cueSheetArea.classList.add('range-mode');
+            icon.classList.remove('fa-clock', 'fa-hourglass-end');
+            icon.classList.add('fa-arrows-alt-h'); // 範囲アイコン
+        } else { // 個別時間モード (デフォルト)
+            icon.classList.remove('fa-hourglass-end', 'fa-arrows-alt-h');
+            icon.classList.add('fa-clock'); // 個別時間アイコン
         }
     }
     // ▲▲▲ 修正ここまで ▲▲▲

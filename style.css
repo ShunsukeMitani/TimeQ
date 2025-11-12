@@ -363,7 +363,6 @@ button:disabled {
 .cue-range-time {
     font-family: monospace;
     color: #333;
-    /* ▼▼▼ 修正 (#888 から #333 に変更) ▼▼▼ */
     font-weight: bold;
 }
 
@@ -537,12 +536,18 @@ button:disabled {
     font-size: 1.5rem;
 }
 
+/* ▼▼▼ 修正 ▼▼▼ */
 #instruction-display-area span.keyboard-instruction {
     /* キーボード入力専用スタイル */
-    font-size: 2rem;
+    /* font-size: 2rem; */
+    /* ← 削除 (JavaScriptで制御) */
     font-weight: bold;
     color: #333;
+    word-break: break-word;
+    /* 折り返しを許可 */
 }
+
+/* ▲▲▲ 修正ここまで ▲▲▲ */
 
 #instruction-display-area img {
     max-width: 100%;
